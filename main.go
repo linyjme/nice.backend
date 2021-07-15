@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"aysyncClient/common/untils"
+	"gopkg.in/ini.v1"
+	"asyncClient/common/untils"
 )
 
 func main() {
