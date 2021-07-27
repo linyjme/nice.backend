@@ -3,8 +3,8 @@ package core
 import (
 	"asyncClient/global"
 	"asyncClient/initialize"
-	"fmt"
 	"go.uber.org/zap"
+	"fmt"
 	"time"
 )
 
@@ -14,7 +14,6 @@ type server interface {
 
 func RunServer() {
 	Router := initialize.Routers()
-
 	address := fmt.Sprintf(":%d", global.RAY_CONFIG.Listen.Port)
 	s := initServer(address, Router)
 	// 保证文本顺序输出

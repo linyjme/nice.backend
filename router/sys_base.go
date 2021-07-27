@@ -1,14 +1,14 @@
 package router
 
 import (
-	"asyncClient/api"
+	"asyncClient/api/site"
 	"github.com/gin-gonic/gin"
 )
 
-func InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
-	BaseRouter := Router.Group("base")
+func InitBaseRouter(Router *gin.RouterGroup) () {
+
+	BaseRouter := Router.Group("api")
 	{
-		BaseRouter.POST("login", api.Login)
+		BaseRouter.GET("website/info", site.SiteInfoResource) // 创建Api
 	}
-	return BaseRouter
 }

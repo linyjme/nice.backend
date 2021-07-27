@@ -1,4 +1,4 @@
-package common
+package transform
 
 type RaySync struct {
 	AuthProtocol     string `mapstructure:"auth_protocol" json:"use_mysql" ini:"auth_protocol"`                    //
@@ -9,7 +9,7 @@ type RaySync struct {
 	License          string `mapstructure:"license" json:"license" ini:"license"`                                  //
 	UseMysql         string `mapstructure:"use_mysql" json:"use_mysql" ini:"use_mysql"`                            //
 	MysqlHost        string `mapstructure:"mysql_host" json:"mysql_host" ini:"mysql_host"`                         //
-	MysqlPort        int    `mapstructure:"mysql_port" json:"mysql_port" ini:"mysql_port"`                         //
+	MysqlPort        string `mapstructure:"mysql_port" json:"mysql_port" ini:"mysql_port"`                         //
 	MysqlUser        string `mapstructure:"mysql_user" json:"mysql_user" ini:"mysql_user"`                         //
 	MysqlPassword    string `mapstructure:"mysql_password" json:"mysql_password" ini:"mysql_password"`             //
 	MysqlName        string `mapstructure:"mysql_name" json:"mysql_name" ini:"mysql_name"`                         //

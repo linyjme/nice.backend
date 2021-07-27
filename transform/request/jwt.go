@@ -2,16 +2,15 @@ package request
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	uuid "github.com/satori/go.uuid"
+	"time"
 )
 
 // Custom claims structure
 type CustomClaims struct {
-	UUID        uuid.UUID
 	ID          uint
-	Username    string
-	NickName    string
-	AuthorityId string
+	Account     string
+	AccountType int
+	CurrentTime time.Time
 	BufferTime  int64
 	jwt.StandardClaims
 }

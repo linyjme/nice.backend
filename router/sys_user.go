@@ -1,13 +1,13 @@
 package router
 
 import (
-	"asyncClient/api"
+	"asyncClient/api/user"
 	"github.com/gin-gonic/gin"
 )
 
 func InitApiRouter(Router *gin.RouterGroup) {
 	ApiRouter := Router.Group("api")
 	{
-		ApiRouter.POST("createApi", api.CreateApi) // 创建Api
+		ApiRouter.POST("login", user.Login)
 	}
 }

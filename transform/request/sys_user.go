@@ -1,7 +1,5 @@
 package request
 
-import uuid "github.com/satori/go.uuid"
-
 // User register structure
 type Register struct {
 	Username    string `json:"userName"`
@@ -13,10 +11,8 @@ type Register struct {
 
 // User login structure
 type Login struct {
-	Username  string `json:"username"`  // 用户名
-	Password  string `json:"password"`  // 密码
-	Captcha   string `json:"captcha"`   // 验证码
-	CaptchaId string `json:"captchaId"` // 验证码ID
+	Account  string `json:"account"`  // 用户名
+	Password string `json:"password"` // 密码
 }
 
 // Modify password structure
@@ -28,6 +24,5 @@ type ChangePasswordStruct struct {
 
 // Modify  user's auth structure
 type SetUserAuth struct {
-	UUID        uuid.UUID `json:"uuid"`        // 用户UUID
 	AuthorityId string    `json:"authorityId"` // 角色ID
 }

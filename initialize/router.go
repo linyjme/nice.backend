@@ -11,10 +11,10 @@ import (
 
 func Routers() *gin.Engine {
 	var Router = gin.Default()
-	// Router.Use(middleware.LoadTls())  // 打开就能玩https了
+	// Router.Use(middleware.LoadTls())  // https
 	global.RAY_LOG.Info("use middleware logger")
 	// 跨域
-	//Router.Use(middleware.Cors()) // 如需跨域可以打开
+	Router.Use(middleware.Cors()) // 跨域
 	global.RAY_LOG.Info("use middleware cors")
 	global.RAY_LOG.Info("register swagger handler")
 	// 方便统一添加路由组前缀 多服务器上线使用

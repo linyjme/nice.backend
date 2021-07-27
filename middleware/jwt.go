@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"asyncClient/common/request"
-	"asyncClient/common/response"
 	"asyncClient/global"
+	"asyncClient/transform/request"
+	"asyncClient/transform/response"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"

@@ -1,7 +1,7 @@
-package api
+package site
 
 import (
-	"asyncClient/common/response"
+	"asyncClient/transform/response"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +13,7 @@ import (
 // @Param data body model.SysApi true "api路径, api中文描述, api组, 方法"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
 // @Router /api/createApi [post]
-func CreateApi(c *gin.Context) {
+func SiteInfoResource(c *gin.Context) {
 	//var api model.SysApi
 	//_ = c.ShouldBindJSON(&api)
 	//if err := utils.Verify(api, utils.ApiVerify); err != nil {

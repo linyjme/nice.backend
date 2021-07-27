@@ -1,4 +1,4 @@
-package common
+package transform
 
 type Listen struct {
 	Host        string `mapstructure:"host" json:"level" ini:"host"`                      //

@@ -1,4 +1,4 @@
-package common
+package transform
 
 type Admin struct {
 	AdminHost      string `mapstructure:"admin_host" json:"level" ini:"admin_host"`              //

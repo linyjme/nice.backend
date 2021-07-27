@@ -1,4 +1,4 @@
-package common
+package transform
 
 type Zap struct {
 	Level         string `mapstructure:"level" json:"level" ini:"level"`                           // 级别

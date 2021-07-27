@@ -1,7 +1,7 @@
 package global
 
 import (
-	"asyncClient/common"
+	"asyncClient/transform"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"golang.org/x/sync/singleflight"
@@ -10,7 +10,7 @@ import (
 
 var (
 	RAY_DB                  *gorm.DB
-	RAY_CONFIG              common.Server
+	RAY_CONFIG              transform.Server
 	RAY_VP                  *viper.Viper
 	RAY_LOG                 *zap.Logger
 	RAY_Concurrency_Control = &singleflight.Group{}
