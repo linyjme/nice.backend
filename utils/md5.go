@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: linyj
 //@function: MD5V
 //@description: md5加密
 //@param: str []byte

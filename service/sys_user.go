@@ -1,12 +1,12 @@
 package service
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"asyncClient/model"
 	"asyncClient/utils"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: linyj
 //@function: Login
 //@description: 用户登录
 //@param: u *model.SysUser

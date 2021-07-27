@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"asyncClient/middleware"
 	"asyncClient/router"
 	"github.com/gin-gonic/gin"

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"asyncClient/middleware"
 	"asyncClient/model"
 	"asyncClient/service"

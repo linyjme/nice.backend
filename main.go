@@ -1,8 +1,8 @@
 package main
 
 import (
+	"asyncClient/common/global"
 	"asyncClient/core"
-	"asyncClient/global"
 	"asyncClient/initialize"
 	"asyncClient/utils"
 	"path"

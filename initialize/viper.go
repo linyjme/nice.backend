@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"

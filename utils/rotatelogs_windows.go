@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap/zapcore"
 	"os"
@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: [linyj](https://github.com/linyj)
 //@function: GetWriteSyncer
 //@description: zap logger中加入file-rotatelogs
 //@return: zapcore.WriteSyncer, error

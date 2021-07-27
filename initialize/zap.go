@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"asyncClient/utils"
 	"fmt"
 	"go.uber.org/zap"

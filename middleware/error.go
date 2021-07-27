@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net"

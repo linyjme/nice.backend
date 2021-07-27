@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"asyncClient/transform/request"
 	"asyncClient/transform/response"
 	"errors"

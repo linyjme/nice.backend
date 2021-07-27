@@ -1,10 +1,10 @@
 package core
 
 import (
-	"asyncClient/global"
+	"asyncClient/common/global"
 	"asyncClient/initialize"
-	"go.uber.org/zap"
 	"fmt"
+	"go.uber.org/zap"
 	"time"
 )
 
