@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-//@author: [linyj](https://github.com/linyj)
+//@author: yjLin
 //@function: GetWriteSyncer
 //@description: zap logger中加入file-rotatelogs
 //@return: zapcore.WriteSyncer, error

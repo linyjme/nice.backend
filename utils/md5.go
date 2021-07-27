@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 )
 
-//@author: linyj
+//@author: yjLin
 //@function: MD5V
 //@description: md5加密
 //@param: str []byte

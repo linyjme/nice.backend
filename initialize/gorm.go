@@ -13,7 +13,7 @@ import (
 	"path"
 )
 
-//@author: linyj
+//@author: yjLin
 //@function: Gorm
 //@description: 初始化数据库并产生数据库全局变量
 //@return: *gorm.DB
@@ -30,7 +30,7 @@ func Gorm() *gorm.DB {
 }
 
 // MysqlTables
-//@author: linyj
+//@author: yjLin
 //@function: MysqlTables
 //@description: 注册数据库表专用
 //@param: db *gorm.DB
@@ -46,7 +46,7 @@ func SqlTables(db *gorm.DB) {
 	global.RAY_LOG.Info("register table success")
 }
 
-//@author: linyj
+//@author: yjLin
 //@function: GormMysql
 //@description: 初始化Mysql数据库
 //@return: *gorm.DB
@@ -77,7 +77,7 @@ func GormMysql() *gorm.DB {
 	}
 }
 
-//@author: linyj
+//@author: yjLin
 //@function: GormMysql
 //@description: 初始化Mysql数据库
 //@return: *gorm.DB
@@ -92,7 +92,7 @@ func GormSqlite() *gorm.DB {
 	}
 }
 
-//@author: linyj
+//@author: yjLin
 //@function: gormConfig
 //@description: 根据配置决定是否开启日志
 //@param: mod bool

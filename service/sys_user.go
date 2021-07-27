@@ -6,7 +6,7 @@ import (
 	"asyncClient/utils"
 )
 
-//@author: linyj
+//@author: yjLin
 //@function: Login
 //@description: 用户登录
 //@param: u *model.SysUser

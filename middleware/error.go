@@ -35,7 +35,7 @@ func GinRecovery(stack bool) gin.HandlerFunc {
 						zap.String("request", string(httpRequest)),
 					)
 					// If the connection is dead, we can't write a status to it.
-					_ = c.Error(err.(error)) // nolint: errcheck
+					_ = c.Error(err.(error)) // noyjLint: errcheck
 					c.Abort()
 					return
 				}

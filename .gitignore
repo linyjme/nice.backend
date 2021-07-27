@@ -48,8 +48,8 @@ jspm_packages/
 # TypeScript v1 declaration files
 typings/
 
-# Optional eslint cache
-.eslintcache
+# Optional esyjLint cache
+.esyjLintcache
 
 # Optional REPL history
 .node_repl_history
