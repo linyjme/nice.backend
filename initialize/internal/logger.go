@@ -3,7 +3,6 @@ package internal
 import (
 	"context"
 	"fmt"
-	"asyncClient/global"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/utils"
 	"io/ioutil"
@@ -126,11 +125,7 @@ func (c *_logger) Trace(ctx context.Context, begin time.Time, fc func() (string,
 }
 
 func (c *_logger) Printf(message string, data ...interface{}) {
-	if global.GVA_CONFIG.Mysql.LogZap {
-		global.GVA_LOG.Info(fmt.Sprintf(message, data...))
-	} else {
-		c.Writer.Printf(message, data...)
-	}
+	c.Writer.Printf(message, data...)
 }
 
 type traceRecorder struct {

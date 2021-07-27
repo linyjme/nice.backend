@@ -1,22 +1,17 @@
 package global
 
 import (
-	"asyncClient/utils/timer"
-	"golang.org/x/sync/singleflight"
-	"go.uber.org/zap"
-	"asyncClient/config"
-	"github.com/go-redis/redis"
+	"asyncClient/common"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
+	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 )
 
 var (
-	GVA_DB     *gorm.DB
-	GVA_REDIS  *redis.Client
-	GVA_CONFIG config.Server
-	GVA_VP     *viper.Viper
-	//GVA_LOG    *oplogging.Logger
-	GVA_LOG                 *zap.Logger
-	GVA_Timer               timer.Timer = timer.NewTimerTask()
-	GVA_Concurrency_Control             = &singleflight.Group{}
+	RAY_DB                  *gorm.DB
+	RAY_CONFIG              common.Server
+	RAY_VP                  *viper.Viper
+	RAY_LOG                 *zap.Logger
+	RAY_Concurrency_Control = &singleflight.Group{}
 )

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/aysyncClient.iml" filepath="$PROJECT_DIR$/.idea/aysyncClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/asyncClient.iml" filepath="$PROJECT_DIR$/.idea/asyncClient.iml" />
     </modules>
   </component>
 </project>

@@ -1,7 +1,0 @@
-package response
-
-import "asyncClient/model"
-
-type ExaFileResponse struct {
-	File model.ExaFileUploadAndDownload `json:"file"`
-}
