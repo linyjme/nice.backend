@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"asyncClient/common/global"
-	"asyncClient/transform/request"
-	"asyncClient/transform/response"
+	"niceBackend/common/global"
+	"niceBackend/transform/request"
+	"niceBackend/transform/response"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"

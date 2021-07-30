@@ -9,7 +9,7 @@ import (
 type CustomClaims struct {
 	ID          uint
 	Account     string
-	AccountType int
+	AccountType uint8
 	CurrentTime time.Time
 	BufferTime  int64
 	jwt.StandardClaims

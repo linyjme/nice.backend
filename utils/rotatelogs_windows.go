@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"asyncClient/common/global"
+	"niceBackend/common/global"
 	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap/zapcore"
 	"os"

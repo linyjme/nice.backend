@@ -1,4 +1,4 @@
-module asyncClient
+module niceBackend
 
 go 1.16
 

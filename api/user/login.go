@@ -1,13 +1,13 @@
 package user
 
 import (
-	"asyncClient/common/global"
-	"asyncClient/middleware"
-	"asyncClient/model"
-	"asyncClient/service"
-	"asyncClient/transform/request"
-	"asyncClient/transform/response"
-	"asyncClient/utils"
+	"niceBackend/common/global"
+	"niceBackend/middleware"
+	"niceBackend/model"
+	"niceBackend/service"
+	"niceBackend/transform/request"
+	"niceBackend/transform/response"
+	"niceBackend/utils"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -27,7 +27,9 @@ func Login(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	u := &model.User{Account: l.Account, Password: l.Password}
+	account := l.UK
+	password := l.UK
+	u := &model.User{Account: account, Password: password}
 	if err, user := service.Login(u); err != nil {
 		global.RAY_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
 		response.FailWithMessage("用户名不存在或者密码错误", c)
@@ -35,7 +37,6 @@ func Login(c *gin.Context) {
 		// 颁发token
 		tokenNext(c, *user)
 	}
-	response.FailWithMessage("验证码错误", c)
 }
 
 // 登录以后签发jwt

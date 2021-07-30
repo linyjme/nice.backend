@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"asyncClient/common/global"
+	"niceBackend/common/global"
 	"go.uber.org/zap"
 	"os"
 )

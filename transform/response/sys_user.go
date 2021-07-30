@@ -1,7 +1,7 @@
 package response
 
 import (
-	"asyncClient/model"
+	"niceBackend/model"
 )
 
 type SysUserResponse struct {

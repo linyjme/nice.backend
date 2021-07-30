@@ -1,7 +1,7 @@
 package site
 
 import (
-	"asyncClient/transform/response"
+	"niceBackend/transform/response"
 	"github.com/gin-gonic/gin"
 )
 

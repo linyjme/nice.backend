@@ -1,8 +1,8 @@
 package core
 
 import (
-	"asyncClient/common/global"
-	"asyncClient/initialize"
+	"niceBackend/common/global"
+	"niceBackend/initialize"
 	"fmt"
 	"go.uber.org/zap"
 	"time"
@@ -21,6 +21,6 @@ func RunServer() {
 	time.Sleep(10 * time.Microsecond)
 	global.RAY_LOG.Info("server run success on ", zap.String("address", address))
 
-	fmt.Printf(`欢迎使用 asyncClient`)
+	fmt.Printf(`欢迎使用 niceBackend`)
 	global.RAY_LOG.Error(s.ListenAndServe().Error())
 }

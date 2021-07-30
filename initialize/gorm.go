@@ -1,9 +1,9 @@
 package initialize
 
 import (
-	"asyncClient/common/global"
-	"asyncClient/model"
-	"asyncClient/utils"
+	"niceBackend/common/global"
+	"niceBackend/model"
+	"niceBackend/utils"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
@@ -38,6 +38,7 @@ func Gorm() *gorm.DB {
 func SqlTables(db *gorm.DB) {
 	err := db.AutoMigrate(
 		model.User{},
+		model.ServerConfig{},
 	)
 	if err != nil {
 		global.RAY_LOG.Error("register table failed", zap.Any("err", err))
@@ -59,7 +60,7 @@ func GormMysql() *gorm.DB {
 	dsn := m.MysqlUser + ":" + m.MysqlPassword + "@tcp(" + m.MysqlHost + ":" + m.MysqlPort + ")/" + m.MysqlName + "?" + "charset=utf8mb4&parseTime=True&loc=Local"
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,   // DSN data source name
-		DefaultStringSize:         256,   // string 类型字段的默认长度
+		DefaultStringSize:         128,   // string 类型字段的默认长度
 		DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 		DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
 		DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
@@ -101,7 +102,7 @@ func GormSqlite() *gorm.DB {
 func gormConfig() *gorm.Config {
 	config := &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
-		NamingStrategy:                           schema.NamingStrategy{TablePrefix: "tb_", SingularTable: true},
+		NamingStrategy:                           schema.NamingStrategy{TablePrefix: "t_", SingularTable: true},
 	}
 	return config
 }

@@ -1,17 +1,17 @@
 package initialize
 
 import (
-	"asyncClient/common/global"
+	"niceBackend/common/global"
+	"niceBackend/utils"
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
 
-func Viper(path ...string) *viper.Viper {
-	var config string
-	config = path[0]
+func Viper() *viper.Viper {
+	configIni := utils.GetConfigIniPath()
 	v := viper.New()
-	v.SetConfigFile(config)
+	v.SetConfigFile(configIni)
 	v.SetConfigType("ini")
 	err := v.ReadInConfig()
 	if err != nil {

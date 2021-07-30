@@ -1,8 +1,8 @@
 package initialize
 
 import (
-	"asyncClient/common/global"
-	"asyncClient/utils"
+	"niceBackend/common/global"
+	"niceBackend/utils"
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
