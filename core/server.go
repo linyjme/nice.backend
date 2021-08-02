@@ -14,6 +14,8 @@ type server interface {
 
 func RunServer() {
 	Router := initialize.Routers()
+	// 初始化redis服务
+	initialize.Redis()
 	address := fmt.Sprintf(":%d", global.RAY_CONFIG.Listen.Port)
 	s := initServer(address, Router)
 	// 保证文本顺序输出

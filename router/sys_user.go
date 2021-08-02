@@ -1,8 +1,8 @@
 package router
 
 import (
-	"niceBackend/api/user"
 	"github.com/gin-gonic/gin"
+	"niceBackend/resources/api/user"
 )
 
 func InitApiRouter(Router *gin.RouterGroup) {

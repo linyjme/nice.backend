@@ -10,14 +10,17 @@ require (
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/spec v0.20.3 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
+	github.com/go-redis/redis v6.15.7+incompatible
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/juju/ratelimit v1.0.1
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/onsi/gomega v1.14.0 // indirect
 	github.com/spf13/viper v1.8.1
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.7.0
+	go.mongodb.org/mongo-driver v1.7.0
 	go.uber.org/zap v1.18.1
 	golang.org/x/net v0.0.0-20210726213435-c6fcb2dbf985 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c

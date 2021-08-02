@@ -7,4 +7,6 @@ type Server struct {
 	Listen  Listen  `mapstructure:"listen" json:"listen" ini:"listen"`
 	Admin   Admin   `mapstructure:"admin" json:"admin" ini:"admin"`
 	RaySync RaySync `mapstructure:"config" json:"config" ini:"config"`
+	Redis   Redis   `mapstructure:"redis" json:"redis" ini:"redis"`
+	Mongo   Mongodb `mapstructure:"mongodb" json:"mongodb" ini:"mongodb"`
 }

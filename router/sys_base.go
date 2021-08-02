@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"niceBackend/api/user"
+	"niceBackend/resources/api/user"
 )
 
 func InitBaseRouter(Router *gin.RouterGroup) () {

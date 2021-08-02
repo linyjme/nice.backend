@@ -1,6 +1,9 @@
 package user
 
 import (
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"niceBackend/common/global"
 	"niceBackend/middleware"
 	"niceBackend/model"
@@ -8,9 +11,6 @@ import (
 	"niceBackend/transform/request"
 	"niceBackend/transform/response"
 	"niceBackend/utils"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"time"
 )
 
