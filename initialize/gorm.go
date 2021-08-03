@@ -1,14 +1,14 @@
 package initialize
 
 import (
-	"niceBackend/common/global"
-	"niceBackend/model"
-	"niceBackend/utils"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
+	"niceBackend/common/global"
+	"niceBackend/model"
+	"niceBackend/utils"
 	"os"
 	"path"
 )
@@ -20,12 +20,12 @@ import (
 
 func Gorm() *gorm.DB {
 	switch global.NICE_CONFIG.System.DbType {
-	case "1":
+	case "mysql":
 		return GormMysql()
-	case "0":
+	case "sqlite":
 		return GormSqlite()
 	default:
-		return GormSqlite()
+		return GormMysql()
 	}
 }
 

@@ -2,14 +2,13 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"niceBackend/resources/api/user"
+	"niceBackend/resources/api/auth"
 )
 
 func InitBaseRouter(Router *gin.RouterGroup) () {
 
 	BaseRouter := Router.Group("api")
 	{
-		BaseRouter.GET("user/login", user.Login) // 创建Api
-		BaseRouter.POST("user/create", user.Register)
+		BaseRouter.GET("auth/login", auth.Login) // 创建Api
 	}
 }

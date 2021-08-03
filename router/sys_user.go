@@ -8,7 +8,6 @@ import (
 func InitApiRouter(Router *gin.RouterGroup) {
 	ApiRouter := Router.Group("api")
 	{
-		ApiRouter.POST("login", user.Login)
-		
+		ApiRouter.POST("user/create", user.Register)
 	}
 }
