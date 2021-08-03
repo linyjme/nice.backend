@@ -38,7 +38,7 @@ func Gorm() *gorm.DB {
 func SqlTables(db *gorm.DB) {
 	err := db.AutoMigrate(
 		model.User{},
-		model.ServerConfig{},
+		//model.ServerConfig{},
 	)
 	if err != nil {
 		global.RAY_LOG.Error("register table failed", zap.Any("err", err))

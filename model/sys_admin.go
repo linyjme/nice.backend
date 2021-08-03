@@ -2,7 +2,7 @@ package model
 
 type Admin struct {
 	BASE_MODEL
-	ID        uint           `gorm:"primarykey"` // 主键ID
+	ID                   uint   `gorm:"primarykey"`                  // 主键ID
 	Account              string `json:"account" gorm:"comment:用户账号"` // 用户登录名
 	Password             string `json:"-"  gorm:"default:用户登录密码"`    //
 	Permission           int    `json:"permission" `                 //
