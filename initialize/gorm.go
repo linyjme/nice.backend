@@ -19,7 +19,7 @@ import (
 //@return: *gorm.DB
 
 func Gorm() *gorm.DB {
-	switch global.RAY_CONFIG.RaySync.UseMysql {
+	switch global.NICE_CONFIG.System.DbType {
 	case "1":
 		return GormMysql()
 	case "0":
@@ -41,10 +41,10 @@ func SqlTables(db *gorm.DB) {
 		//model.ServerConfig{},
 	)
 	if err != nil {
-		global.RAY_LOG.Error("register table failed", zap.Any("err", err))
+		global.NICE_LOG.Error("register table failed", zap.Any("err", err))
 		os.Exit(0)
 	}
-	global.RAY_LOG.Info("register table success")
+	global.NICE_LOG.Info("register table success")
 }
 
 //@author: yjLin
@@ -53,11 +53,11 @@ func SqlTables(db *gorm.DB) {
 //@return: *gorm.DB
 
 func GormMysql() *gorm.DB {
-	m := global.RAY_CONFIG.RaySync
-	if m.UseMysql == "0" {
+	m := global.NICE_CONFIG.Mysql
+	if m.Dbname == "" {
 		return nil
 	}
-	dsn := m.MysqlUser + ":" + m.MysqlPassword + "@tcp(" + m.MysqlHost + ":" + m.MysqlPort + ")/" + m.MysqlName + "?" + "charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := m.Username + ":" + m.Password + "@tcp(" + m.Path + ")/" + m.Dbname + "?" + m.Config
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,   // DSN data source name
 		DefaultStringSize:         128,   // string 类型字段的默认长度
@@ -67,7 +67,7 @@ func GormMysql() *gorm.DB {
 		SkipInitializeWithVersion: false, // 根据版本自动配置
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), gormConfig()); err != nil {
-		global.RAY_LOG.Error("MySQL启动异常", zap.Any("err", err))
+		global.NICE_LOG.Error("MySQL启动异常", zap.Any("err", err))
 		os.Exit(0)
 		return nil
 	} else {

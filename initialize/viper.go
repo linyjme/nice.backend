@@ -12,7 +12,7 @@ func Viper() *viper.Viper {
 	configIni := utils.GetConfigIniPath()
 	v := viper.New()
 	v.SetConfigFile(configIni)
-	v.SetConfigType("ini")
+	v.SetConfigType("yaml")
 	err := v.ReadInConfig()
 	if err != nil {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
@@ -20,11 +20,11 @@ func Viper() *viper.Viper {
 	v.WatchConfig()
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config file changed:", e.Name)
-		if err := v.Unmarshal(&global.RAY_CONFIG); err != nil {
+		if err := v.Unmarshal(&global.NICE_CONFIG); err != nil {
 			fmt.Println(err)
 		}
 	})
-	if err := v.Unmarshal(&global.RAY_CONFIG); err != nil {
+	if err := v.Unmarshal(&global.NICE_CONFIG); err != nil {
 		fmt.Println(err)
 	}
 	return v

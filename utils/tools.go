@@ -12,7 +12,7 @@ func GetProjectDirectory() string {
 
 func GetConfigIniPath() string {
 	projectDir := GetProjectDirectory()
-	return path.Join(projectDir, "config", "config.ini")
+	return path.Join(projectDir, "config", "config.yaml")
 }
 
 func GetStaticAppPath() string {

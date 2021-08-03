@@ -11,11 +11,11 @@ import (
 )
 
 var (
-	RAY_DB                  *gorm.DB
-	RAY_CONFIG              transform.Server
-	RAY_REDIS               *redis.Client
-	RAY_VP                  *viper.Viper
-	RAY_LOG                 *zap.Logger
-	RAY_Mongo               *mongo.Client
-	RAY_Concurrency_Control = &singleflight.Group{}
+	NICE_DB                  *gorm.DB
+	NICE_CONFIG              transform.Server
+	NICE_REDIS               *redis.Client
+	NICE_VP                  *viper.Viper
+	NICE_LOG                 *zap.Logger
+	NICE_Mongo               *mongo.Client
+	NICE_Concurrency_Control = &singleflight.Group{}
 )

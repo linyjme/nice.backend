@@ -1,12 +1,12 @@
 package transform
 
 type Server struct {
-	JWT     JWT     `mapstructure:"jwt" json:"jwt" ini:"jwt"`
-	Zap     Zap     `mapstructure:"zap" json:"zap" ini:"zap"`
-	Timer   Timer   `mapstructure:"timer" json:"timer" ini:"timer"`
-	Listen  Listen  `mapstructure:"listen" json:"listen" ini:"listen"`
-	Admin   Admin   `mapstructure:"admin" json:"admin" ini:"admin"`
-	RaySync RaySync `mapstructure:"config" json:"config" ini:"config"`
-	Redis   Redis   `mapstructure:"redis" json:"redis" ini:"redis"`
-	Mongo   Mongodb `mapstructure:"mongodb" json:"mongodb" ini:"mongodb"`
+	JWT    JWT     `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
+	Zap    Zap     `mapstructure:"zap" json:"zap" yaml:"zap"`
+	Timer  Timer   `mapstructure:"timer" json:"timer" yaml:"timer"`
+	Admin  Admin   `mapstructure:"admin" json:"admin" yaml:"admin"`
+	System System  `mapstructure:"system" json:"system" yaml:"system"`
+	Redis  Redis   `mapstructure:"redis" json:"redis" yaml:"redis"`
+	Mongo  Mongodb `mapstructure:"mongodb" json:"mongodb" yaml:"mongodb"`
+	Mysql  Mysql   `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 }

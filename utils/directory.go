@@ -36,9 +36,9 @@ func CreateDir(dirs ...string) (err error) {
 			return err
 		}
 		if !exist {
-			global.RAY_LOG.Debug("create directory" + v)
+			global.NICE_LOG.Debug("create directory" + v)
 			if err := os.MkdirAll(v, os.ModePerm); err != nil {
-				global.RAY_LOG.Error("create directory"+v, zap.Any(" error:", err))
+				global.NICE_LOG.Error("create directory"+v, zap.Any(" error:", err))
 				return err
 			}
 		}

@@ -27,7 +27,7 @@ func Register(c *gin.Context) {
 	user := &model.User{Account: r.Account, Password: r.Password}
 	err, userReturn := service.Register(*user)
 	if err != nil {
-		global.RAY_LOG.Error("注册失败!", zap.Any("err", err))
+		global.NICE_LOG.Error("注册失败!", zap.Any("err", err))
 		response.FailWithDetailed(response.SysUserResponse{User: userReturn}, "注册失败", c)
 	} else {
 		response.OkWithDetailed(response.SysUserResponse{User: userReturn}, "注册成功", c)
