@@ -3,6 +3,7 @@ package response
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"niceBackend/common/constants"
 )
 
 type Response struct {
@@ -47,6 +48,10 @@ func Fail(c *gin.Context) {
 
 func FailWithMessage(message string, c *gin.Context) {
 	Result(ERROR, map[string]interface{}{}, message, c)
+}
+
+func FailWithCode(code int, c *gin.Context) {
+	Result(code, map[string]interface{}{}, constants.ResultCode[code], c)
 }
 
 func FailWithDetailed(data interface{}, message string, c *gin.Context) {

@@ -14,15 +14,14 @@ import (
 //@param: u *model.SysUser
 //@return: err error, userInter *model.SysUser
 
-func Login(u *model.User) (err error, userInter *model.User) {
-	var user model.User
-	u.Password = utils.MD5V([]byte(u.Password))
-	err = global.NICE_DB.Where("username = ? AND password = ?", u.Account, u.Password).Preload("Authority").First(&user).Error
+func Login(u *model.SysUser) (err error, userInter *model.SysUser) {
+	var user model.SysUser
+	err = global.NICE_DB.Where("account = ? AND password = ?", u.Account, u.Password).Preload("Authority").First(&user).Error
 	return err, &user
 }
 
-func Register(u model.User) (err error, userInter model.User) {
-	var user model.User
+func Register(u model.SysUser) (err error, userInter model.SysUser) {
+	var user model.SysUser
 	if !errors.Is(global.NICE_DB.Where("username = ?", u.Account).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
 		return errors.New("用户名已注册"), userInter
 	}

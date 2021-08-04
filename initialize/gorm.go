@@ -39,18 +39,23 @@ func Gorm() *gorm.DB {
 
 func SqlTables(db *gorm.DB) {
 	err := db.AutoMigrate(
-		model.User{},
-		//model.ServerConfig{},
+		model.SysUser{},
+		model.SysAuthority{},
 	)
 	if err != nil {
 		global.NICE_LOG.Error("register table failed", zap.Any("err", err))
 		os.Exit(0)
 	}
-	err = service.InitDB(source.Admin)
-	if err != nil {
-		global.NICE_DB = nil
-		os.Exit(0)
+	if global.NICE_CONFIG.System.DbMigrate == true {
+		err = service.InitDB(source.Admin, source.Authority, source.DataAuthorities)
+		if err != nil {
+			global.NICE_LOG.Error("init table failed", zap.Any("err", err))
+		} else {
+			global.NICE_CONFIG.System.DbMigrate = false
+			service.SetSystemConfig(global.NICE_CONFIG)
+		}
 	}
+
 	global.NICE_LOG.Info("register table success")
 }
 
@@ -92,7 +97,7 @@ func GormMysql() *gorm.DB {
 
 func GormSqlite() *gorm.DB {
 	projectDir := utils.GetProjectDirectory()
-	sqlitePath := path.Join(projectDir, "config", "raysync.db")
+	sqlitePath := path.Join(projectDir, "config", "nice.db")
 	if db, err := gorm.Open(sqlite.Open(sqlitePath), gormConfig()); err != nil {
 		return nil
 	} else {
@@ -109,7 +114,7 @@ func GormSqlite() *gorm.DB {
 func gormConfig() *gorm.Config {
 	config := &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
-		NamingStrategy:                           schema.NamingStrategy{TablePrefix: "t_", SingularTable: true},
+		NamingStrategy:                           schema.NamingStrategy{TablePrefix: "", SingularTable: true},
 	}
 	return config
 }

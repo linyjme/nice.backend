@@ -13,8 +13,8 @@ import (
 var (
 	NICE_DB                  *gorm.DB
 	NICE_CONFIG              transform.Server
-	NICE_REDIS               *redis.Client
 	NICE_VP                  *viper.Viper
+	NICE_REDIS               *redis.Client
 	NICE_LOG                 *zap.Logger
 	NICE_Mongo               *mongo.Client
 	NICE_Concurrency_Control = &singleflight.Group{}

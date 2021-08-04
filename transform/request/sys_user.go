@@ -4,7 +4,8 @@ package request
 
 // User login structure
 type Login struct {
-	UK string `json:"uk"` // 用户 账号密码
+	Password string `json:"password"` // 用户 账号密码
+	Account  string `json:"account"`  // 用户 账号密码
 }
 
 type Register struct {

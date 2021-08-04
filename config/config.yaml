@@ -1,21 +1,26 @@
 captcha:
-  key-long: 6
-  img-width: 240
   img-height: 80
+  img-width: 240
+  key-long: 6
 casbin:
   model-path: ./resource/rbac_model.conf
 email:
-  to: xxx@qq.com
-  port: 465
   from: xxx@163.com
   host: smtp.163.com
   is-ssl: true
-  secret: xxx
   nickname: test
+  port: 465
+  secret: xxx
+  to: xxx@qq.com
 jwt:
   signing-key: qmPlus
   expires-time: 604800
   buffer-time: 86400
+mongodb:
+  db: 0
+  collection: 0
+  addr: ""
+  password: ""
 mysql:
   path: 127.0.0.1:3306
   config: charset=utf8mb4&parseTime=True&loc=Local
@@ -32,24 +37,25 @@ redis:
   password: ""
 system:
   env: public
-  addr: 8888
+  addr: 9527
   db-type: mysql
   oss-type: local
   use-multipoint: false
+  db_migrate: false
 timer:
   start: true
   spec: '@daily'
   detail:
-    - tableName: sys_operation_records
-      compareField: created_at
-      interval: 2160h
+  - tableName: sys_operation_records
+    compareField: created_at
+    interval: 2160h
 zap:
   level: info
   format: console
-  prefix: '[GIN-VUE-ADMIN]'
+  prefix: '[NICE]'
   director: log
-  link-name: latest_log
-  showLine: false
-  encode-level: LowercaseColorLevelEncoder
-  stacktrace-key: stacktrace
-  log-in-console: true
+  linkname: latest_log
+  showline: false
+  encodelevel: LowercaseColorLevelEncoder
+  stacktracekey: stacktrace
+  loginconsole: true

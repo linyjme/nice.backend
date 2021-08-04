@@ -24,7 +24,7 @@ func Register(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	user := &model.User{Account: r.Account, Password: r.Password}
+	user := &model.SysUser{Account: r.Account, Password: r.Password}
 	err, userReturn := service.Register(*user)
 	if err != nil {
 		global.NICE_LOG.Error("注册失败!", zap.Any("err", err))

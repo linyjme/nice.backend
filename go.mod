@@ -20,6 +20,7 @@ require (
 	github.com/onsi/gomega v1.14.0 // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.8.1
+	github.com/stretchr/testify v1.7.0
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.7.0
 	go.mongodb.org/mongo-driver v1.7.0

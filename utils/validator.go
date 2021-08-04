@@ -37,6 +37,10 @@ func NotEmpty() string {
 	return "notEmpty"
 }
 
+func Empty() string {
+	return "Empty"
+}
+
 //@author: yjLin
 //@function: Lt
 //@description: 小于入参(<) 如果为string array Slice则为长度比较 如果是 int uint float 则为数值比较

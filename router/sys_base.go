@@ -9,6 +9,6 @@ func InitBaseRouter(Router *gin.RouterGroup) () {
 
 	BaseRouter := Router.Group("api")
 	{
-		BaseRouter.GET("auth/login", auth.Login) // 创建Api
+		BaseRouter.POST("auth/login", auth.Login) // 创建Api
 	}
 }
