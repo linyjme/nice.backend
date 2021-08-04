@@ -8,6 +8,8 @@ import (
 	"gorm.io/gorm/schema"
 	"niceBackend/common/global"
 	"niceBackend/model"
+	"niceBackend/service"
+	"niceBackend/source"
 	"niceBackend/utils"
 	"os"
 	"path"
@@ -42,6 +44,11 @@ func SqlTables(db *gorm.DB) {
 	)
 	if err != nil {
 		global.NICE_LOG.Error("register table failed", zap.Any("err", err))
+		os.Exit(0)
+	}
+	err = service.InitDB(source.Admin)
+	if err != nil {
+		global.NICE_DB = nil
 		os.Exit(0)
 	}
 	global.NICE_LOG.Info("register table success")

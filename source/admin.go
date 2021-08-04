@@ -2,12 +2,11 @@ package source
 
 import (
 	"github.com/gookit/color"
+	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 	"niceBackend/common/global"
 	"niceBackend/model"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 var Admin = new(admin)
