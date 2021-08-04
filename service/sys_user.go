@@ -30,3 +30,11 @@ func Register(u model.SysUser) (err error, userInter model.SysUser) {
 	err = global.NICE_DB.Create(&u).Error
 	return err, u
 }
+
+func FindUserByUuid(uuid string) (err error, user *model.SysUser) {
+	var u model.SysUser
+	if err = global.NICE_DB.Where("`uuid` = ?", uuid).First(&u).Error; err != nil {
+		return errors.New("用户不存在"), &u
+	}
+	return nil, &u
+}
