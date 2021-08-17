@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"go.mongodb.org/mongo-driver/mongo"
+	"niceBackend/common/global"
 	"os"
 	"path"
 )
@@ -18,4 +20,8 @@ func GetConfigIniPath() string {
 func GetStaticAppPath() string {
 	projectDir := GetProjectDirectory()
 	return path.Join(projectDir, "dist", "app")
+}
+
+func GetDatabase() *mongo.Database {
+	return global.NICE_Mongo.Database(global.NICE_CONFIG.Mongo.DB)
 }

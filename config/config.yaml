@@ -17,10 +17,11 @@ jwt:
   expires-time: 604800
   buffer-time: 86400
 mongodb:
-  db: 0
-  collection: 0
-  addr: ""
+  db: NodePress
+  collection: xxx
+  addr: mongodb://localhost:27017
   password: ""
+  number: 10
 mysql:
   path: 127.0.0.1:3306
   config: charset=utf8mb4&parseTime=True&loc=Local
@@ -37,7 +38,7 @@ redis:
   password: ""
 system:
   env: public
-  addr: 9527
+  addr: 8088
   db-type: mysql
   oss-type: local
   use-multipoint: false

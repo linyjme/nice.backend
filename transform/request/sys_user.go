@@ -13,6 +13,11 @@ type Register struct {
 	Password string `json:"password"` // 用户 账号密码
 }
 
+type Announcements struct {
+	Content string `json:"content"` // 用户 账号密码
+	State   int8   `json:"state"`   // 用户 账号密码
+}
+
 // Modify password structure
 type ChangePasswordStruct struct {
 	Username    string `json:"username"`    // 用户名

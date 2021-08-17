@@ -43,6 +43,7 @@ func Login(c *gin.Context) {
 func tokenNext(c *gin.Context, user model.SysUser) {
 	j := &middleware.JWT{SigningKey: []byte(global.NICE_CONFIG.JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
+		UUID:        user.UUID,
 		ID:          user.ID,
 		Account:     user.Account,
 		AccountType: user.AccountType,

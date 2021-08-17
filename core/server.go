@@ -16,6 +16,7 @@ func RunServer() {
 	Router := initialize.Routers()
 	// 初始化redis服务
 	initialize.Redis()
+	initialize.Mongo()
 	address := fmt.Sprintf(":%d", global.NICE_CONFIG.System.Addr)
 	s := initServer(address, Router)
 	// 保证文本顺序输出

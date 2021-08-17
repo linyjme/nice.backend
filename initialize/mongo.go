@@ -10,9 +10,11 @@ import (
 
 func Mongo() {
 	mongoCfg := global.NICE_CONFIG.Mongo
-	var err error
 	clientOptions := options.Client().ApplyURI(mongoCfg.Addr)
+	clientOptions.SetMaxPoolSize(mongoCfg.Number)
+	// 设置连接池
 	// 连接到MongoDB
+	var err error
 	global.NICE_Mongo, err = mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		global.NICE_LOG.Error("mongo connect ping failed, err:", zap.Any("err", err))
