@@ -25,3 +25,10 @@ func GetStaticAppPath() string {
 func GetDatabase() *mongo.Database {
 	return global.NICE_Mongo.Database(global.NICE_CONFIG.Mongo.DB)
 }
+
+func getNextSequenceValue(sequenceName string) {
+	//filter := bson.D{{"id", "Ash"}}
+	//sequenceDocument:= GetDatabase().Collection(sequenceName).FindOneAndUpdate(context.TODO(), filter)
+	//fmt.Println(sequenceDocument)
+	
+}

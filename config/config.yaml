@@ -18,7 +18,6 @@ jwt:
   buffer-time: 86400
 mongodb:
   db: NodePress
-  collection: xxx
   addr: mongodb://localhost:27017
   password: ""
   number: 10
