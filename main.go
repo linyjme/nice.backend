@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"gopkg.in/mgo.v2/bson"
 	"niceBackend/common/global"
 	"niceBackend/core"
 	"niceBackend/initialize"
@@ -24,8 +22,6 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	id := bson.NewObjectId()
-	fmt.Println(id)
 	global.NICE_VP = initialize.Viper() // 初始化Viper
 	global.NICE_LOG = initialize.Zap()  // 初始化zap日志库
 	global.NICE_DB = initialize.Gorm()  // gorm连接数据库

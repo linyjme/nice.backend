@@ -41,6 +41,8 @@ func SqlTables(db *gorm.DB) {
 	err := db.AutoMigrate(
 		model.SysUser{},
 		model.SysAuthority{},
+		model.Tags{},
+		model.Announcement{},
 	)
 	if err != nil {
 		global.NICE_LOG.Error("register table failed", zap.Any("err", err))

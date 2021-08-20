@@ -54,8 +54,8 @@ zap:
   format: console
   prefix: '[NICE]'
   director: log
-  linkname: latest_log
+  linkname: ""
   showline: false
-  encodelevel: LowercaseColorLevelEncoder
-  stacktracekey: stacktrace
-  loginconsole: true
+  encodelevel: ""
+  stacktracekey: ""
+  loginconsole: false

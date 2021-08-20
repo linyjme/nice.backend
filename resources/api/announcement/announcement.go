@@ -4,13 +4,12 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	uuid "github.com/satori/go.uuid"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
-	oson "gopkg.in/mgo.v2/bson"
-	"log"
 	"niceBackend/common/global"
 	"niceBackend/model"
+	"niceBackend/service"
 	"niceBackend/transform/request"
 	"niceBackend/transform/response"
 	"niceBackend/utils"
@@ -24,52 +23,27 @@ func PostAnnouncement(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	var ash model.Announcement
-	ash.Content = r.Content
-	//ash.UUID _ := uuid.New()
-	ash.CreatedAt = time.Now()
-	ash.UpdatedAt = time.Now()
-	ash.State = r.State
-	uid := oson.NewObjectId().String()
-	ash.UUID = uid
-	ash.V = 0
-	database := utils.GetDatabase()
-	insertResult, err := database.Collection("announcements").InsertOne(context.TODO(), ash)
+	var an model.Announcement
+	an.Content = r.Content
+	an.CreatedAt = time.Now()
+	an.UpdatedAt = time.Now()
+	an.State = r.State
+	an.UUID = uuid.NewV4()
+	err := service.PostAnnouncement(an)
 	if err != nil {
-		global.NICE_LOG.Error("插入通告失败!", zap.Any("err", err))
+		response.OkWithMessage("通告写入失败", c)
+	} else {
+		response.OkWithMessage("通告写入成功", c)
 	}
-	fmt.Println("Inserted a single document: ", insertResult.InsertedID)
-	response.OkWithMessage("写入成功", c)
 }
 
 func GetAnnouncement(c *gin.Context) {
-	var results []model.Announcement
-	database := utils.GetDatabase()
-	findOptions := options.Find()
-	findOptions.SetLimit(2)
-	cur, err := database.Collection("announcements").Find(context.TODO(), bson.D{{}}, findOptions)
+	err, anList := service.GetAnnouncements()
 	if err != nil {
-		global.NICE_LOG.Error("查询失败", zap.Any("err", err))
+		response.FailWithCode(501, c)
+	} else {
+		response.OkWithData(anList, c)
 	}
-	// Finding multiple documents returns a cursor
-	// Iterating through the cursor allows us to decode documents one at a time
-	for cur.Next(context.TODO()) {
-		// create a value into which the single document can be decoded
-		var elem model.Announcement
-		err := cur.Decode(&elem)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, elem)
-	}
-
-	if err := cur.Err(); err != nil {
-		log.Fatal(err)
-	}
-	// Close the cursor once finished
-	cur.Close(context.TODO())
-	fmt.Printf("Found multiple documents (array of pointers): %+v\n", results)
-	response.OkWithMessage("查询成功", c)
 }
 
 func GetAnnouncementById(c *gin.Context) {
