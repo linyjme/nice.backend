@@ -1,13 +1,8 @@
 package announcement
 
 import (
-	"context"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.uber.org/zap"
-	"niceBackend/common/global"
 	"niceBackend/model"
 	"niceBackend/service"
 	"niceBackend/transform/request"
@@ -47,14 +42,5 @@ func GetAnnouncement(c *gin.Context) {
 }
 
 func GetAnnouncementById(c *gin.Context) {
-	var result []model.Announcement
-	database := utils.GetDatabase()
-	filter := bson.D{{"_id", "aaaa"}}
-	//filter :bson.D{{}}
-	err := database.Collection("announcements").FindOne(context.TODO(), filter).Decode(&result)
-	if err != nil {
-		global.NICE_LOG.Error("查询失败", zap.Any("err", err))
-	}
-	fmt.Println(result)
 	response.OkWithMessage("查询成功", c)
 }
