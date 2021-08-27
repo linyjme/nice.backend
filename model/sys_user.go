@@ -6,7 +6,7 @@ import (
 )
 
 type SysUser struct {
-	global.BASE_MODEL
+	global.BaseMODEL
 	UUID        uuid.UUID    `json:"uuid" gorm:"comment:用户UUID"`
 	Account     string       `json:"account" gorm:"type:varchar(128);not null"`                                     // 用户登录名
 	Password    string       `json:"-"  gorm:"type:varchar(256)"`                                                   //

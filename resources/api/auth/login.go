@@ -7,10 +7,8 @@ import (
 	"niceBackend/common/global"
 	"niceBackend/middleware"
 	"niceBackend/model"
-	"niceBackend/service"
 	"niceBackend/transform/request"
 	"niceBackend/transform/response"
-	"niceBackend/utils"
 	"time"
 )
 
@@ -21,22 +19,23 @@ import (
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"登陆成功"}"
 // @Router /base/login [post]
 func Login(c *gin.Context) {
-	var l request.Login
-	_ = c.ShouldBindJSON(&l)
-	if err := utils.Verify(l, utils.LoginVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	account := l.Account
-	password := l.Password
-	u := &model.SysUser{Account: account, Password: password}
-	if err, user := service.Login(u); err != nil {
-		global.NICE_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
-		response.FailWithCode(4002, c)
-	} else {
-		// 颁发token
-		tokenNext(c, *user)
-	}
+	//var l request.Login
+	//_ = c.ShouldBindJSON(&l)
+	//if err := utils.Verify(l, utils.LoginVerify); err != nil {
+	//	response.FailWithMessage(err.Error(), c)
+	//	return
+	//}
+	//account := l.Account
+	//password := l.Password
+	//u := &model.SysUser{Account: account, Password: password}
+	//if err, user := service.Login(u); err != nil {
+	//	global.NICE_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
+	//	response.FailWithCode(4002, c)
+	//} else {
+	//	// 颁发token
+	//	tokenNext(c, *user)
+	//}
+
 }
 
 // 登录以后签发jwt

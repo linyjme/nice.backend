@@ -6,7 +6,7 @@ import (
 )
 
 type Announcement struct {
-	global.BASE_MODEL
+	global.BaseMODEL
 	UUID    uuid.UUID `json:"_id "gorm:"comment:announcementUUID" bson:"_id"`
 	Content string    `json:"content" bson:"content" gorm:"type:varchar(128)"` //
 	State   uint8     `json:"state" bson:"state" gorm:"default:1;not null"`    //
@@ -14,5 +14,5 @@ type Announcement struct {
 }
 
 func (a Announcement) TableName() string {
-	return "sys_announcement"
+	return "announcement"
 }

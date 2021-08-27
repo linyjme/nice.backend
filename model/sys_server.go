@@ -3,7 +3,7 @@ package model
 import "niceBackend/common/global"
 
 type ServerConfig struct {
-	global.BASE_MODEL
+	global.BaseMODEL
 	ID       uint   `gorm:"primarykey"`                       // 主键ID
 	Name     string `json:"name" gorm:"type:varchar(128)"`    //
 	Version  string `json:"version" gorm:"type:varchar(128)"` //
