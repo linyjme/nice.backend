@@ -1,10 +1,10 @@
 package core
 
 import (
-	"niceBackend/common/global"
-	"niceBackend/initialize"
 	"fmt"
 	"go.uber.org/zap"
+	"niceBackend/common/global"
+	"niceBackend/core/initialize"
 	"time"
 )
 

@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"niceBackend/common/global"
-	"niceBackend/model"
+	"niceBackend/core/model"
 	"time"
 )
 

@@ -3,7 +3,7 @@ package main
 import (
 	"niceBackend/common/global"
 	"niceBackend/core"
-	"niceBackend/initialize"
+	"niceBackend/core/initialize"
 )
 
 //go:generate go env -w GO111MODULE=on

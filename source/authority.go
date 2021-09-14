@@ -3,7 +3,7 @@ package source
 import (
 	"github.com/gookit/color"
 	"niceBackend/common/global"
-	"niceBackend/model"
+	"niceBackend/core/model"
 	"time"
 
 	"gorm.io/gorm"

@@ -10,9 +10,9 @@ import (
 	oson "gopkg.in/mgo.v2/bson"
 	"log"
 	"niceBackend/common/global"
-	"niceBackend/model"
-	"niceBackend/transform/request"
-	"niceBackend/transform/response"
+	"niceBackend/common/transform/request"
+	"niceBackend/common/transform/response"
+	"niceBackend/core/model"
 	"niceBackend/utils"
 	"time"
 )
