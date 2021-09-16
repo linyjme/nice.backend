@@ -15,10 +15,12 @@ import (
 
 func Routers() *gin.Engine {
 	var Router = gin.Default()
+	Router.NoMethod(global.HandleNotFound)
+	Router.NoRoute(global.HandleNotFound)
+	Router.Use(global.ErrHandler())
 	// Router.Use(middleware.LoadTls())  // https
 	global.NICE_LOG.Info("use middleware logger")
-	Router.Use(middleware.GlobalMiddleWare())
-	// 跨域
+	Router.Use(middleware.GlobalMiddleWare()) // 全局中间件
 	Router.Use(middleware.Cors()) // 跨域
 	global.NICE_LOG.Info("use middleware cors")
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
