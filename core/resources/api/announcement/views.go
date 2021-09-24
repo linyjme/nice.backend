@@ -7,14 +7,14 @@ import (
 	"niceBackend/common/transform/response"
 	"niceBackend/core/model"
 	"niceBackend/core/service"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 	"time"
 )
 
 func PostAnnouncement(c *gin.Context) {
 	var r request.Announcements
 	_ = c.ShouldBindJSON(&r)
-	if err := utils.Verify(r, utils.AnnouncementVerify); err != nil {
+	if err := pkg.Verify(r, pkg.AnnouncementVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

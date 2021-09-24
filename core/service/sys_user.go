@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 	"niceBackend/common/global"
 	"niceBackend/core/model"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 )
 
 //@author: yjLin
@@ -26,7 +26,7 @@ func Register(u model.SysUser) (err error, userInter model.SysUser) {
 		return errors.New("用户名已注册"), userInter
 	}
 	// 否则 附加uuid 密码md5简单加密 注册
-	u.Password = utils.MD5V([]byte(u.Password))
+	u.Password = pkg.MD5V([]byte(u.Password))
 	err = global.NICE_DB.Create(&u).Error
 	return err, u
 }

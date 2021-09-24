@@ -27,9 +27,6 @@ func main() {
 	global.NICE_DB = initialize.Gorm()  // gorm连接数据库
 	if global.NICE_DB != nil {
 		initialize.SqlTables(global.NICE_DB) // 初始化表
-		// 程序结束前关闭数据库链接
-		db, _ := global.NICE_DB.DB()
-		defer db.Close()
 	}
 	core.RunServer()
 }

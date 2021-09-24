@@ -1,15 +1,18 @@
 package core
 
 import (
+	"context"
 	"fmt"
 	"go.uber.org/zap"
 	"niceBackend/common/global"
 	"niceBackend/core/initialize"
+	"niceBackend/pkg/shutdown"
 	"time"
 )
 
 type server interface {
 	ListenAndServe() error
+	Shutdown(context.Context) error
 }
 
 func RunServer() {
@@ -24,6 +27,24 @@ func RunServer() {
 	time.Sleep(10 * time.Microsecond)
 	global.NICE_LOG.Info("server run success on ", zap.String("address", address))
 
-	fmt.Printf(`欢迎使用 niceBackend`)
+	fmt.Println("欢迎使用 nice Backend")
+	// 关闭
+	go shutdown.NewHook().Close(
+		func() {
+			// 程序结束前关闭数据库链接
+			db, _ := global.NICE_DB.DB()
+			fmt.Println("关闭 db")
+			db.Close()
+		},
+		// 关闭 http server
+		func() {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+			defer cancel()
+			fmt.Println("关闭 nice Backend")
+			if err := s.Shutdown(ctx); err != nil {
+				global.NICE_LOG.Error("server shutdown err", zap.Error(err))
+			}
+		},
+	)
 	global.NICE_LOG.Error(s.ListenAndServe().Error())
 }

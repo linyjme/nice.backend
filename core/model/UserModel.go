@@ -25,5 +25,5 @@ type SysUser struct {
 }
 
 func (s SysUser) TableName() string {
-	return "sys_user"
+	return "user"
 }

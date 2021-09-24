@@ -2,14 +2,14 @@ package initialize
 
 import (
 	"niceBackend/common/global"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
 
 func Viper() *viper.Viper {
-	configIni := utils.GetConfigIniPath()
+	configIni := pkg.GetConfigIniPath()
 	v := viper.New()
 	v.SetConfigFile(configIni)
 	v.SetConfigType("yaml")

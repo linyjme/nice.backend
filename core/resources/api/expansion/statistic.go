@@ -5,7 +5,7 @@ import (
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
 	"niceBackend/core/service"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 )
 
 func GetStatistic(c *gin.Context) {
@@ -16,7 +16,7 @@ func GetStatistic(c *gin.Context) {
 func PostStatistic(c *gin.Context) {
 	var r request.Register
 	_ = c.ShouldBindJSON(&r)
-	if err := utils.Verify(r, utils.AnnouncementVerify); err != nil {
+	if err := pkg.Verify(r, pkg.AnnouncementVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

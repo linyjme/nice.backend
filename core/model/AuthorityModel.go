@@ -14,3 +14,8 @@ type SysAuthority struct {
 	DataAuthorityId []SysAuthority `json:"dataAuthorityId" gorm:"many2many:sys_data_authority_id"`
 	Children        []SysAuthority `json:"children" gorm:"-"`
 }
+
+
+func (s SysAuthority) TableName() string {
+	return "authority"
+}

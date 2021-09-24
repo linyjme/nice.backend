@@ -5,7 +5,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"niceBackend/common/global"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 	"os"
 	"time"
 )
@@ -13,7 +13,7 @@ import (
 var level zapcore.Level
 
 func Zap() (logger *zap.Logger) {
-	if ok, _ := utils.PathExists(global.NICE_CONFIG.Zap.Director); !ok { // 判断是否有Director文件夹
+	if ok, _ := pkg.PathExists(global.NICE_CONFIG.Zap.Director); !ok { // 判断是否有Director文件夹
 		fmt.Printf("create %v directory\n", global.NICE_CONFIG.Zap.Director)
 		_ = os.Mkdir(global.NICE_CONFIG.Zap.Director, os.ModePerm)
 	}
@@ -88,7 +88,7 @@ func getEncoder() zapcore.Encoder {
 
 // getEncoderCore 获取Encoder的zapcore.Core
 func getEncoderCore() (core zapcore.Core) {
-	writer, err := utils.GetWriteSyncer() // 使用file-rotatelogs进行日志分割
+	writer, err := pkg.GetWriteSyncer() // 使用file-rotatelogs进行日志分割
 	if err != nil {
 		fmt.Printf("Get Write Syncer Failed err:%v", err.Error())
 		return

@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -15,6 +16,10 @@ import (
 
 func Routers() *gin.Engine {
 	var Router = gin.Default()
+	//gin.SetMode(gin.ReleaseMode)
+	if gin.Mode() == gin.DebugMode{
+		fmt.Println("debug")
+	}
 	Router.NoMethod(global.HandleNotFound)
 	Router.NoRoute(global.HandleNotFound)
 	Router.Use(global.ErrHandler())

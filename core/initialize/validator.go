@@ -1,22 +1,22 @@
 package initialize
 
-import "niceBackend/utils"
+import "niceBackend/pkg"
 
 func init() {
-	_ = utils.RegisterRule("PageVerify",
-		utils.Rules{
-			"Page":     {utils.NotEmpty()},
-			"PageSize": {utils.NotEmpty()},
+	_ = pkg.RegisterRule("PageVerify",
+		pkg.Rules{
+			"Page":     {pkg.NotEmpty()},
+			"PageSize": {pkg.NotEmpty()},
 		},
 	)
-	_ = utils.RegisterRule("IdVerify",
-		utils.Rules{
-			"Id": {utils.NotEmpty()},
+	_ = pkg.RegisterRule("IdVerify",
+		pkg.Rules{
+			"Id": {pkg.NotEmpty()},
 		},
 	)
-	_ = utils.RegisterRule("AuthorityIdVerify",
-		utils.Rules{
-			"AuthorityId": {utils.NotEmpty()},
+	_ = pkg.RegisterRule("AuthorityIdVerify",
+		pkg.Rules{
+			"AuthorityId": {pkg.NotEmpty()},
 		},
 	)
 }

@@ -24,13 +24,13 @@ var authorities = []model.SysAuthority{
 func (a *authority) Init() error {
 	return global.NICE_DB.Transaction(func(tx *gorm.DB) error {
 		if tx.Where("authority_id IN ? ", []string{"888", "9528"}).Find(&[]model.SysAuthority{}).RowsAffected == 2 {
-			color.Danger.Println("\n[Mysql] --> sys_authorities 表的初始数据已存在!")
+			color.Danger.Println("\n[Mysql] --> authorities 表的初始数据已存在!")
 			return nil
 		}
 		if err := tx.Create(&authorities).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		color.Info.Println("\n[Mysql] --> sys_authorities 表初始数据成功!")
+		color.Info.Println("\n[Mysql] --> authorities 表初始数据成功!")
 		return nil
 	})
 }

@@ -21,7 +21,7 @@ import (
 func Login(c *gin.Context) {
 	//var l request.Login
 	//_ = c.ShouldBindJSON(&l)
-	//if err := utils.Verify(l, utils.LoginVerify); err != nil {
+	//if err := pkg.Verify(l, pkg.LoginVerify); err != nil {
 	//	response.FailWithMessage(err.Error(), c)
 	//	return
 	//}

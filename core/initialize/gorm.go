@@ -10,7 +10,7 @@ import (
 	"niceBackend/core/model"
 	"niceBackend/core/service"
 	"niceBackend/source"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 	"os"
 	"path"
 )
@@ -98,7 +98,7 @@ func GormMysql() *gorm.DB {
 //@return: *gorm.DB
 
 func GormSqlite() *gorm.DB {
-	projectDir := utils.GetProjectDirectory()
+	projectDir := pkg.GetProjectDirectory()
 	sqlitePath := path.Join(projectDir, "config", "nice.db")
 	if db, err := gorm.Open(sqlite.Open(sqlitePath), gormConfig()); err != nil {
 		return nil

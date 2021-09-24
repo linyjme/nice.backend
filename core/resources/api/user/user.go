@@ -8,7 +8,7 @@ import (
 	"niceBackend/common/transform/response"
 	"niceBackend/core/model"
 	"niceBackend/core/service"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 )
 
 // @Tags Base
@@ -20,7 +20,7 @@ import (
 func Register(c *gin.Context) {
 	var r request.Register
 	_ = c.ShouldBindJSON(&r)
-	if err := utils.Verify(r, utils.RegisterVerify); err != nil {
+	if err := pkg.Verify(r, pkg.RegisterVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

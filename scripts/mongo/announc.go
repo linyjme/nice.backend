@@ -13,14 +13,14 @@ import (
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
 	"niceBackend/core/model"
-	"niceBackend/utils"
+	"niceBackend/pkg"
 	"time"
 )
 
 func PostAnnouncement(c *gin.Context) {
 	var r request.Announcements
 	_ = c.ShouldBindJSON(&r)
-	if err := utils.Verify(r, utils.AnnouncementVerify); err != nil {
+	if err := pkg.Verify(r, pkg.AnnouncementVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -33,7 +33,7 @@ func PostAnnouncement(c *gin.Context) {
 	uid := oson.NewObjectId().String()
 	ash.UUID = uid
 	ash.V = 0
-	database := utils.GetDatabase()
+	database := pkg.GetDatabase()
 	insertResult, err := database.Collection("announcements").InsertOne(context.TODO(), ash)
 	if err != nil {
 		global.NICE_LOG.Error("插入通告失败!", zap.Any("err", err))
@@ -44,7 +44,7 @@ func PostAnnouncement(c *gin.Context) {
 
 func GetAnnouncement(c *gin.Context) {
 	var results []model.Announcement
-	database := utils.GetDatabase()
+	database := pkg.GetDatabase()
 	findOptions := options.Find()
 	findOptions.SetLimit(2)
 	cur, err := database.Collection("announcements").Find(context.TODO(), bson.D{{}}, findOptions)
@@ -74,7 +74,7 @@ func GetAnnouncement(c *gin.Context) {
 
 func GetAnnouncementById(c *gin.Context) {
 	var result []model.Announcement
-	database := utils.GetDatabase()
+	database := pkg.GetDatabase()
 	filter := bson.D{{"_id", "aaaa"}}
 	//filter :bson.D{{}}
 	err := database.Collection("announcements").FindOne(context.TODO(), filter).Decode(&result)
