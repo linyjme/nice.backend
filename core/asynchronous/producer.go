@@ -2,15 +2,12 @@ package asynchronous
 
 import (
 	"container/list"
+	"niceBackend/common/global"
 )
 
 func DistributeTask(task list.List) {
-
-}
-
-func Producer(ch chan int) {
-	for i := 1; i <= 10; i++ {
-		ch <- i
+	for e := task.Front(); e != nil; e = e.Next() {
+		global.AsyncChan.PutChan(e.Value.(map[string]interface{}))
 	}
-	close(ch)
+
 }

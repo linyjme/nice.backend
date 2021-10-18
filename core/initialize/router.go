@@ -20,6 +20,7 @@ func Routers() *gin.Engine {
 	if gin.Mode() == gin.DebugMode{
 		fmt.Println("debug")
 	}
+	gin.SetMode(gin.ReleaseMode)
 	Router.NoMethod(global.HandleNotFound)
 	Router.NoRoute(global.HandleNotFound)
 	Router.Use(global.ErrHandler())

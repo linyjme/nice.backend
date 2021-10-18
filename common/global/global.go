@@ -17,5 +17,6 @@ var (
 	NICE_REDIS               *redis.Client
 	NICE_LOG                 *zap.Logger
 	NICE_Mongo               *mongo.Client
+	AsyncChan                *transform.AsyncChan
 	NICE_Concurrency_Control = &singleflight.Group{}
 )

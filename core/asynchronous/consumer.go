@@ -1,16 +1,32 @@
 package asynchronous
 
-import "fmt"
+import (
+	"fmt"
+	"niceBackend/common/transform"
+	"niceBackend/core/asynchronous/tasks"
+)
 
-func Consumer(id int, ch chan int, done chan bool) {
-	for {
-		value, ok := <-ch
-		if ok {
-			fmt.Printf("id: %d, recv: %d\n", id, value)
-		} else {
-			fmt.Printf("id: %d, closed\n", id)
+func Consumer(p *transform.AsyncChan) {
+	var tMap map[string]interface{}
+	for true {
+		select {
+		case tMap = <-p.Product:
+			for k, v := range tMap {
+				if k == "report_event" {
+					fmt.Println(v)
+					go tasks.ReportEventJob()
+				}
+			}
+		case p.IsClosed = <-p.CloseChan:
+			fmt.Println("close the chan ...")
+			close(p.CloseChan)
+			break
+		default:
+		}
+		if p.IsClosed {
 			break
 		}
+
 	}
-	done <- true
+
 }

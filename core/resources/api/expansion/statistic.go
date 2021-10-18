@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
-	"niceBackend/core/service"
+	"niceBackend/core/api/service"
 	"niceBackend/pkg"
 )
 

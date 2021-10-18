@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"niceBackend/common/global"
+	"niceBackend/core/asynchronous"
 	"niceBackend/core/initialize"
 	"niceBackend/pkg/shutdown"
 	"time"
@@ -31,6 +32,9 @@ func RunServer() {
 	// 关闭
 	go shutdown.NewHook().Close(
 		func() {
+			asynchronous.StopChan(global.AsyncChan)
+		},
+		func() {
 			// 程序结束前关闭数据库链接
 			db, _ := global.NICE_DB.DB()
 			fmt.Println("关闭 db")
@@ -46,5 +50,6 @@ func RunServer() {
 			}
 		},
 	)
+	go asynchronous.Consumer(global.AsyncChan)
 	global.NICE_LOG.Error(s.ListenAndServe().Error())
 }
