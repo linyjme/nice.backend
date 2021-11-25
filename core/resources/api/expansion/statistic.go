@@ -10,7 +10,11 @@ import (
 
 func GetStatistic(c *gin.Context) {
 	service.GetStatistic()
-	response.OkWithMessage("获取成功", c)
+	var result map[string]interface{}
+	result = make(map[string]interface{})
+	var data [1]int
+	result["data"] = data
+	response.OkWithData(result, c)
 }
 
 func PostStatistic(c *gin.Context) {
