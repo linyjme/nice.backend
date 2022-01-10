@@ -40,7 +40,7 @@ func Gorm() *gorm.DB {
 
 func SqlTables(db *gorm.DB) {
 	err := db.AutoMigrate(
-		user_repo.SysUser{},
+		user_repo.User{},
 		model.SysAuthority{},
 		model.Tags{},
 		model.Announcement{},

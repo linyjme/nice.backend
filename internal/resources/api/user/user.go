@@ -24,7 +24,7 @@ func Register(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	user := &user_repo.SysUser{Account: r.Account, Password: r.Password}
+	user := &user_repo.User{Account: r.Account, Password: r.Password}
 	err, userReturn := user_service.Register(*user)
 	if err != nil {
 		global.NiceLog.Error("注册失败!", zap.Any("err", err))

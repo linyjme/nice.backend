@@ -14,7 +14,7 @@ var Admin = new(admin)
 
 type admin struct{}
 
-var admins = []user_repo.SysUser{
+var admins = []user_repo.User{
 	{BaseMODEL: global.BaseMODEL{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, UUID: uuid.NewV4(), Account: "admin", Password: "cm9vdA==", NickName: "超级管理员", HeaderImg: "http://qmplusimg.henrongyi.top/NICE_header.jpg", AuthorityId: "888"},
 }
 
@@ -22,7 +22,7 @@ var admins = []user_repo.SysUser{
 //@description: sys_users 表数据初始化
 func (a *admin) Init() error {
 	return global.NiceDb.Transaction(func(tx *gorm.DB) error {
-		if tx.Where("id IN ?", []int{1, 2}).Find(&[]user_repo.SysUser{}).RowsAffected == 2 {
+		if tx.Where("id IN ?", []int{1, 2}).Find(&[]user_repo.User{}).RowsAffected == 2 {
 			color.Danger.Println("\n[Mysql] --> sys_users 表的初始数据已存在!")
 			return nil
 		}

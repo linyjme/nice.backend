@@ -6,7 +6,7 @@ import (
 	"niceBackend/internal/model"
 )
 
-type SysUser struct {
+type User struct {
 	global.BaseMODEL
 	UUID        uuid.UUID          `json:"uuid" gorm:"comment:用户UUID"`
 	Account     string             `json:"account" gorm:"type:varchar(128);not null"`                                     // 用户登录名
@@ -23,6 +23,6 @@ type SysUser struct {
 	Status      uint8              `json:"status" gorm:"default:0"`                       //
 }
 
-func (s SysUser) TableName() string {
+func (s User) TableName() string {
 	return "user"
 }

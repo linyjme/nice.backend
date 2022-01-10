@@ -3,7 +3,7 @@ package asynchronous
 import (
 	"fmt"
 	"niceBackend/common/transform"
-	"niceBackend/internal/asynchronous/tasks"
+	"niceBackend/internal/cron/asynchronous/tasks"
 )
 
 func Consumer(p *transform.AsyncChan) {

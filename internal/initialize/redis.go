@@ -10,7 +10,7 @@ func Redis() {
 	redisCfg := global.NiceConfig.Redis
 	client := redis.NewClient(&redis.Options{
 		Addr:     redisCfg.Addr,
-		Password: redisCfg.Password, // no password set
+		Password: redisCfg.Pass, // no password set
 		DB:       redisCfg.DB,       // use default DB
 	})
 	pong, err := client.Ping().Result()

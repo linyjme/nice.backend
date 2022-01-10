@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"niceBackend/common/global"
-	"niceBackend/internal/asynchronous"
+	"niceBackend/internal/cron/asynchronous"
 	"niceBackend/internal/initialize"
 	"niceBackend/pkg/shutdown"
 	"time"

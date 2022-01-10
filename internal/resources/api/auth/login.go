@@ -27,7 +27,7 @@ func Login(c *gin.Context) {
 	//}
 	//account := l.Account
 	//password := l.Password
-	//u := &model.SysUser{Account: account, Password: password}
+	//u := &model.User{Account: account, Password: password}
 	//if err, user := service.Login(u); err != nil {
 	//	global.NiceLog.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
 	//	response.FailWithCode(4002, c)
@@ -39,13 +39,12 @@ func Login(c *gin.Context) {
 }
 
 // 登录以后签发jwt
-func tokenNext(c *gin.Context, user user_repo.SysUser) {
+func tokenNext(c *gin.Context, user user_repo.User) {
 	j := &middleware.JWT{SigningKey: []byte(global.NiceConfig.JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
 		UUID:        user.UUID,
 		ID:          user.ID,
 		Account:     user.Account,
-		AccountType: user.AccountType,
 		BufferTime:  global.NiceConfig.JWT.BufferTime, // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                               // 签名生效时间

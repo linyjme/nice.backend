@@ -5,11 +5,11 @@ import (
 )
 
 type SysUserResponse struct {
-	User user_repo.SysUser `json:"user"`
+	User user_repo.User `json:"user"`
 }
 
 type LoginResponse struct {
-	User      user_repo.SysUser `json:"user"`
+	User      user_repo.User `json:"user"`
 	Token     string            `json:"token"`
 	ExpiresAt int64             `json:"expiresAt"`
 }
