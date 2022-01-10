@@ -2,8 +2,8 @@ package main
 
 import (
 	"niceBackend/common/global"
-	"niceBackend/core"
-	"niceBackend/core/initialize"
+	"niceBackend/internal"
+	"niceBackend/internal/initialize"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -22,12 +22,12 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	global.NICE_VP = initialize.Viper() // 初始化Viper
-	global.NICE_LOG = initialize.Zap()  // 初始化zap日志库
-	global.NICE_DB = initialize.Gorm()  // gorm连接数据库
+	global.NiceVp = initialize.Viper() // 初始化Viper
+	global.NiceLog = initialize.Zap()  // 初始化zap日志库
+	global.NiceDb = initialize.Gorm()  // gorm连接数据库
 	global.AsyncChan = initialize.InitAsync()
-	if global.NICE_DB != nil {
-		initialize.SqlTables(global.NICE_DB) // 初始化表
+	if global.NiceDb != nil {
+		initialize.SqlTables(global.NiceDb) // 初始化表
 	}
-	core.RunServer()
+	internal.RunServer()
 }

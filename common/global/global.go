@@ -11,12 +11,12 @@ import (
 )
 
 var (
-	NICE_DB                  *gorm.DB
-	NICE_CONFIG              transform.Server
-	NICE_VP                  *viper.Viper
-	NICE_REDIS               *redis.Client
-	NICE_LOG                 *zap.Logger
-	NICE_Mongo               *mongo.Client
-	AsyncChan                *transform.AsyncChan
-	NICE_Concurrency_Control = &singleflight.Group{}
+	NiceDb                 *gorm.DB
+	NiceConfig             transform.Server
+	NiceVp                 *viper.Viper
+	NiceRedis              *redis.Client
+	NiceLog                *zap.Logger
+	NiceMongo              *mongo.Client
+	AsyncChan              *transform.AsyncChan
+	NiceConcurrencyControl = &singleflight.Group{}
 )

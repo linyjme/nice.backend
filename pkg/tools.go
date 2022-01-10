@@ -23,7 +23,7 @@ func GetStaticAppPath() string {
 }
 
 func GetDatabase() *mongo.Database {
-	return global.NICE_Mongo.Database(global.NICE_CONFIG.Mongo.DB)
+	return global.NiceMongo.Database(global.NiceConfig.Mongo.DB)
 }
 
 func getNextSequenceValue(sequenceName string) {

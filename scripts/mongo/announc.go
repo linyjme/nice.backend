@@ -12,7 +12,7 @@ import (
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
-	"niceBackend/core/model"
+	"niceBackend/internal/model"
 	"niceBackend/pkg"
 	"time"
 )
@@ -36,7 +36,7 @@ func PostAnnouncement(c *gin.Context) {
 	database := pkg.GetDatabase()
 	insertResult, err := database.Collection("announcements").InsertOne(context.TODO(), ash)
 	if err != nil {
-		global.NICE_LOG.Error("插入通告失败!", zap.Any("err", err))
+		global.NiceLog.Error("插入通告失败!", zap.Any("err", err))
 	}
 	fmt.Println("Inserted a single document: ", insertResult.InsertedID)
 	response.OkWithMessage("写入成功", c)
@@ -49,7 +49,7 @@ func GetAnnouncement(c *gin.Context) {
 	findOptions.SetLimit(2)
 	cur, err := database.Collection("announcements").Find(context.TODO(), bson.D{{}}, findOptions)
 	if err != nil {
-		global.NICE_LOG.Error("查询失败", zap.Any("err", err))
+		global.NiceLog.Error("查询失败", zap.Any("err", err))
 	}
 	// Finding multiple documents returns a cursor
 	// Iterating through the cursor allows us to decode documents one at a time
@@ -79,7 +79,7 @@ func GetAnnouncementById(c *gin.Context) {
 	//filter :bson.D{{}}
 	err := database.Collection("announcements").FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {
-		global.NICE_LOG.Error("查询失败", zap.Any("err", err))
+		global.NiceLog.Error("查询失败", zap.Any("err", err))
 	}
 	fmt.Println(result)
 	response.OkWithMessage("查询成功", c)

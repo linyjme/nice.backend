@@ -3,7 +3,7 @@ package source
 import (
 	"github.com/gookit/color"
 	"niceBackend/common/global"
-	"niceBackend/core/model"
+	"niceBackend/internal/model"
 	"time"
 
 	"gorm.io/gorm"
@@ -22,7 +22,7 @@ var authorities = []model.SysAuthority{
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: sys_authorities 表数据初始化
 func (a *authority) Init() error {
-	return global.NICE_DB.Transaction(func(tx *gorm.DB) error {
+	return global.NiceDb.Transaction(func(tx *gorm.DB) error {
 		if tx.Where("authority_id IN ? ", []string{"888", "9528"}).Find(&[]model.SysAuthority{}).RowsAffected == 2 {
 			color.Danger.Println("\n[Mysql] --> authorities 表的初始数据已存在!")
 			return nil
