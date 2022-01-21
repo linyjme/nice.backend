@@ -6,9 +6,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
 	"niceBackend/common/global"
+	"time"
 )
 
-func Mongo() {
+func ConnectMongo() {
 	mongoCfg := global.NiceConfig.Mongo
 	clientOptions := options.Client().ApplyURI(mongoCfg.Addr)
 	clientOptions.SetMaxPoolSize(mongoCfg.Number)
@@ -24,4 +25,17 @@ func Mongo() {
 	if err != nil {
 		global.NiceLog.Error("mongo connect ping failed, err:", zap.Any("err", err))
 	}
+}
+
+func ConnectToDB(uri, name string, timeout time.Duration, num uint64) (*mongo.Database, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	o := options.Client().ApplyURI(uri)
+	o.SetMaxPoolSize(num)
+	client, err := mongo.Connect(ctx, o)
+	if err != nil {
+		return nil, err
+	}
+
+	return client.Database(name), nil
 }

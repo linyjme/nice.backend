@@ -1,4 +1,4 @@
-package model
+package announcement_repo
 
 import (
 	uuid "github.com/satori/go.uuid"

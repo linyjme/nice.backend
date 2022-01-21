@@ -1,4 +1,4 @@
-package model
+package tag_repo
 
 import (
 	uuid "github.com/satori/go.uuid"

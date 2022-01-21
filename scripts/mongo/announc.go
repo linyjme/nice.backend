@@ -12,7 +12,7 @@ import (
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
-	"niceBackend/internal/model"
+	"niceBackend/internal/api/repository/db_repo/announcement_repo"
 	"niceBackend/pkg"
 	"time"
 )
@@ -24,7 +24,7 @@ func PostAnnouncement(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	var ash model.Announcement
+	var ash announcement_repo.Announcement
 	ash.Content = r.Content
 	//ash.UUID _ := uuid.New()
 	ash.CreatedAt = time.Now()
@@ -43,7 +43,7 @@ func PostAnnouncement(c *gin.Context) {
 }
 
 func GetAnnouncement(c *gin.Context) {
-	var results []model.Announcement
+	var results []announcement_repo.Announcement
 	database := pkg.GetDatabase()
 	findOptions := options.Find()
 	findOptions.SetLimit(2)
@@ -55,7 +55,7 @@ func GetAnnouncement(c *gin.Context) {
 	// Iterating through the cursor allows us to decode documents one at a time
 	for cur.Next(context.TODO()) {
 		// create a value into which the single document can be decoded
-		var elem model.Announcement
+		var elem announcement_repo.Announcement
 		err := cur.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)
@@ -73,7 +73,7 @@ func GetAnnouncement(c *gin.Context) {
 }
 
 func GetAnnouncementById(c *gin.Context) {
-	var result []model.Announcement
+	var result []announcement_repo.Announcement
 	database := pkg.GetDatabase()
 	filter := bson.D{{"_id", "aaaa"}}
 	//filter :bson.D{{}}

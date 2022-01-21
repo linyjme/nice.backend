@@ -15,7 +15,7 @@ var Admin = new(admin)
 type admin struct{}
 
 var admins = []user_repo.User{
-	{BaseMODEL: global.BaseMODEL{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, UUID: uuid.NewV4(), Account: "admin", Password: "cm9vdA==", NickName: "超级管理员", HeaderImg: "http://qmplusimg.henrongyi.top/NICE_header.jpg", AuthorityId: "888"},
+	{BaseMODEL: global.BaseMODEL{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, UUID: uuid.NewV4(), Account: "admin", Password: "cm9vdA==", NickName: "超级管理员", HeaderImg: "http://qmplusimg.henrongyi.top/NICE_header.jpg"},
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

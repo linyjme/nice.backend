@@ -5,8 +5,8 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
+	"niceBackend/internal/api/repository/db_repo/announcement_repo"
 	"niceBackend/internal/api/service"
-	"niceBackend/internal/model"
 	"niceBackend/pkg"
 	"time"
 )
@@ -18,7 +18,7 @@ func PostAnnouncement(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	var an model.Announcement
+	var an announcement_repo.Announcement
 	an.Content = r.Content
 	an.CreatedAt = time.Now()
 	an.UpdatedAt = time.Now()

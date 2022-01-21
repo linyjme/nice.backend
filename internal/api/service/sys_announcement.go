@@ -4,11 +4,11 @@ import (
 	"errors"
 	"go.uber.org/zap"
 	"niceBackend/common/global"
-	"niceBackend/internal/model"
+	"niceBackend/internal/api/repository/db_repo/announcement_repo"
 )
 
 func GetAnnouncements() (err error, list interface{}) {
-	var annList []model.Announcement
+	var annList []announcement_repo.Announcement
 	if err = global.NiceDb.Find(&annList).Error; err != nil {
 		return errors.New("查询通告失败"), &annList
 	} else {
@@ -16,7 +16,7 @@ func GetAnnouncements() (err error, list interface{}) {
 	}
 }
 
-func PostAnnouncement(an model.Announcement) (err error) {
+func PostAnnouncement(an announcement_repo.Announcement) (err error) {
 	err = global.NiceDb.Create(&an).Error
 	if err != nil {
 		global.NiceLog.Error("插入通告失败!", zap.Any("err", err))
