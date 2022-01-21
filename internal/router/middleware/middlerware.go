@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"niceBackend/internal/api/service/admin_service"
-	"niceBackend/internal/api/service/authorized_service"
 	"niceBackend/internal/pkg/cache"
 	"niceBackend/internal/pkg/core"
 	"niceBackend/internal/pkg/db"
@@ -26,21 +25,12 @@ type Middleware interface {
 	// DisableLog 不记录日志
 	DisableLog() core.HandlerFunc
 
-	// Signature 签名验证，对用签名算法 pkg/signature
-	Signature() core.HandlerFunc
-
-	// Token 签名验证，对登录用户的验证
-	Token(ctx core.Context) (userId int64, userName string, err errno.Error)
-
-	// RBAC 权限验证
-	RBAC() core.HandlerFunc
 }
 
 type middleware struct {
 	logger            *zap.Logger
 	cache             cache.Repo
 	db                db.Repo
-	authorizedService authorized_service.Service
 	adminService      admin_service.Service
 }
 
@@ -49,8 +39,6 @@ func New(logger *zap.Logger, cache cache.Repo, db db.Repo) Middleware {
 		logger:            logger,
 		cache:             cache,
 		db:                db,
-		authorizedService: authorized_service.New(db, cache),
-		adminService:      admin_service.New(db, cache),
 	}
 }
 

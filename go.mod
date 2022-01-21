@@ -12,6 +12,7 @@ require (
 	github.com/go-openapi/spec v0.20.3 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/go-redis/redis v6.15.7+incompatible
+	github.com/golang/protobuf v1.5.2
 	github.com/gookit/color v1.3.1
 	github.com/jakecoffman/cron v0.0.0-20190106200828-7e2009c226a5
 	github.com/jonboulle/clockwork v0.2.2 // indirect
@@ -24,6 +25,7 @@ require (
 	github.com/prometheus/client_golang v1.11.0
 	github.com/rs/cors/wrapper/gin v0.0.0-20211222042454-bf1dbac76afe
 	github.com/satori/go.uuid v1.2.0
+	github.com/speps/go-hashids v2.0.0+incompatible
 	github.com/spf13/cast v1.3.1
 	github.com/spf13/viper v1.8.1
 	github.com/swaggo/gin-swagger v1.2.0
@@ -41,4 +43,5 @@ require (
 	gorm.io/driver/mysql v1.1.1
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.12
+
 )

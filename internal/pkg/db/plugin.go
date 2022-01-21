@@ -3,9 +3,9 @@ package db
 import (
 	"time"
 
-	"github.com/xinliangnote/go-gin-api/internal/pkg/core"
-	"github.com/xinliangnote/go-gin-api/pkg/time_parse"
-	"github.com/xinliangnote/go-gin-api/pkg/trace"
+	"niceBackend/internal/pkg/core"
+	"niceBackend/pkg/time_parse"
+	"niceBackend/pkg/trace"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/utils"

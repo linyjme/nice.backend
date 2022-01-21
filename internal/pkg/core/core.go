@@ -13,7 +13,6 @@ import (
 	"golang.org/x/time/rate"
 	"net/http"
 	"net/url"
-	"niceBackend/common/global"
 	_ "niceBackend/docs"
 	"niceBackend/internal/pkg/code"
 	"niceBackend/pkg/browser"
@@ -243,7 +242,6 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 	}
 
 	fmt.Println(color.Blue(_UI))
-	fmt.Println(color.Green(fmt.Sprintf("* [register port %d]", global.RAYConfig.Listen.Port)))
 	fmt.Println(color.Green(fmt.Sprintf("* [register env %s]", env.Active().Value())))
 
 	mux.engine.StaticFS("bootstrap", http.Dir("./assets/bootstrap"))
