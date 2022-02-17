@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"niceBackend/common/global"
-	"niceBackend/internal/api/service"
 	"niceBackend/pkg"
 	"niceBackend/source"
 	"os"
@@ -47,12 +46,12 @@ func SqlTables(db *gorm.DB) {
 		os.Exit(0)
 	}
 	if global.NiceConfig.System.DbMigrate == true {
-		err = service.InitDB(source.Admin)
+		err = source.InitDB(source.Admin)
 		if err != nil {
 			global.NiceLog.Error("init table failed", zap.Any("err", err))
 		} else {
 			global.NiceConfig.System.DbMigrate = false
-			service.SetSystemConfig(global.NiceConfig)
+			SetSystemConfig(global.NiceConfig)
 		}
 	}
 

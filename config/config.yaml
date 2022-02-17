@@ -37,7 +37,7 @@ redis:
   password: ""
 system:
   env: public
-  port: 8088
+  port: 8000
   db-type: mysql
   oss-type: local
   use-multipoint: false

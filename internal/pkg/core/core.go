@@ -29,7 +29,7 @@ import (
 )
 
 // see https://patorjk.com/software/taag/#p=testall&f=Graffiti&t=go-gin-api
-const _UI = `Nice`
+const _UI = `Nice Backend`
 
 type Option func(*option)
 

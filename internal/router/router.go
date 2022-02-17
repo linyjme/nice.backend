@@ -6,6 +6,7 @@ import (
 	"niceBackend/internal/metrics"
 	"niceBackend/internal/pkg/core"
 	"niceBackend/internal/router/interceptor"
+	"strconv"
 )
 
 type resource struct {
@@ -19,7 +20,7 @@ type Server struct {
 
 func NewHTTPServer() (*Server, error) {
 	r := new(resource)
-	openBrowserUri := global.NiceConfig.System.Domain + string(global.NiceConfig.System.Port)
+	openBrowserUri := global.NiceConfig.System.Domain + ":" + strconv.Itoa(global.NiceConfig.System.Port)
 
 	mux, err := core.New(global.NiceLog,
 		core.WithEnableOpenBrowser(openBrowserUri),

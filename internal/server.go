@@ -32,6 +32,7 @@ func RunServer() {
 	}
 
 	address := fmt.Sprintf(":%d", global.NiceConfig.System.Port)
+	global.NiceLog.Info("server run success on ", zap.String("address", address))
 	server := &http.Server{
 		Addr:           address,
 		Handler:        s.Mux,

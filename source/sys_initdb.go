@@ -1,4 +1,4 @@
-package service
+package source
 
 import "niceBackend/internal/model"
 

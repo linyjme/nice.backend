@@ -1,9 +1,12 @@
 package statistic_service
 
+import "niceBackend/internal/pkg/core"
+
 var _ Service = (*service)(nil)
 
 type Service interface {
 	i()
+	Create(ctx core.Context) (id int32, err error)
 }
 
 type service struct {

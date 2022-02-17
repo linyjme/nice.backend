@@ -66,8 +66,8 @@ func init() {
 	case "pro":
 		active = pro
 	default:
-		active = fat
-		fmt.Println("Warning: '-env' cannot be found, or it is illegal. The default 'fat' will be used.")
+		active = dev
+		fmt.Println("Warning: '-env' cannot be found, or it is illegal. The default 'dev' will be used.")
 	}
 }
 

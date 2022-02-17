@@ -1,9 +1,9 @@
-package service
+package initialize
 
 import (
 	"go.uber.org/zap"
 	"niceBackend/common/global"
-	"niceBackend/config"
+	nc "niceBackend/config"
 	"niceBackend/pkg"
 )
 
@@ -13,7 +13,7 @@ import (
 //@param: system model.System
 //@return: err error
 
-func SetSystemConfig(system config.Server) {
+func SetSystemConfig(system nc.Server) {
 	cs := pkg.StructToMap(system)
 	for k, v := range cs {
 		global.NiceVp.Set(k, v)
