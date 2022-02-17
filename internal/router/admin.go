@@ -3,7 +3,6 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"niceBackend/internal/resources/api/announcement"
-	"niceBackend/internal/resources/api/auth"
 	"niceBackend/internal/resources/api/expansion"
 )
 
@@ -17,9 +16,4 @@ func AuthAdminRouter(Router *gin.RouterGroup) {
 	}
 }
 
-func BaseAdminRouter(Router *gin.RouterGroup) {
-	ApiRouter := Router.Group("api")
-	{
-		ApiRouter.GET("auth/admin", auth.Admin)
-	}
-}
+

@@ -1,4 +1,4 @@
-package article_handler
+package auth_handler
 
 import (
 	"niceBackend/internal/api/service/user_service"
@@ -9,10 +9,12 @@ var _ Handler = (*handler)(nil)
 
 type Handler interface {
 	i()
+
 	// List 管理员登录
 	// @Tags API.admin
 	// @Router /api/tag [get]
 	List() core.HandlerFunc
+	Login() core.HandlerFunc
 }
 
 type handler struct {
