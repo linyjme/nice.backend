@@ -1,4 +1,4 @@
-package announcement
+package announcement_handler
 
 import (
 	"github.com/gin-gonic/gin"
