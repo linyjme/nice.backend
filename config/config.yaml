@@ -18,7 +18,7 @@ jwt:
   buffer-time: 86400
 mongodb:
   db: NodePress
-  addr: mongodb://localhost:27017
+  addr: mongodb://172.16.4.145:27017
   password: ""
   number: 10
 mysql:
@@ -37,18 +37,20 @@ redis:
   password: ""
 system:
   env: public
-  addr: 8088
+  port: 8088
   db-type: mysql
   oss-type: local
   use-multipoint: false
   db_migrate: false
+  Domain: "http://127.0.0.1"
+  Language: "zh-cn"
 timer:
   start: true
   spec: '@daily'
   detail:
-  - tableName: sys_operation_records
-    compareField: created_at
-    interval: 2160h
+    - tableName: sys_operation_records
+      compareField: created_at
+      interval: 2160h
 zap:
   level: info
   format: console

@@ -3,8 +3,8 @@ package article_repo
 import (
 	uuid "github.com/satori/go.uuid"
 	"niceBackend/common/global"
-	"niceBackend/internal/api/repository/db_repo/categroy_repo"
-	"niceBackend/internal/api/repository/db_repo/tag_repo"
+	"niceBackend/internal/repository/db_repo/categroy_repo"
+	"niceBackend/internal/repository/db_repo/tag_repo"
 )
 
 type Article struct {

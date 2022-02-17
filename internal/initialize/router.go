@@ -31,7 +31,6 @@ func Routers() *gin.Engine {
 	global.NiceLog.Info("use middleware cors")
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	global.NiceLog.Info("register swagger handler")
-	Router.Static("/app", "./dist/app")
 	//Router.StaticFS(AppStaticPath, http.Dir(AppStaticPath))
 	//Router.StaticFile("/", "./resources/favicon.ico")
 	// 方便统一添加路由组前缀 多服务器上线使用

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"gorm.io/gorm"
 	"niceBackend/common/global"
-	"niceBackend/internal/api/repository/db_repo/user_repo"
+	"niceBackend/internal/repository/db_repo/user_repo"
 	"niceBackend/pkg"
 )
 

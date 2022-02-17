@@ -8,11 +8,12 @@ import (
 	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 	"niceBackend/common/transform"
+	"niceBackend/config"
 )
 
 var (
 	NiceDb                 *gorm.DB
-	NiceConfig             transform.Server
+	NiceConfig             config.Server
 	NiceVp                 *viper.Viper
 	NiceRedis              *redis.Client
 	NiceLog                *zap.Logger

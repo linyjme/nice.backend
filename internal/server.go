@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"go.uber.org/zap"
+	"net/http"
 	"niceBackend/common/global"
 	"niceBackend/internal/cron/asynchronous"
 	"niceBackend/internal/initialize"
+	"niceBackend/internal/router"
 	"niceBackend/pkg/shutdown"
 	"time"
 )
@@ -17,12 +19,26 @@ type server interface {
 }
 
 func RunServer() {
-	Router := initialize.Routers()
+	//Router := initialize.Routers()
+
 	// 初始化redis服务
 	initialize.Redis()
-	//initialize.Mongo()
-	address := fmt.Sprintf(":%d", global.NiceConfig.System.Addr)
-	s := initServer(address, Router)
+	// 初始化mongo服务
+	initialize.ConnectMongo()
+
+	s, err := router.NewHTTPServer()
+	if err != nil {
+		panic(err)
+	}
+
+	address := fmt.Sprintf(":%d", global.NiceConfig.System.Port)
+	server := &http.Server{
+		Addr:           address,
+		Handler:        s.Mux,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
 	// 保证文本顺序输出
 	// In order to ensure that the text order output can be deleted
 	time.Sleep(100 * time.Microsecond)
@@ -37,12 +53,12 @@ func RunServer() {
 		func() {
 			// 程序结束前关闭数据库链接
 			db, err := global.NiceDb.DB()
-			if err != nil{
+			if err != nil {
 				fmt.Println("关闭 db")
 				return
 			}
 			err = db.Close()
-			if err != nil{
+			if err != nil {
 				fmt.Println("关闭 db 异常")
 				return
 			}
@@ -53,11 +69,11 @@ func RunServer() {
 			ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 			defer cancel()
 			fmt.Println("关闭 nice Backend")
-			if err := s.Shutdown(ctx); err != nil {
+			if err := server.Shutdown(ctx); err != nil {
 				global.NiceLog.Error("server shutdown err", zap.Error(err))
 			}
 		},
 	)
 	go asynchronous.Consumer(global.AsyncChan)
-	global.NiceLog.Error(s.ListenAndServe().Error())
+	global.NiceLog.Error(server.ListenAndServe().Error())
 }

@@ -2,7 +2,7 @@ package cron_server
 
 import (
 	"fmt"
-	"niceBackend/internal/api/repository/db_repo/cron_task_repo"
+	"niceBackend/internal/repository/db_repo/cron_task_repo"
 )
 
 func (s *server) Start() {

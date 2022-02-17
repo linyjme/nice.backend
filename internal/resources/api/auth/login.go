@@ -7,8 +7,8 @@ import (
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
-	"niceBackend/internal/api/repository/db_repo/user_repo"
 	"niceBackend/internal/middleware"
+	"niceBackend/internal/repository/db_repo/user_repo"
 	"time"
 )
 

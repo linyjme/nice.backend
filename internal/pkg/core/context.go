@@ -3,16 +3,18 @@ package core
 import (
 	"bytes"
 	stdctx "context"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"niceBackend/pkg/errno"
-	"niceBackend/pkg/trace"
 	"strings"
 	"sync"
+
+	"niceBackend/internal/proposal"
+	"niceBackend/pkg/trace"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"go.uber.org/zap"
 )
 
 type HandlerFunc func(c Context)
@@ -26,9 +28,9 @@ const (
 	_BodyName         = "_body_"
 	_PayloadName      = "_payload_"
 	_GraphPayloadName = "_graph_payload_"
-	_UserID           = "_user_id_"
-	_UserName         = "_user_name_"
+	_SessionUserInfo  = "_session_user_info"
 	_AbortErrorName   = "_abort_error_"
+	_IsRecordMetrics  = "_is_record_metrics_"
 )
 
 var contextPool = &sync.Pool{
@@ -99,8 +101,8 @@ type Context interface {
 	HTML(name string, obj interface{})
 
 	// AbortWithError 错误返回
-	AbortWithError(err errno.Error)
-	abortError() errno.Error
+	AbortWithError(err BusinessError)
+	abortError() BusinessError
 
 	// Header 获取 Header 对象
 	Header() http.Header
@@ -109,17 +111,18 @@ type Context interface {
 	// SetHeader 设置 Header
 	SetHeader(key, value string)
 
-	// UserID 获取 UserID
-	UserID() int64
-	setUserID(userID int64)
+	// SessionUserInfo 当前用户信息
+	SessionUserInfo() proposal.SessionUserInfo
+	setSessionUserInfo(info proposal.SessionUserInfo)
 
-	// UserName 获取 UserName
-	UserName() string
-	setUserName(userName string)
-
-	// Alias 设置路由别名 for metrics uri
+	// Alias 设置路由别名 for metrics path
 	Alias() string
 	setAlias(path string)
+
+	// disableRecordMetrics 设置禁止记录指标
+	disableRecordMetrics()
+	ableRecordMetrics()
+	isRecordMetrics() bool
 
 	// RequestInputParams 获取所有参数
 	RequestInputParams() url.Values
@@ -277,35 +280,22 @@ func (c *context) SetHeader(key, value string) {
 	c.ctx.Header(key, value)
 }
 
-func (c *context) UserID() int64 {
-	val, ok := c.ctx.Get(_UserID)
+func (c *context) SessionUserInfo() proposal.SessionUserInfo {
+	val, ok := c.ctx.Get(_SessionUserInfo)
 	if !ok {
-		return 0
+		return proposal.SessionUserInfo{}
 	}
 
-	return val.(int64)
+	return val.(proposal.SessionUserInfo)
 }
 
-func (c *context) setUserID(userID int64) {
-	c.ctx.Set(_UserID, userID)
+func (c *context) setSessionUserInfo(info proposal.SessionUserInfo) {
+	c.ctx.Set(_SessionUserInfo, info)
 }
 
-func (c *context) UserName() string {
-	val, ok := c.ctx.Get(_UserName)
-	if !ok {
-		return ""
-	}
-
-	return val.(string)
-}
-
-func (c *context) setUserName(userName string) {
-	c.ctx.Set(_UserName, userName)
-}
-
-func (c *context) AbortWithError(err errno.Error) {
+func (c *context) AbortWithError(err BusinessError) {
 	if err != nil {
-		httpCode := err.GetHttpCode()
+		httpCode := err.HTTPCode()
 		if httpCode == 0 {
 			httpCode = http.StatusInternalServerError
 		}
@@ -315,9 +305,9 @@ func (c *context) AbortWithError(err errno.Error) {
 	}
 }
 
-func (c *context) abortError() errno.Error {
+func (c *context) abortError() BusinessError {
 	err, _ := c.ctx.Get(_AbortErrorName)
-	return err.(errno.Error)
+	return err.(BusinessError)
 }
 
 func (c *context) Alias() string {
@@ -333,6 +323,23 @@ func (c *context) setAlias(path string) {
 	if path = strings.TrimSpace(path); path != "" {
 		c.ctx.Set(_Alias, path)
 	}
+}
+
+func (c *context) isRecordMetrics() bool {
+	isRecordMetrics, ok := c.ctx.Get(_IsRecordMetrics)
+	if !ok {
+		return false
+	}
+
+	return isRecordMetrics.(bool)
+}
+
+func (c *context) ableRecordMetrics() {
+	c.ctx.Set(_IsRecordMetrics, true)
+}
+
+func (c *context) disableRecordMetrics() {
+	c.ctx.Set(_IsRecordMetrics, false)
 }
 
 // RequestInputParams 获取所有参数

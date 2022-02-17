@@ -12,7 +12,7 @@ import (
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
-	"niceBackend/internal/api/repository/db_repo/announcement_repo"
+	"niceBackend/internal/repository/db_repo/announcement_repo"
 	"niceBackend/pkg"
 	"time"
 )

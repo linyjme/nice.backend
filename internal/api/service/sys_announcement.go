@@ -4,7 +4,7 @@ import (
 	"errors"
 	"go.uber.org/zap"
 	"niceBackend/common/global"
-	"niceBackend/internal/api/repository/db_repo/announcement_repo"
+	"niceBackend/internal/repository/db_repo/announcement_repo"
 )
 
 func GetAnnouncements() (err error, list interface{}) {

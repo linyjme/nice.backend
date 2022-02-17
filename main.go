@@ -25,7 +25,6 @@ func main() {
 	global.NiceVp = initialize.Viper() // 初始化Viper
 	global.NiceLog = initialize.Zap()  // 初始化zap日志库
 	global.NiceDb = initialize.Gorm()  // gorm连接数据库
-	initialize.ConnectMongo()
 	global.AsyncChan = initialize.InitAsync()
 	if global.NiceDb != nil {
 		initialize.SqlTables(global.NiceDb) // 初始化表

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
-	"niceBackend/internal/api/repository/db_repo/tag_repo"
+	"niceBackend/internal/repository/db_repo/tag_repo"
 	"niceBackend/pkg"
 )
 

@@ -6,8 +6,8 @@ import (
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
-	"niceBackend/internal/api/repository/db_repo/user_repo"
 	"niceBackend/internal/api/service/user_service"
+	"niceBackend/internal/repository/db_repo/user_repo"
 	"niceBackend/pkg"
 )
 

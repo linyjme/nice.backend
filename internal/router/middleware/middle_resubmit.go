@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"niceBackend/config"
 	"time"
 
 	"niceBackend/configs"
@@ -29,7 +30,7 @@ func (m *middleware) Resubmit() core.HandlerFunc {
 			return
 		}
 
-		redisKey := configs.RedisKeyPrefixRequestID + tokenString
+		redisKey := config.RedisKeyPrefixRequestID + tokenString
 		if !m.cache.Exists(redisKey) {
 			err = m.cache.Set(redisKey, reSubmitMark, time.Minute*cfg.ExpireDuration)
 			if err != nil {
