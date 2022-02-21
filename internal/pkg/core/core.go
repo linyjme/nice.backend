@@ -7,7 +7,7 @@ import (
 	"niceBackend/common/global"
 	"niceBackend/config"
 	_ "niceBackend/docs"
-	"niceBackend/internal/code"
+	"niceBackend/internal/pkg/code"
 	"niceBackend/internal/proposal"
 	"niceBackend/pkg/browser"
 	"niceBackend/pkg/color"
@@ -234,7 +234,7 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 		return nil, errors.New("logger required")
 	}
 
-	gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.DebugMode)
 	mux := &mux{
 		engine: gin.New(),
 	}
@@ -249,7 +249,6 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 	// withoutTracePaths 这些请求，默认不记录日志
 	withoutTracePaths := map[string]bool{
 		"/metrics": true,
-
 		"/debug/pprof/":             true,
 		"/debug/pprof/cmdline":      true,
 		"/debug/pprof/profile":      true,
@@ -261,9 +260,7 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 		"/debug/pprof/heap":         true,
 		"/debug/pprof/mutex":        true,
 		"/debug/pprof/threadcreate": true,
-
 		"/favicon.ico": true,
-
 		"/system/health": true,
 	}
 

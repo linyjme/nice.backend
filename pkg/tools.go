@@ -17,18 +17,6 @@ func GetConfigIniPath() string {
 	return path.Join(projectDir, "config", "config.yaml")
 }
 
-func GetStaticAppPath() string {
-	projectDir := GetProjectDirectory()
-	return path.Join(projectDir, "dist", "app")
-}
-
 func GetDatabase() *mongo.Database {
 	return global.NiceMongo.Database(global.NiceConfig.Mongo.DB)
-}
-
-func getNextSequenceValue(sequenceName string) {
-	//filter := bson.D{{"id", "Ash"}}
-	//sequenceDocument:= GetDatabase().Collection(sequenceName).FindOneAndUpdate(context.TODO(), filter)
-	//fmt.Println(sequenceDocument)
-	
 }

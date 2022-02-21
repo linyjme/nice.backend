@@ -7,7 +7,7 @@ import (
 
 type Tags struct {
 	global.CustomMODEL
-	TagId       uint      `json:"tag_id" bson:"tag_id"  gorm:"primarykey"` // 主键ID
+	TagId       uint      `json:"id" bson:"id"  gorm:"primarykey"` // 主键ID
 	UUID        uuid.UUID `json:"_id "gorm:"comment:tagsUUID" bson:"_id"`
 	Name        string    `json:"name" bson:"name" gorm:"type:varchar(128)"`                     //
 	Slug        string    `json:"slug" bson:"slug" gorm:"type:varchar(128);not null"`            // 用户登录名

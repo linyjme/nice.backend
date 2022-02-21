@@ -14,7 +14,6 @@ type Handler interface {
 	// @Tags API.admin
 	// @Router /api/tag [get]
 	List() core.HandlerFunc
-	Login() core.HandlerFunc
 }
 
 type handler struct {

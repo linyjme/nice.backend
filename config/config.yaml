@@ -36,7 +36,7 @@ redis:
   addr: 127.0.0.1:6379
   password: ""
 system:
-  env: public
+  env: dev
   port: 8000
   db-type: mysql
   oss-type: local

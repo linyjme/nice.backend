@@ -6,7 +6,8 @@ import (
 	"niceBackend/internal/repository/db_repo/announcement_repo"
 )
 
-func (s *service) Create(ctx core.Context) (id int32, err error) {
+func (s *service) Create(ctx core.Context) (err error) {
 	var annList []announcement_repo.Announcement
 	fmt.Println(annList)
+	return nil
 }

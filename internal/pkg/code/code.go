@@ -1,8 +1,8 @@
 package code
 
 import (
-	"niceBackend/common/constants"
 	"niceBackend/common/global"
+	"niceBackend/config"
 )
 
 // Failure 错误时返回结构
@@ -74,11 +74,11 @@ const (
 )
 
 func Text(code int) string {
-	lang := global.NiceConfig.Language.Current
-	if lang == constants.ZhCN {
+	lang := global.NiceConfig.System.Language
+	if lang == config.ZhCN {
 		return zhCNText[code]
 	}
-	if lang == constants.EnUS {
+	if lang == config.EnUS {
 		return enUSText[code]
 	}
 

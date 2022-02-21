@@ -1,6 +1,12 @@
 package tag_handler
 
-import "niceBackend/internal/pkg/core"
+import (
+	"fmt"
+	"net/http"
+	"niceBackend/internal/pkg/code"
+	"niceBackend/internal/pkg/core"
+	"niceBackend/pkg/errors"
+)
 
 // List 管理员列表
 // @Summary 管理员列表
@@ -18,5 +24,14 @@ import "niceBackend/internal/pkg/core"
 // @Router /api/admin [get]
 // @Security LoginToken
 func (h *handler) List() core.HandlerFunc {
-	return func(c core.Context) {}
+	return func(c core.Context) {
+		err := h.tagService.List(c)
+		fmt.Println(err)
+		c.AbortWithError(core.Error(
+			http.StatusBadRequest,
+			code.ServerError,
+			code.Text(code.ServerError)).WithError(errors.New("未查询出符合条件的用户")),
+		)
+
+	}
 }
