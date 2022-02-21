@@ -14,5 +14,5 @@ type Announcement struct {
 }
 
 func (a Announcement) TableName() string {
-	return "announcement"
+	return "tb_announcement"
 }

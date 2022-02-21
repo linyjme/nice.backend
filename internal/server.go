@@ -24,7 +24,7 @@ func RunServer() {
 	// 初始化redis服务
 	initialize.Redis()
 	// 初始化mongo服务
-	initialize.ConnectMongo()
+	//initialize.ConnectMongo()
 
 	s, err := router.NewHTTPServer()
 	if err != nil {
