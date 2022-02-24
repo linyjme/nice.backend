@@ -1,14 +1,11 @@
-package article_handler
+package option_handler
 
 import "niceBackend/internal/pkg/core"
 
 type loginResponse struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
-	Result  dataResponse  `json:"result"`
-}
-type dataResponse struct {
-	Data  []int  `json:"data"`
+	Result  string  `json:"result"`
 }
 
 // List 管理员列表
@@ -30,10 +27,7 @@ func (h *handler) List() core.HandlerFunc {
 	return func(c core.Context) {
 		res := new(loginResponse)
 		res.Status = "success"
-		res.Message = "获取文章成功"
-		res.Result = dataResponse{
-			Data: []int{},
-		}
+		res.Message = "获取设置成功"
 		c.Payload(res)
 	}
 }

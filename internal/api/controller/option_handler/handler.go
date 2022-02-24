@@ -1,6 +1,8 @@
-package announcement_handler
+package option_handler
 
-import "niceBackend/internal/pkg/core"
+import (
+	"niceBackend/internal/pkg/core"
+)
 
 var _ Handler = (*handler)(nil)
 

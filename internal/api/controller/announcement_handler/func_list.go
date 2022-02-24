@@ -1,11 +1,13 @@
-package article_handler
+package announcement_handler
 
-import "niceBackend/internal/pkg/core"
+import (
+	"niceBackend/internal/pkg/core"
+)
 
 type loginResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
-	Result  dataResponse  `json:"result"`
+	Status  string       `json:"status"`
+	Message string       `json:"message"`
+	Result  dataResponse `json:"result"`
 }
 type dataResponse struct {
 	Data  []int  `json:"data"`
@@ -30,7 +32,7 @@ func (h *handler) List() core.HandlerFunc {
 	return func(c core.Context) {
 		res := new(loginResponse)
 		res.Status = "success"
-		res.Message = "获取文章成功"
+		res.Message = "登陆成功"
 		res.Result = dataResponse{
 			Data: []int{},
 		}
