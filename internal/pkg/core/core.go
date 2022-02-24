@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"niceBackend/common/global"
@@ -14,6 +15,7 @@ import (
 	"niceBackend/pkg/env"
 	"niceBackend/pkg/errors"
 	"niceBackend/pkg/trace"
+	"os"
 	"runtime/debug"
 	"time"
 
@@ -234,11 +236,40 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 		return nil, errors.New("logger required")
 	}
 
-	gin.SetMode(gin.DebugMode)
 	mux := &mux{
 		engine: gin.New(),
 	}
 	fmt.Println(color.Blue(_UI))
+
+	if env.Active().IsDev() {
+		gin.SetMode(gin.DebugMode)
+		gin.DefaultWriter = io.MultiWriter(os.Stdout)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+		logfile, err := os.Create("./log/http.log")
+		if err != nil {
+			fmt.Println("Could not create log file")
+		}
+		gin.DefaultWriter = io.MultiWriter(logfile)
+	}
+	mux.engine.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+		return fmt.Sprintf("%s\t|\t%d|\t%s|\t%s|\t%s \t%s \n",
+			//时间格式
+			param.TimeStamp.Format("2006-01-02 15:04:05"),
+			//http请求状态码
+			param.StatusCode,
+			//耗时
+			param.Latency,
+			//客户端IP
+			param.ClientIP,
+			//http请求方式 get post等
+			param.Method,
+			//客户端请求的路径
+			param.Path,
+			//http请求协议版本
+			//param.Request.Proto,
+		)
+	}))
 
 	//mux.engine.StaticFS("assets", http.FS(assets.Bootstrap))
 	//mux.engine.SetHTMLTemplate(template.Must(template.New("").ParseFS(assets.Templates, "templates/**/*")))
@@ -248,7 +279,7 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 
 	// withoutTracePaths 这些请求，默认不记录日志
 	withoutTracePaths := map[string]bool{
-		"/metrics": true,
+		"/metrics":                  true,
 		"/debug/pprof/":             true,
 		"/debug/pprof/cmdline":      true,
 		"/debug/pprof/profile":      true,
@@ -260,8 +291,8 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 		"/debug/pprof/heap":         true,
 		"/debug/pprof/mutex":        true,
 		"/debug/pprof/threadcreate": true,
-		"/favicon.ico": true,
-		"/system/health": true,
+		"/favicon.ico":              true,
+		"/system/health":            true,
 	}
 
 	opt := new(option)
@@ -459,7 +490,7 @@ func New(logger *zap.Logger, options ...Option) (Mux, error) {
 
 			// ctx.Request.Header，精简 Header 参数
 			traceHeader := map[string]string{
-				"Content-Type":              ctx.GetHeader("Content-Type"),
+				"Content-Type":             ctx.GetHeader("Content-Type"),
 				config.HeaderLoginToken:    ctx.GetHeader(config.HeaderLoginToken),
 				config.HeaderSignToken:     ctx.GetHeader(config.HeaderSignToken),
 				config.HeaderSignTokenDate: ctx.GetHeader(config.HeaderSignTokenDate),

@@ -10,7 +10,7 @@ import (
 
 func setApiRouter(r *resource) {
 
-	BaseRouter := r.mux.Group("/api")
+	BaseRouter := r.mux.Group("")
 	tagHandler := tag_handler.New()
 	categoryHandler := category_handler.New()
 	articleHandler := article_handler.New()
@@ -20,7 +20,7 @@ func setApiRouter(r *resource) {
 		BaseRouter.GET("/tag", tagHandler.List())           // 创建Api
 		BaseRouter.GET("/category", categoryHandler.List()) // 创建Api
 		BaseRouter.GET("/article", articleHandler.List())   // 创建Api
-		BaseRouter.GET("/auth/login", authHandler.Login())  // 创建Api
+		BaseRouter.POST("/auth/login", authHandler.Login())  // 创建Api
 		BaseRouter.GET("/auth/admin", authHandler.List())   // 创建Api
 		BaseRouter.GET("/expansion/statistic", expansionHandler.List())   // 创建Api
 		BaseRouter.POST("/expansion/statistic", expansionHandler.List())   // 创建Api

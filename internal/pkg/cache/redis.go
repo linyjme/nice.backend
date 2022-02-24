@@ -59,7 +59,7 @@ func redisConnect() (*redis.Client, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr:         cfg.Addr,
 		Password:     cfg.Pass,
-		DB:           cfg.Db,
+		DB:           cfg.DB,
 		MaxRetries:   cfg.MaxRetries,
 		PoolSize:     cfg.PoolSize,
 		MinIdleConns: cfg.MinIdleConns,

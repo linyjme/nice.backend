@@ -5,12 +5,10 @@ captcha:
 casbin:
   model-path: ./resource/rbac_model.conf
 email:
-  from: xxx@163.com
   host: smtp.163.com
-  is-ssl: true
-  nickname: test
   port: 465
-  secret: xxx
+  user: ""
+  pass: ""
   to: xxx@qq.com
 jwt:
   signing-key: qmPlus
@@ -35,22 +33,25 @@ redis:
   db: 0
   addr: 127.0.0.1:6379
   password: ""
+  maxretries: 0
+  poolsize: 0
+  minidleconns: 0
 system:
   env: dev
   port: 8000
+  domain: http://127.0.0.1
   db-type: mysql
   oss-type: local
   use-multipoint: false
   db_migrate: false
-  Domain: "http://127.0.0.1"
-  Language: "zh-cn"
+  language: zh-cn
 timer:
   start: true
   spec: '@daily'
   detail:
-    - tableName: sys_operation_records
-      compareField: created_at
-      interval: 2160h
+  - tableName: sys_operation_records
+    compareField: created_at
+    interval: 2160h
 zap:
   level: info
   format: console

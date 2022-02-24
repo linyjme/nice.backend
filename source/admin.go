@@ -22,14 +22,14 @@ var admins = []user_repo.Admin{
 func (a *admin) Init() error {
 	return global.NiceDb.Transaction(func(tx *gorm.DB) error {
 		if tx.Where("id IN ?", []int{1, 2}).Find(&[]user_repo.Admin{}).RowsAffected == 2 {
-			color.Danger.Println("\n[Mysql] --> sys_users 表的初始数据已存在!")
+			color.Danger.Println("\n[Mysql] --> tb_administrator 表的初始数据已存在!")
 			return nil
 		}
 		if err := tx.Create(&admins).Error; err != nil { // 遇到错误时回滚事务
 			global.NiceLog.Error("migrate table failed", zap.Any("err", err))
 			return err
 		}
-		color.Info.Println("\n[Mysql] --> sys_users 表初始数据成功!")
+		color.Info.Println("\n[Mysql] --> tb_administrator 表初始数据成功!")
 		return nil
 	})
 }
