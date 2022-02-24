@@ -4,14 +4,33 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"net/http"
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
 	"niceBackend/internal/middleware"
+	"niceBackend/internal/pkg/code"
 	"niceBackend/internal/pkg/core"
 	"niceBackend/internal/repository/db_repo/user_repo"
+	"niceBackend/pkg"
 	"time"
 )
+
+// Admin login structure
+type loginRequest struct {
+	Password string `json:"password"` // 用户 账号密码
+	Account  string `json:"account"`  // 用户 账号密码
+}
+
+type loginResponse struct {
+	Status  string `json:"status"`
+	Message string `json:"message"`
+	Result  Token  `json:"result"`
+}
+type Token struct {
+	AccessToken string `json:"access_token"`
+	ExpiresIn   uint16 `json:"expires_in"`
+}
 
 // @Tags Base
 // @Summary 用户登录
@@ -20,27 +39,37 @@ import (
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"登陆成功"}"
 // @Router /base/login [post]
 func (h *handler) Login() core.HandlerFunc {
-	//var l request.Login
-	//_ = c.ShouldBindJSON(&l)
-	//if err := pkg.Verify(l, pkg.LoginVerify); err != nil {
-	//	response.FailWithMessage(err.Error(), c)
-	//	return
-	//}
-	//account := l.Account
-	//password := l.Password
-	//u := &model.User{Account: account, Password: password}
-	//if err, user := service.Login(u); err != nil {
-	//	global.NiceLog.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
-	//	response.FailWithCode(4002, c)
-	//} else {
-	//	// 颁发token
-	//	tokenNext(c, *user)
-	//}
-	var result map[string]interface{}
-	result = make(map[string]interface{})
-	var data [1]int
-	result["data"] = data
-	return func(c core.Context) {}
+	return func(c core.Context) {
+		var req loginRequest
+		res := new(loginResponse)
+		_ = c.ShouldBindJSON(&req)
+		if err := pkg.Verify(req, pkg.LoginVerify); err != nil {
+			c.AbortWithError(core.Error(
+				http.StatusBadRequest,
+				code.ParamBindError,
+				code.Text(code.ParamBindError)).WithError(err),
+			)
+			return
+		}
+		//account := req.Account
+		//password := req.Password
+		//h.userService
+		//u := &model.User{Account: account, Password: password}
+		//if err, user := service.Login(u); err != nil {
+		//	global.NiceLog.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
+		//	response.FailWithCode(4002, c)
+		//} else {
+		//	// 颁发token
+		//	tokenNext(c, *user)
+		//}
+		res.Status = "success"
+		res.Message = "登陆成功"
+		res.Result = Token{
+			AccessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJyb290In0sImlhdCI6MTY0NTY5NTkxMiwiZXhwIjoxNjQ1Njk5NTEyfQ.o4xs9FrYHDam5YhK2hmDsPO0qLhsajX3mCnhPwH0wyY",
+			ExpiresIn:   3600,
+		}
+		c.Payload(res)
+	}
 
 }
 
@@ -65,7 +94,7 @@ func tokenNext(c *gin.Context, user user_repo.Admin) {
 		return
 	}
 	response.OkWithDetailed(response.LoginResponse{
-		Admin:      user,
+		Admin:     user,
 		Token:     token,
 		ExpiresAt: claims.StandardClaims.ExpiresAt * 1000,
 	}, "登录成功", c)

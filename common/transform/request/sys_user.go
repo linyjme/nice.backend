@@ -2,16 +2,6 @@ package request
 
 // Admin register structure
 
-// Admin login structure
-type Login struct {
-	Password string `json:"password"` // 用户 账号密码
-	Account  string `json:"account"`  // 用户 账号密码
-}
-
-type Register struct {
-	Account  string `json:"account"`  // 用户 账号密码
-	Password string `json:"password"` // 用户 账号密码
-}
 
 type Announcements struct {
 	Content string `json:"content"` // 用户 账号密码
