@@ -7,7 +7,7 @@ import (
 
 type Comments struct {
 	gorm.Model
-	UUID    uuid.UUID `json:"_id "gorm:"comment:announcementUUID;column:_id" bson:"_id"`
+	UUID    uuid.UUID `json:"_id "gorm:"comment:;column:_id" bson:"_id"`
 	Pid        uint32 `json:"pid" bson:"pid" gorm:"default:0;not null"`                                  //
 	State      uint8  `json:"state" bson:"state" gorm:"default:1;not null"`                              //
 	IsTop      bool   `json:"is_top" bson:"is_top" gorm:"default:false;column:is_top"`                   //

@@ -7,7 +7,7 @@ import (
 
 type Tags struct {
 	gorm.Model
-	UUID    uuid.UUID `json:"_id "gorm:"comment:announcementUUID;column:_id" bson:"_id"`
+	UUID    uuid.UUID `json:"_id "gorm:"comment:;column:_id" bson:"_id"`
 	Name        string `json:"name" bson:"name" gorm:"type:varchar(128)"`                                  //
 	Slug        string `json:"slug" bson:"slug" gorm:"type:varchar(128);not null"`                         //
 	Description string `json:"description"  bson:"description" gorm:"type:varchar(256)"`                   //
