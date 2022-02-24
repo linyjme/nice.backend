@@ -2,12 +2,12 @@ package user_repo
 
 import (
 	uuid "github.com/satori/go.uuid"
-	"niceBackend/common/global"
+	"gorm.io/gorm"
 )
 
-type User struct {
-	global.BaseMODEL
-	UUID      uuid.UUID `json:"uuid" gorm:"comment:用户UUID"`
+type Admin struct {
+	gorm.Model
+	UUID    uuid.UUID `json:"_id "gorm:"comment:announcementUUID;column:_id" bson:"_id"`
 	Account   string    `json:"account" gorm:"type:varchar(128);not null"`                                     // 用户登录名
 	Password  string    `json:"-"  gorm:"type:varchar(256)"`                                                   //
 	NickName  string    `json:"nick_name" gorm:"type:varchar(128)"`                                            //
@@ -20,6 +20,6 @@ type User struct {
 	Status    uint8     `json:"status" gorm:"default:0"`                                                       //
 }
 
-func (s User) TableName() string {
-	return "tb_user"
+func (s Admin) TableName() string {
+	return "tb_administrator"
 }

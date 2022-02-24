@@ -1,19 +1,15 @@
 package global
 
 import (
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"time"
 )
 
 type BaseMODEL struct {
-	ID        uint           `gorm:"primarykey"` // 主键ID
-	CreatedAt time.Time      // 创建时间
-	UpdatedAt time.Time      // 更新时间
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"` // 删除时间
-}
-
-type CustomMODEL struct {
-	CreatedAt time.Time      // 创建时间
-	UpdatedAt time.Time      // 更新时间
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"` // 删除时间
+	gorm.Model
+	ID       uint      `json:"id" bson:"id"  gorm:"primarykey"`
+	UUID     uuid.UUID `json:"_id "gorm:"comment:announcementUUID;column:_id" bson:"_id"`
+	CreateAt time.Time `json:"create_at" gorm:"column:create_at;not null"` // 创建时间
+	UpdateAt time.Time `json:"update_at" gorm:"column:update_at;not null"` // 更新时间
 }

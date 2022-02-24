@@ -28,6 +28,8 @@ func main() {
 	global.AsyncChan = initialize.InitAsync()
 	if global.NiceDb != nil {
 		initialize.SqlTables(global.NiceDb) // 初始化表
+	} else {
+		panic(global.NiceDb)
 	}
 	internal.RunServer()
 }

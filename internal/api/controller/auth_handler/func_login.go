@@ -45,7 +45,7 @@ func (h *handler) Login() core.HandlerFunc {
 }
 
 // 登录以后签发jwt
-func tokenNext(c *gin.Context, user user_repo.User) {
+func tokenNext(c *gin.Context, user user_repo.Admin) {
 	j := &middleware.JWT{SigningKey: []byte(global.NiceConfig.JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
 		UUID:       user.UUID,
@@ -65,7 +65,7 @@ func tokenNext(c *gin.Context, user user_repo.User) {
 		return
 	}
 	response.OkWithDetailed(response.LoginResponse{
-		User:      user,
+		Admin:      user,
 		Token:     token,
 		ExpiresAt: claims.StandardClaims.ExpiresAt * 1000,
 	}, "登录成功", c)

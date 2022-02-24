@@ -8,6 +8,9 @@ import (
 	"gorm.io/gorm/schema"
 	"niceBackend/common/global"
 	"niceBackend/internal/repository/db_repo/announcement_repo"
+	"niceBackend/internal/repository/db_repo/article_repo"
+	"niceBackend/internal/repository/db_repo/categroy_repo"
+	"niceBackend/internal/repository/db_repo/comment_repo"
 	"niceBackend/internal/repository/db_repo/tag_repo"
 	"niceBackend/internal/repository/db_repo/user_repo"
 	"niceBackend/pkg"
@@ -40,9 +43,12 @@ func Gorm() *gorm.DB {
 
 func SqlTables(db *gorm.DB) {
 	err := db.AutoMigrate(
-		user_repo.User{},
 		tag_repo.Tags{},
+		categroy_repo.Category{},
 		announcement_repo.Announcement{},
+		comment_repo.Comments{},
+		user_repo.Admin{},
+		article_repo.Article{},
 	)
 	if err != nil {
 		global.NiceLog.Error("register table failed", zap.Any("err", err))

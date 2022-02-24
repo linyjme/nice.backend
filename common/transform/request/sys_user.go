@@ -1,8 +1,8 @@
 package request
 
-// User register structure
+// Admin register structure
 
-// User login structure
+// Admin login structure
 type Login struct {
 	Password string `json:"password"` // 用户 账号密码
 	Account  string `json:"account"`  // 用户 账号密码
