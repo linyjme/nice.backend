@@ -1,4 +1,4 @@
-package user_repo
+package admin_repo
 
 import (
 	uuid "github.com/satori/go.uuid"
@@ -7,7 +7,7 @@ import (
 
 type Admin struct {
 	gorm.Model
-	UUID    uuid.UUID `json:"_id "gorm:"comment:;column:_id" bson:"_id"`
+	UUID      uuid.UUID `json:"_id "gorm:"comment:;column:_id" bson:"_id"`
 	Account   string    `json:"account" gorm:"type:varchar(128);not null"`                                     // 用户登录名
 	Password  string    `json:"-"  gorm:"type:varchar(256)"`                                                   //
 	NickName  string    `json:"nick_name" gorm:"type:varchar(128)"`                                            //

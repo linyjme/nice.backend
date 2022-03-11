@@ -1,7 +1,7 @@
 package article_handler
 
 import (
-	"niceBackend/internal/api/service/user_service"
+	"niceBackend/internal/api/service/admin"
 	"niceBackend/internal/pkg/core"
 )
 
@@ -16,12 +16,12 @@ type Handler interface {
 }
 
 type handler struct {
-	userService user_service.Service
+	userService admin.Service
 }
 
 func New() Handler {
 	return &handler{
-		userService: user_service.New(),
+		userService: admin.New(),
 	}
 }
 

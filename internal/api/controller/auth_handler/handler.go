@@ -1,7 +1,7 @@
 package auth_handler
 
 import (
-	"niceBackend/internal/api/service/user_service"
+	"niceBackend/internal/api/service/admin"
 	"niceBackend/internal/pkg/core"
 )
 
@@ -18,12 +18,12 @@ type Handler interface {
 }
 
 type handler struct {
-	userService user_service.Service
+	adminService admin.Service
 }
 
 func New() Handler {
 	return &handler{
-		userService: user_service.New(),
+		adminService: admin.New(),
 	}
 }
 

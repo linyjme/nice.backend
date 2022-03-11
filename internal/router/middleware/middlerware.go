@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"niceBackend/internal/api/service/admin_service"
+	"niceBackend/internal/api/service/admin"
 	"niceBackend/internal/pkg/cache"
 	"niceBackend/internal/pkg/core"
 	"niceBackend/internal/pkg/db"
@@ -28,10 +28,10 @@ type Middleware interface {
 }
 
 type middleware struct {
-	logger            *zap.Logger
-	cache             cache.Repo
-	db                db.Repo
-	adminService      admin_service.Service
+	logger       *zap.Logger
+	cache        cache.Repo
+	db           db.Repo
+	adminService admin.Service
 }
 
 func New(logger *zap.Logger, cache cache.Repo, db db.Repo) Middleware {

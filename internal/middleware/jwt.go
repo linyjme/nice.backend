@@ -9,7 +9,7 @@ import (
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
 	"niceBackend/internal/api/service"
-	"niceBackend/internal/api/service/user_service"
+	"niceBackend/internal/api/service/admin"
 	"strconv"
 	"time"
 )
@@ -37,7 +37,7 @@ func JWTAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		if err, _ = user_service.FindUserByUuid(claims.UUID.String()); err != nil {
+		if err, _ = admin.FindUserByUuid(claims.UUID.String()); err != nil {
 			_ = service.JsonInBlacklist(response.JwtBlacklist{Jwt: token})
 			response.FailWithDetailed(gin.H{"reload": true}, err.Error(), c)
 			c.Abort()

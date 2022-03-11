@@ -12,7 +12,7 @@ import (
 	"niceBackend/internal/repository/db_repo/categroy_repo"
 	"niceBackend/internal/repository/db_repo/comment_repo"
 	"niceBackend/internal/repository/db_repo/tag_repo"
-	"niceBackend/internal/repository/db_repo/user_repo"
+	"niceBackend/internal/repository/db_repo/admin_repo"
 	"niceBackend/pkg"
 	"niceBackend/source"
 	"os"
@@ -47,7 +47,7 @@ func SqlTables(db *gorm.DB) {
 		categroy_repo.Category{},
 		announcement_repo.Announcement{},
 		comment_repo.Comments{},
-		user_repo.Admin{},
+		admin_repo.Admin{},
 		article_repo.Article{},
 	)
 	if err != nil {

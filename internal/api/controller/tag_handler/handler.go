@@ -1,7 +1,7 @@
 package tag_handler
 
 import (
-	"niceBackend/internal/api/service/tag_service"
+	"niceBackend/internal/api/service/tag"
 	"niceBackend/internal/pkg/core"
 )
 
@@ -17,12 +17,12 @@ type Handler interface {
 }
 
 type handler struct {
-	tagService tag_service.Service
+	tagService tag.Service
 }
 
 func New() Handler {
 	return &handler{
-		tagService: tag_service.New(),
+		tagService: tag.New(),
 	}
 }
 

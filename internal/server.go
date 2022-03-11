@@ -13,11 +13,6 @@ import (
 	"time"
 )
 
-type server interface {
-	ListenAndServe() error
-	Shutdown(context.Context) error
-}
-
 func RunServer() {
 	//Router := initialize.Routers()
 

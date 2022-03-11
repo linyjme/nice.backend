@@ -1,4 +1,4 @@
-package announcement_service
+package announcement
 
 import (
 	"fmt"

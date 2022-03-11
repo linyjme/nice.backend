@@ -11,7 +11,7 @@ import (
 	"niceBackend/internal/middleware"
 	"niceBackend/internal/pkg/code"
 	"niceBackend/internal/pkg/core"
-	"niceBackend/internal/repository/db_repo/user_repo"
+	"niceBackend/internal/repository/db_repo/admin_repo"
 	"niceBackend/pkg"
 	"time"
 )
@@ -52,7 +52,10 @@ func (h *handler) Login() core.HandlerFunc {
 			return
 		}
 		//account := req.Account
-		//password := req.Password
+		//searchOneData := new(admin.SearchOneData)
+		//password := pkg.DecodeBase64(req.Password)
+
+
 		//h.userService
 		//u := &model.User{Account: account, Password: password}
 		//if err, user := service.Login(u); err != nil {
@@ -74,7 +77,7 @@ func (h *handler) Login() core.HandlerFunc {
 }
 
 // 登录以后签发jwt
-func tokenNext(c *gin.Context, user user_repo.Admin) {
+func tokenNext(c *gin.Context, user admin_repo.Admin) {
 	j := &middleware.JWT{SigningKey: []byte(global.NiceConfig.JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
 		UUID:       user.UUID,

@@ -1,4 +1,4 @@
-package tag_service
+package tag
 
 import (
 	"niceBackend/internal/pkg/core"

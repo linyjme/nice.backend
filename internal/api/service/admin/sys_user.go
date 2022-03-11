@@ -1,10 +1,10 @@
-package user_service
+package admin
 
 import (
 	"errors"
 	"gorm.io/gorm"
 	"niceBackend/common/global"
-	"niceBackend/internal/repository/db_repo/user_repo"
+	"niceBackend/internal/repository/db_repo/admin_repo"
 	"niceBackend/pkg"
 )
 
@@ -14,14 +14,14 @@ import (
 //@param: u *model.Admin
 //@return: err error, userInter *model.Admin
 
-func Login(u *user_repo.Admin) (err error, userInter *user_repo.Admin) {
-	var user user_repo.Admin
+func Login(u *admin_repo.Admin) (err error, userInter *admin_repo.Admin) {
+	var user admin_repo.Admin
 	err = global.NiceDb.Where("account = ? AND password = ?", u.Account, u.Password).Preload("Authority").First(&user).Error
 	return err, &user
 }
 
-func Register(u user_repo.Admin) (err error, userInter user_repo.Admin) {
-	var user user_repo.Admin
+func Register(u admin_repo.Admin) (err error, userInter admin_repo.Admin) {
+	var user admin_repo.Admin
 	if !errors.Is(global.NiceDb.Where("username = ?", u.Account).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
 		return errors.New("用户名已注册"), userInter
 	}
@@ -31,8 +31,8 @@ func Register(u user_repo.Admin) (err error, userInter user_repo.Admin) {
 	return err, u
 }
 
-func FindUserByUuid(uuid string) (err error, user *user_repo.Admin) {
-	var u user_repo.Admin
+func FindUserByUuid(uuid string) (err error, user *admin_repo.Admin) {
+	var u admin_repo.Admin
 	if err = global.NiceDb.Where("`uuid` = ?", uuid).First(&u).Error; err != nil {
 		return errors.New("用户不存在"), &u
 	}
