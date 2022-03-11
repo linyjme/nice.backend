@@ -14,6 +14,7 @@ require (
 	github.com/go-redis/redis v6.15.7+incompatible
 	github.com/golang/protobuf v1.5.2
 	github.com/gookit/color v1.3.1
+	github.com/gorilla/websocket v1.4.2
 	github.com/jakecoffman/cron v0.0.0-20190106200828-7e2009c226a5
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/juju/ratelimit v1.0.1
@@ -21,6 +22,7 @@ require (
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/onsi/gomega v1.14.0 // indirect
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.11.0
 	github.com/rs/cors/wrapper/gin v0.0.0-20211222042454-bf1dbac76afe
@@ -33,16 +35,18 @@ require (
 	go.mongodb.org/mongo-driver v1.7.0
 	go.uber.org/multierr v1.6.0
 	go.uber.org/zap v1.18.1
+	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/sys v0.0.0-20220222200937-f2425489ef4c // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
-	golang.org/x/tools v0.1.5 // indirect
+	golang.org/x/tools v0.1.9
 	google.golang.org/grpc v1.38.0
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
-	gorm.io/driver/mysql v1.1.1
-	gorm.io/driver/sqlite v1.1.4
-	gorm.io/gorm v1.21.12
-	github.com/gorilla/websocket v1.4.2
+	gorm.io/driver/mysql v1.3.2
+	gorm.io/driver/sqlite v1.3.1
+	gorm.io/gorm v1.23.1
+	github.com/jinzhu/gorm v1.9.16
 
 )

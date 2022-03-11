@@ -15,7 +15,7 @@ var Admin = new(admin)
 type admin struct{}
 
 var admins = []admin_repo.Admin{
-	{UUID: uuid.NewV4(), Account: "admin", Password: password.GeneratePassword("root"), NickName: "管理员", HeaderImg: "http://qmplusimg.henrongyi.top/NICE_header.jpg"},
+	{UUID: uuid.NewV4(), Account: "root", Password: password.GeneratePassword("root"), NickName: "管理员", HeaderImg: "http://qmplusimg.henrongyi.top/NICE_header.jpg"},
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

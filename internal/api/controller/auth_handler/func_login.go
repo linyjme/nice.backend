@@ -1,18 +1,25 @@
 package auth_handler
 
 import (
+	"crypto/sha256"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/patrickmn/go-cache"
 	"go.uber.org/zap"
 	"net/http"
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
+	"niceBackend/config"
+	"niceBackend/internal/api/service/admin"
 	"niceBackend/internal/middleware"
 	"niceBackend/internal/pkg/code"
 	"niceBackend/internal/pkg/core"
+	"niceBackend/internal/pkg/password"
 	"niceBackend/internal/repository/db_repo/admin_repo"
 	"niceBackend/pkg"
+	"sync"
 	"time"
 )
 
@@ -31,6 +38,11 @@ type Token struct {
 	AccessToken string `json:"access_token"`
 	ExpiresIn   uint16 `json:"expires_in"`
 }
+
+var (
+	loginOnce      = sync.Once{}
+	userLoginCache *cache.Cache
+)
 
 // @Tags Base
 // @Summary 用户登录
@@ -51,11 +63,33 @@ func (h *handler) Login() core.HandlerFunc {
 			)
 			return
 		}
-		//account := req.Account
-		//searchOneData := new(admin.SearchOneData)
-		//password := pkg.DecodeBase64(req.Password)
-
-
+		loginOnce.Do(func() {
+			if config.LoginCacheTime > 0 {
+				userLoginCache = cache.New(time.Duration(config.LoginCacheTime)*time.Second, 2*time.Minute)
+			}
+		})
+		pass := pkg.DecodeBase64(req.Password)
+		account := req.Account
+		if account == ""{
+			account = pass
+		}
+		var shaKey string
+		if userLoginCache != nil {
+			h := sha256.New()
+			h.Write(pkg.StringToBytes(account + "|" + pass))
+			shaKey = string(h.Sum(nil))
+			u, ok := userLoginCache.Get(shaKey)
+			if ok {
+				res.Result = u.(Token)
+				c.Payload(res)
+				return
+			}
+		}
+		searchOneData := new(admin.SearchOneData)
+		searchOneData.Account = account
+		searchOneData.Password = password.GeneratePassword(pass)
+		info, _ := h.adminService.Detail(c, searchOneData)
+		fmt.Println(info)
 		//h.userService
 		//u := &model.User{Account: account, Password: password}
 		//if err, user := service.Login(u); err != nil {
@@ -67,11 +101,15 @@ func (h *handler) Login() core.HandlerFunc {
 		//}
 		res.Status = "success"
 		res.Message = "登陆成功"
-		res.Result = Token{
+		token := Token{
 			AccessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJyb290In0sImlhdCI6MTY0NTY5NTkxMiwiZXhwIjoxNjQ1Njk5NTEyfQ.o4xs9FrYHDam5YhK2hmDsPO0qLhsajX3mCnhPwH0wyY",
 			ExpiresIn:   3600,
 		}
+		res.Result = token
 		c.Payload(res)
+		if userLoginCache != nil {
+			userLoginCache.SetDefault(shaKey, token)
+		}
 	}
 
 }
