@@ -2,12 +2,14 @@ package initialize
 
 import (
 	"fmt"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-	"niceBackend/common/global"
-	"niceBackend/pkg"
 	"os"
 	"time"
+
+	"niceBackend/common/global"
+	"niceBackend/pkg"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 var level zapcore.Level

@@ -2,8 +2,10 @@ package cron_server
 
 import (
 	"fmt"
-	"github.com/jakecoffman/cron"
+
 	"niceBackend/internal/repository/db_repo/cron_task_repo"
+
+	"github.com/jakecoffman/cron"
 )
 
 func (s *server) AddJob(task *cron_task_repo.CronTask) cron.FuncJob {

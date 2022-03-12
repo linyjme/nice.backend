@@ -3,11 +3,10 @@ package auth_handler
 import (
 	"crypto/sha256"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	"github.com/patrickmn/go-cache"
-	"go.uber.org/zap"
 	"net/http"
+	"sync"
+	"time"
+
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
@@ -19,8 +18,11 @@ import (
 	"niceBackend/internal/pkg/password"
 	"niceBackend/internal/repository/db_repo/admin_repo"
 	"niceBackend/pkg"
-	"sync"
-	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	"github.com/patrickmn/go-cache"
+	"go.uber.org/zap"
 )
 
 // Admin login structure
@@ -70,7 +72,7 @@ func (h *handler) Login() core.HandlerFunc {
 		})
 		pass := pkg.DecodeBase64(req.Password)
 		account := req.Account
-		if account == ""{
+		if account == "" {
 			account = pass
 		}
 		var shaKey string

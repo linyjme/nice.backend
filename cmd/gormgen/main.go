@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"log"
-	"niceBackend/cmd/gormgen/pkg"
 	"os"
 	"strings"
+
+	"niceBackend/cmd/gormgen/pkg"
 )
 
 var (

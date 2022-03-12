@@ -1,10 +1,11 @@
 package initialize
 
 import (
-	"go.uber.org/zap"
 	"niceBackend/common/global"
 	nc "niceBackend/config"
 	"niceBackend/pkg"
+
+	"go.uber.org/zap"
 )
 
 // @description   set system config,

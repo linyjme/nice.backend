@@ -1,16 +1,17 @@
 package router
 
 import (
+	"strconv"
+
 	"niceBackend/common/global"
 	"niceBackend/internal/alert"
 	"niceBackend/internal/metrics"
 	"niceBackend/internal/pkg/core"
 	"niceBackend/internal/router/interceptor"
-	"strconv"
 )
 
 type resource struct {
-	mux core.Mux
+	mux          core.Mux
 	interceptors interceptor.Interceptor
 }
 

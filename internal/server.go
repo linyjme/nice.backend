@@ -3,14 +3,16 @@ package internal
 import (
 	"context"
 	"fmt"
-	"go.uber.org/zap"
 	"net/http"
+	"time"
+
 	"niceBackend/common/global"
 	"niceBackend/internal/cron/asynchronous"
 	"niceBackend/internal/initialize"
 	"niceBackend/internal/router"
 	"niceBackend/pkg/shutdown"
-	"time"
+
+	"go.uber.org/zap"
 )
 
 func RunServer() {

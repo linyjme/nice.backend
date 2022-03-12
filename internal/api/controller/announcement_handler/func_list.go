@@ -10,7 +10,7 @@ type loginResponse struct {
 	Result  dataResponse `json:"result"`
 }
 type dataResponse struct {
-	Data  []int  `json:"data"`
+	Data []int `json:"data"`
 }
 
 // List 管理员列表

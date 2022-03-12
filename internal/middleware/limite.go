@@ -1,10 +1,11 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/juju/ratelimit"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/juju/ratelimit"
 )
 
 func RateLimitMiddleware(fillInterval time.Duration, cap int64) func(c *gin.Context) {
@@ -19,6 +20,3 @@ func RateLimitMiddleware(fillInterval time.Duration, cap int64) func(c *gin.Cont
 		c.Next()
 	}
 }
-
-
-

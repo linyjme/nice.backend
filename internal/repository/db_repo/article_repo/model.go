@@ -1,10 +1,11 @@
 package article_repo
 
 import (
-	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 	"niceBackend/internal/repository/db_repo/categroy_repo"
 	"niceBackend/internal/repository/db_repo/tag_repo"
+
+	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Article struct {
@@ -17,7 +18,7 @@ type Article struct {
 	Origin      uint8                  `json:"origin" bson:"origin" gorm:"default:0;not null"`                   //
 	Tag         tag_repo.Tags          `json:"tags" gorm:"foreignKey:TagId;references:ID;"`
 	TagId       uint                   `json:"tagId" gorm:"comment:文字标签"`
-	Category    categroy_repo.Category `json:"Category" gorm:"foreignKey:CategoryId;references:ID;"` //
+	Category    categroy_repo.Category `json:"Category" gorm:"foreignKey:CategoryId;references:ID;"`     //
 	CategoryId  uint                   `json:"categoryId" bson:"categoryId" gorm:"comment:文章分类"`         //
 	Description string                 `json:"description"  bson:"description" gorm:"type:varchar(256)"` //
 	Title       string                 `json:"title" bson:"title" gorm:"type:varchar(64)"`               //

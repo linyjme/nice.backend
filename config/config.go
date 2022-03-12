@@ -1,5 +1,7 @@
 package config
 
+import "time"
+
 type Server struct {
 	JWT    JWT     `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
 	Zap    Zap     `mapstructure:"zap" json:"zap" yaml:"zap"`
@@ -18,20 +20,32 @@ type JWT struct {
 }
 
 type Mysql struct {
-	Path         string `mapstructure:"path" json:"path" yaml:"path"`                             // 服务器地址:端口
-	Config       string `mapstructure:"config" json:"config" yaml:"config"`                       // 高级配置
-	Dbname       string `mapstructure:"db-name" json:"dbname" yaml:"db-name"`                     // 数据库名
-	Username     string `mapstructure:"username" json:"username" yaml:"username"`                 // 数据库用户名
-	Password     string `mapstructure:"password" json:"password" yaml:"password"`                 // 数据库密码
-	MaxIdleConns int    `mapstructure:"max-idle-conns" json:"maxIdleConns" yaml:"max-idle-conns"` // 空闲中的最大连接数
-	MaxOpenConns int    `mapstructure:"max-open-conns" json:"maxOpenConns" yaml:"max-open-conns"` // 打开到数据库的最大连接数
-	LogMode      string `mapstructure:"log-mode" json:"logMode" yaml:"log-mode"`                  // 是否开启Gorm全局日志
-	LogZap       bool   `mapstructure:"log-zap" json:"logZap" yaml:"log-zap"`                     // 是否通过zap写入日志文件
+	Read struct {
+		Path     string `mapstructure:"path" json:"path" yaml:"path"`             // 服务器地址:端口
+		Config   string `mapstructure:"config" json:"config" yaml:"config"`       // 高级配置
+		Dbname   string `mapstructure:"db-name" json:"dbname" yaml:"db-name"`     // 数据库名
+		Username string `mapstructure:"username" json:"username" yaml:"username"` // 数据库用户名
+		Password string `mapstructure:"password" json:"password" yaml:"password"` // 数据库密码
+	} `yaml:"read"`
+	Write struct {
+		Path     string `mapstructure:"path" json:"path" yaml:"path"`             // 服务器地址:端口
+		Config   string `mapstructure:"config" json:"config" yaml:"config"`       // 高级配置
+		Dbname   string `mapstructure:"db-name" json:"dbname" yaml:"db-name"`     // 数据库名
+		Username string `mapstructure:"username" json:"username" yaml:"username"` // 数据库用户名
+		Password string `mapstructure:"password" json:"password" yaml:"password"` // 数据库密码
+	} `yaml:"write"`
+	Base struct {
+		MaxIdleConns    int           `mapstructure:"max-idle-conns" json:"maxIdleConns" yaml:"max-idle-conns"` // 空闲中的最大连接数
+		MaxOpenConns    int           `mapstructure:"max-open-conns" json:"maxOpenConns" yaml:"max-open-conns"` // 打开到数据库的最大连接数
+		LogMode         string        `mapstructure:"log-mode" json:"logMode" yaml:"log-mode"`                  // 是否开启Gorm全局日志
+		LogZap          bool          `mapstructure:"log-zap" json:"logZap" yaml:"log-zap"`                     // 是否通过zap写入日志文件
+		ConnMaxLifeTime time.Duration `mapstructure:"connMaxLifeTime" json:"connMaxLifeTime" yaml:"connMaxLifeTime"`
+	} `yaml:"base"`
 }
 
-func (m *Mysql) Dsn() string {
-	return m.Username + ":" + m.Password + "@tcp(" + m.Path + ")/" + m.Dbname + "?" + m.Config
-}
+//func (m *Mysql) Dsn() string {
+//	return m.Username + ":" + m.Password + "@tcp(" + m.Path + ")/" + m.Dbname + "?" + m.Config
+//}
 
 type Redis struct {
 	DB           int    `mapstructure:"db" json:"db" yaml:"db"`                   // redis的哪个数据库
@@ -52,12 +66,12 @@ type Mongodb struct {
 type System struct {
 	Env           string `mapstructure:"env" json:"env" yaml:"env"`                                 // 环境值
 	Port          int    `mapstructure:"port" json:"port" yaml:"port"`                              // 端口值
-	Domain        string `mapstructure:"domain" json:"domain" yaml:"domain"`                          // 域名
+	Domain        string `mapstructure:"domain" json:"domain" yaml:"domain"`                        // 域名
 	DbType        string `mapstructure:"db-type" json:"dbType" yaml:"db-type"`                      // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql
 	OssType       string `mapstructure:"oss-type" json:"ossType" yaml:"oss-type"`                   // Oss类型
 	UseMultipoint bool   `mapstructure:"use-multipoint" json:"useMultipoint" yaml:"use-multipoint"` // 多点登录拦截
 	DbMigrate     bool   `mapstructure:"db_migrate" json:"db_migrate" yaml:"db_migrate"`            // 初始化数据标志
-	Language     string   `mapstructure:"language" json:"language" yaml:"language"`            // 初始化数据标志
+	Language      string `mapstructure:"language" json:"language" yaml:"language"`                  // 初始化数据标志
 }
 
 type Timer struct {

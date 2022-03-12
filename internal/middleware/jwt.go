@@ -2,16 +2,18 @@ package middleware
 
 import (
 	"errors"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
+	"strconv"
+	"time"
+
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
 	"niceBackend/internal/api/service"
 	"niceBackend/internal/api/service/admin"
-	"strconv"
-	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func JWTAuth() gin.HandlerFunc {

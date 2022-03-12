@@ -24,7 +24,7 @@ func EncodeBase64(str string) string {
 
 func DecodeBase64(str string) string {
 	decoded, err := base64.StdEncoding.DecodeString(str)
-	if err != nil{
+	if err != nil {
 
 	}
 	decodeStr := string(decoded)

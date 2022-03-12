@@ -139,7 +139,6 @@ func (t *Trace) AppendRedis(redis *Redis) *Trace {
 	return t
 }
 
-
 // AppendGRPC 追加 gRPC 调用信息
 func (t *Trace) AppendGRPC(grpc *Grpc) *Trace {
 	if grpc == nil {
@@ -152,4 +151,3 @@ func (t *Trace) AppendGRPC(grpc *Grpc) *Trace {
 	t.GRPCs = append(t.GRPCs, grpc)
 	return t
 }
-

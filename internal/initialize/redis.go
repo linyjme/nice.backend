@@ -1,9 +1,10 @@
 package initialize
 
 import (
+	"niceBackend/common/global"
+
 	"github.com/go-redis/redis"
 	"go.uber.org/zap"
-	"niceBackend/common/global"
 )
 
 func Redis() {
@@ -11,7 +12,7 @@ func Redis() {
 	client := redis.NewClient(&redis.Options{
 		Addr:     redisCfg.Addr,
 		Password: redisCfg.Pass, // no password set
-		DB:       redisCfg.DB,       // use default DB
+		DB:       redisCfg.DB,   // use default DB
 	})
 	pong, err := client.Ping().Result()
 	if err != nil {

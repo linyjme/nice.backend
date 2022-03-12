@@ -2,9 +2,10 @@ package errors
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"io"
 	"runtime"
+
+	"github.com/pkg/errors"
 )
 
 func callers() []uintptr {

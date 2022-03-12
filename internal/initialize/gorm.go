@@ -1,22 +1,24 @@
 package initialize
 
 import (
-	"go.uber.org/zap"
-	"gorm.io/driver/mysql"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
+	"os"
+	"path"
+
 	"niceBackend/common/global"
+	"niceBackend/internal/repository/db_repo/admin_repo"
 	"niceBackend/internal/repository/db_repo/announcement_repo"
 	"niceBackend/internal/repository/db_repo/article_repo"
 	"niceBackend/internal/repository/db_repo/categroy_repo"
 	"niceBackend/internal/repository/db_repo/comment_repo"
 	"niceBackend/internal/repository/db_repo/tag_repo"
-	"niceBackend/internal/repository/db_repo/admin_repo"
 	"niceBackend/pkg"
 	"niceBackend/source"
-	"os"
-	"path"
+
+	"go.uber.org/zap"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 //@author: yjLin
@@ -73,7 +75,7 @@ func SqlTables(db *gorm.DB) {
 //@return: *gorm.DB
 
 func GormMysql() *gorm.DB {
-	m := global.NiceConfig.Mysql
+	m := global.NiceConfig.Mysql.Write
 	if m.Dbname == "" {
 		return nil
 	}

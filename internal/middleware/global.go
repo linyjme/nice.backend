@@ -1,8 +1,9 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"niceBackend/common/global"
+
+	"github.com/gin-gonic/gin"
 )
 
 // 全局中间件定义中间

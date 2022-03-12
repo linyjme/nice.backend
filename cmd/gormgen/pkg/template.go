@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/xinliangnote/go-gin-api/internal/repository/mysql"
+	"niceBackend/internal/repository/mysql"
 
 	"github.com/pkg/errors"
 	"gorm.io/gorm"

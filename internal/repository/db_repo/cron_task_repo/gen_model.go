@@ -3,7 +3,6 @@ package cron_task_repo
 import "time"
 
 // CronTask 后台任务表
-//go:generate gormgen -structs CronTask -input .
 type CronTask struct {
 	Id                  int32     // 主键
 	Name                string    // 任务名称

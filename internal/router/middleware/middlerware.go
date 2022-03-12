@@ -24,7 +24,6 @@ type Middleware interface {
 
 	// DisableLog 不记录日志
 	DisableLog() core.HandlerFunc
-
 }
 
 type middleware struct {
@@ -36,9 +35,9 @@ type middleware struct {
 
 func New(logger *zap.Logger, cache cache.Repo, db db.Repo) Middleware {
 	return &middleware{
-		logger:            logger,
-		cache:             cache,
-		db:                db,
+		logger: logger,
+		cache:  cache,
+		db:     db,
 	}
 }
 

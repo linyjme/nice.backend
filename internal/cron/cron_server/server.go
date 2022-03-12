@@ -1,11 +1,13 @@
 package cron_server
 
 import (
-	"github.com/jakecoffman/cron"
-	"go.uber.org/zap"
+	"sync"
+
 	"niceBackend/internal/pkg/cache"
 	"niceBackend/pkg/errors"
-	"sync"
+
+	"github.com/jakecoffman/cron"
+	"go.uber.org/zap"
 )
 
 var _ Server = (*server)(nil)
@@ -48,7 +50,6 @@ type Server interface {
 
 	// Start 启动 cron 服务
 	Start()
-
 }
 
 func New(logger *zap.Logger, cache cache.Repo) (Server, error) {

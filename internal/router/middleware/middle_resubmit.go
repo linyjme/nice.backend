@@ -2,9 +2,9 @@ package middleware
 
 import (
 	"net/http"
-	"niceBackend/config"
 	"time"
 
+	"niceBackend/config"
 	"niceBackend/configs"
 	"niceBackend/internal/pkg/cache"
 	"niceBackend/internal/pkg/code"

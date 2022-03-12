@@ -1,12 +1,14 @@
 package pkg
 
 import (
-	"niceBackend/common/global"
-	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"go.uber.org/zap/zapcore"
 	"os"
 	"path"
 	"time"
+
+	"niceBackend/common/global"
+
+	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"go.uber.org/zap/zapcore"
 )
 
 //@author: yjLin

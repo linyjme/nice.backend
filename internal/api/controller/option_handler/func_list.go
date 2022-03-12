@@ -5,7 +5,7 @@ import "niceBackend/internal/pkg/core"
 type loginResponse struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
-	Result  string  `json:"result"`
+	Result  string `json:"result"`
 }
 
 // List 管理员列表

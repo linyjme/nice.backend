@@ -20,11 +20,18 @@ mongodb:
   password: ""
   number: 10
 mysql:
-  path: 127.0.0.1:3306
-  config: charset=utf8mb4&parseTime=True&loc=Local
-  db-name: nice
-  username: root
-  password: "123456"
+  read:
+    path: 127.0.0.1:3306
+    config: charset=utf8mb4&parseTime=True&loc=Local
+    db-name: nice
+    username: root
+    password: "123456"
+  write:
+    path: 127.0.0.1:3306
+    config: charset=utf8mb4&parseTime=True&loc=Local
+    db-name: nice
+    username: root
+    password: "123456"
   max-idle-conns: 0
   max-open-conns: 0
   log-mode: ""

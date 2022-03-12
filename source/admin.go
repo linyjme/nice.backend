@@ -1,13 +1,14 @@
 package source
 
 import (
+	"niceBackend/common/global"
+	"niceBackend/internal/pkg/password"
+	"niceBackend/internal/repository/db_repo/admin_repo"
+
 	"github.com/gookit/color"
 	uuid "github.com/satori/go.uuid"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"niceBackend/common/global"
-	"niceBackend/internal/pkg/password"
-	"niceBackend/internal/repository/db_repo/admin_repo"
 )
 
 var Admin = new(admin)

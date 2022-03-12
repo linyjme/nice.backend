@@ -2,10 +2,9 @@ package request
 
 // Admin register structure
 
-
 type Announcements struct {
 	Content string `json:"content"` // 用户 账号密码
-	State   uint8   `json:"state"`   // 用户 账号密码
+	State   uint8  `json:"state"`   // 用户 账号密码
 }
 
 // Modify password structure

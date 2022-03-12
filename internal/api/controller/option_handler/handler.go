@@ -18,8 +18,7 @@ type handler struct {
 }
 
 func New() Handler {
-	return &handler{
-	}
+	return &handler{}
 }
 
 func (h *handler) i() {}

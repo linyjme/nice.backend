@@ -2,6 +2,7 @@ package mail
 
 import (
 	"strings"
+
 	"gopkg.in/gomail.v2"
 )
 

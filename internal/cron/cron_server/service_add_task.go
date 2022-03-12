@@ -1,9 +1,11 @@
 package cron_server
 
 import (
-	"github.com/spf13/cast"
-	"niceBackend/internal/repository/db_repo/cron_task_repo"
 	"strings"
+
+	"niceBackend/internal/repository/db_repo/cron_task_repo"
+
+	"github.com/spf13/cast"
 )
 
 func (s *server) AddTask(task *cron_task_repo.CronTask) {

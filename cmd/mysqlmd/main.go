@@ -4,11 +4,13 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"gorm.io/gorm"
 	"log"
-	"niceBackend/cmd/mysqlmd/mysql"
 	"os"
 	"strings"
+
+	"niceBackend/cmd/mysqlmd/mysql"
+
+	"gorm.io/gorm"
 )
 
 type tableInfo struct {

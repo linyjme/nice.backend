@@ -1,9 +1,8 @@
 package notify
 
 import (
-
-	"niceBackend/internal/pkg/core"
 	"niceBackend/common/global"
+	"niceBackend/internal/pkg/core"
 	"niceBackend/pkg/mail"
 
 	"go.uber.org/zap"

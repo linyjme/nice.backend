@@ -15,13 +15,11 @@ var (
 
 type handler struct {
 	logger *zap.Logger
-
 }
 
-func New(logger *zap.Logger,) *handler {
+func New(logger *zap.Logger) *handler {
 	return &handler{
 		logger: logger,
-
 	}
 }
 

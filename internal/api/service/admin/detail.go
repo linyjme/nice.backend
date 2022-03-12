@@ -7,7 +7,7 @@ import (
 
 type SearchOneData struct {
 	Id       int32  // 用户ID
-	Account string // 用户名
+	Account  string // 用户名
 	Nickname string // 昵称
 	Mobile   string // 手机号
 	Password string // 密码

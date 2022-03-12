@@ -24,14 +24,14 @@ func ByteString(p []byte) string {
 
 func DecodeBase64(str string) string {
 	decoded, err := base64.StdEncoding.DecodeString(str)
-	if err != nil{
+	if err != nil {
 
 	}
 	decodeStr := string(decoded)
 	return decodeStr
 }
 
-func main()  {
+func main() {
 	str := "root"
 	res := MD5V([]byte(str))
 	fmt.Println(res)

@@ -5,6 +5,10 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
+	"runtime/debug"
+	"time"
+
 	"niceBackend/common/global"
 	"niceBackend/config"
 	_ "niceBackend/docs"
@@ -15,9 +19,6 @@ import (
 	"niceBackend/pkg/env"
 	"niceBackend/pkg/errors"
 	"niceBackend/pkg/trace"
-	"os"
-	"runtime/debug"
-	"time"
 
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"

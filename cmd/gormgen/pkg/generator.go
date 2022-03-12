@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/jinzhu/gorm"
 	"go/format"
 	"io/ioutil"
 	"log"
 	"strings"
+
+	"github.com/jinzhu/gorm"
 )
 
 // fieldConfig

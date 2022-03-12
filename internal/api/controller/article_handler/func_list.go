@@ -3,12 +3,12 @@ package article_handler
 import "niceBackend/internal/pkg/core"
 
 type loginResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
-	Result  dataResponse  `json:"result"`
+	Status  string       `json:"status"`
+	Message string       `json:"message"`
+	Result  dataResponse `json:"result"`
 }
 type dataResponse struct {
-	Data  []int  `json:"data"`
+	Data []int `json:"data"`
 }
 
 // List 管理员列表

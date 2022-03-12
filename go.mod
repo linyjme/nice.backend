@@ -16,6 +16,7 @@ require (
 	github.com/gookit/color v1.3.1
 	github.com/gorilla/websocket v1.4.2
 	github.com/jakecoffman/cron v0.0.0-20190106200828-7e2009c226a5
+	github.com/jinzhu/gorm v1.9.16
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/juju/ratelimit v1.0.1
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
@@ -47,6 +48,5 @@ require (
 	gorm.io/driver/mysql v1.3.2
 	gorm.io/driver/sqlite v1.3.1
 	gorm.io/gorm v1.23.1
-	github.com/jinzhu/gorm v1.9.16
 
 )

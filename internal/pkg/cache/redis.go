@@ -1,12 +1,14 @@
 package cache
 
 import (
-	"github.com/go-redis/redis"
+	"time"
+
 	"niceBackend/common/global"
 	"niceBackend/pkg/errors"
 	"niceBackend/pkg/time_parse"
 	"niceBackend/pkg/trace"
-	"time"
+
+	"github.com/go-redis/redis"
 )
 
 type Option func(*option)

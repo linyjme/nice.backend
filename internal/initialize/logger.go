@@ -3,12 +3,13 @@ package initialize
 import (
 	"context"
 	"fmt"
-	"gorm.io/gorm/logger"
-	"gorm.io/gorm/utils"
 	"io/ioutil"
 	"log"
 	"os"
 	"time"
+
+	"gorm.io/gorm/logger"
+	"gorm.io/gorm/utils"
 )
 
 type config struct {

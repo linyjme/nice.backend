@@ -3,11 +3,13 @@ package tag
 import (
 	ctx "context"
 	"fmt"
+
+	"niceBackend/common/global"
+	"niceBackend/internal/repository/db_repo/tag_repo"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
-	"niceBackend/common/global"
-	"niceBackend/internal/repository/db_repo/tag_repo"
 )
 
 func NewModel() *tag_repo.Tags {

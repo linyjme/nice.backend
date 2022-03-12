@@ -1,9 +1,11 @@
 package pkg
 
 import (
-	"niceBackend/common/global"
-	"go.uber.org/zap"
 	"os"
+
+	"niceBackend/common/global"
+
+	"go.uber.org/zap"
 )
 
 //@author: yjLin

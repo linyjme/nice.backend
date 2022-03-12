@@ -9,15 +9,14 @@ var _ Service = (*service)(nil)
 
 type Service interface {
 	i()
-	Detail(ctx core.Context, searchOneData *SearchOneData)  (info *admin_repo.Admin, err error)
+	Detail(ctx core.Context, searchOneData *SearchOneData) (info *admin_repo.Admin, err error)
 }
 
 type service struct {
 }
 
 func New() Service {
-	return &service{
-	}
+	return &service{}
 }
 
 func (s *service) i() {}

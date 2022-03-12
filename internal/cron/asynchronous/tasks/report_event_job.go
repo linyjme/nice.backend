@@ -2,10 +2,11 @@ package tasks
 
 import (
 	"fmt"
-	"go.uber.org/zap"
-	"niceBackend/common/global"
-)
 
+	"niceBackend/common/global"
+
+	"go.uber.org/zap"
+)
 
 func ReportEventJob() {
 	defer func() {

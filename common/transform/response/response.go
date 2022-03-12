@@ -1,15 +1,17 @@
 package response
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
 	"niceBackend/common/constants"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Response struct {
-	Code int         `json:"code"`
-	Result interface{} `json:"result"`
-	Message  string      `json:"message"`
+	Code    int         `json:"code"`
+	Result  interface{} `json:"result"`
+	Message string      `json:"message"`
 	Status  string      `json:"status"`
 }
 

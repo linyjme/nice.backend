@@ -3,7 +3,7 @@ package socket
 import (
 	"net/http"
 	"time"
-	
+
 	"niceBackend/pkg/errors"
 
 	"github.com/gorilla/websocket"

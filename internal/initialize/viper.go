@@ -1,9 +1,11 @@
 package initialize
 
 import (
+	"fmt"
+
 	"niceBackend/common/global"
 	"niceBackend/pkg"
-	"fmt"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )

@@ -13,8 +13,7 @@ type service struct {
 }
 
 func New() Service {
-	return &service{
-	}
+	return &service{}
 }
 
 func (s *service) i() {}

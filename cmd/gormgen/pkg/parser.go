@@ -1,13 +1,14 @@
 package pkg
 
 import (
-	"github.com/jinzhu/gorm"
 	"go/ast"
 	"go/build"
 	"go/parser"
 	"go/token"
 	"log"
 	"strings"
+
+	"github.com/jinzhu/gorm"
 )
 
 // The Parser is used to parse a directory and expose information about the structs defined in the files of this directory.

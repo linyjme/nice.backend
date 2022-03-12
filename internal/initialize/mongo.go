@@ -2,11 +2,13 @@ package initialize
 
 import (
 	"context"
+	"time"
+
+	"niceBackend/common/global"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
-	"niceBackend/common/global"
-	"time"
 )
 
 func ConnectMongo() {

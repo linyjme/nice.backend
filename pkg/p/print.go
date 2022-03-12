@@ -2,8 +2,9 @@ package p
 
 import (
 	"fmt"
-	"niceBackend/pkg/trace"
 	"time"
+
+	"niceBackend/pkg/trace"
 )
 
 type Option func(*option)
