@@ -5,7 +5,7 @@ import "time"
 // TbAdministrator
 //go:generate gormgen -structs TbAdministrator -input .
 type TbAdministrator struct {
-	Id        int64     //
+	Id        int32     //
 	CreatedAt time.Time `gorm:"time"` //
 	UpdatedAt time.Time `gorm:"time"` //
 	DeletedAt time.Time `gorm:"time"` //
