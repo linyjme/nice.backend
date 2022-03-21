@@ -1,8 +1,10 @@
 package source
 
-import "niceBackend/internal/model"
+import (
+	"niceBackend/internal/repository/db_repo"
+)
 
-func InitDB(InitDBFunctions ...model.InitDBFunc) (err error) {
+func InitDB(InitDBFunctions ...db_repo.InitDBFunc) (err error) {
 	for _, v := range InitDBFunctions {
 		err = v.Init()
 		if err != nil {

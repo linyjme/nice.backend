@@ -2,12 +2,10 @@ package initialize
 
 import (
 	"fmt"
-
-	"niceBackend/common/global"
-	"niceBackend/pkg"
-
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"niceBackend/common/global"
+	"niceBackend/pkg"
 )
 
 func Viper() *viper.Viper {

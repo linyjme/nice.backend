@@ -47,6 +47,7 @@ require (
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 	gorm.io/driver/mysql v1.3.2
 	gorm.io/driver/sqlite v1.3.1
+	gorm.io/gen v0.2.43 // indirect
 	gorm.io/gorm v1.23.1
 
 )

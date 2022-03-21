@@ -20,6 +20,6 @@ type Admin struct {
 	Status    uint8     `json:"status" gorm:"default:0"`                                                       //
 }
 
-func (s Admin) TableName() string {
+func (Admin) TableName() string {
 	return "tb_administrator"
 }
