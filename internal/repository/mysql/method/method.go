@@ -28,74 +28,19 @@ type Method interface {
 }
 
 type Methods interface {
-	// Where("name=@name and age=@age")
-	SimpleFindByNameAndAge(name string, age int) (gen.T, error)
-	//simple query
-
-	// select * from users where id=@id
-	FindUserToMap(id int) (gen.M, error)
-	// return to map[string]interface{}
-
-	//sql(insert into @@table (name,age) values (@name,@age) )
-	InsertValue(age int, name string) error
-	// execute only return error
-
-	/*
-		select * from @@table
-		  {{where}}
-				  id>0
-		       {{if cond}}id=@id {{end}}
-		       {{if key!="" && value != ""}} or @@key=@value{{end}}
-		   {{end}}
-	*/
-	FindByIDOrCustom(cond bool, id int, key, value string) ([]gen.T, error)
-	// where clause
-
-	//update @@table
-	//	{{set}}
-	//		update_time=now(),
-	//		{{if name != ""}}
-	//			name=@name
-	//		{{end}}
-	//	{{end}}
-	//	{{where}}
-	//		id=@id
-	//	{{end}}
-	UpdateName(name string, id int) error
-	// Set clause if clause blend
-
 }
 
-// only used to User
-type UserMethod interface {
+// only administrator to Administrator
+type AdministratorMethod interface {
 	//where(id=@id)
 	FindByID(id int) (gen.T, error)
 
-	//select * from users where age>18
-	FindAdult() ([]gen.T, error)
+	// Where("account=@account and password=@password")
+	SimpleFindByAccountAndPassword(account string, password string) (gen.T, error)
 
-	//select * from @@table
-	//	{{where}}
-	//		{{if role=="user"}}
-	//			id=@id
-	//		{{else if role=="admin"}}
-	//			role="user" or rule="normal-admin"
-	//		{{else}}
-	//			role="user" or role="normal-admin" or role="admin"
-	//		{{end}}
-	//	{{end}}
-	FindByRole(role string, id int)
-
-	//update users
-	//	{{set}}
-	//		update_time=now(),
-	//		{{if name != ""}}
-	//			name=@name
-	//		{{end}}
-	//	{{end}}
-	// where id=@id
-	UpdateUserName(name string, id int) error
-
-	//Insert()
-
+	//FindAdministratorToMap(id int) (gen.M, error)
+	//
+	//FindByAccount(account string)
+	//
+	//UpdateAdministratorName(name string, id int) error
 }

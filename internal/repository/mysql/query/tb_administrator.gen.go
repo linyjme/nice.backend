@@ -6,6 +6,7 @@ package query
 
 import (
 	"context"
+	"strings"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -142,6 +143,43 @@ func (a administrator) clone(db *gorm.DB) administrator {
 }
 
 type administratorDo struct{ gen.DO }
+
+//where(id=@id)
+func (a administratorDo) FindByID(id int) (result *model.Administrator, err error) {
+	params := make(map[string]interface{}, 0)
+
+	var generateSQL strings.Builder
+	params["id"] = id
+	generateSQL.WriteString("id=@id ")
+
+	var executeSQL *gorm.DB
+	if len(params) > 0 {
+		executeSQL = a.UnderlyingDB().Where(generateSQL.String(), params).Take(&result)
+	} else {
+		executeSQL = a.UnderlyingDB().Where(generateSQL.String()).Take(&result)
+	}
+	err = executeSQL.Error
+	return
+}
+
+//Where("account=@account and password=@password")
+func (a administratorDo) SimpleFindByAccountAndPassword(account string, password string) (result *model.Administrator, err error) {
+	params := make(map[string]interface{}, 0)
+
+	var generateSQL strings.Builder
+	params["account"] = account
+	params["password"] = password
+	generateSQL.WriteString("account=@account and password=@password ")
+
+	var executeSQL *gorm.DB
+	if len(params) > 0 {
+		executeSQL = a.UnderlyingDB().Where(generateSQL.String(), params).Take(&result)
+	} else {
+		executeSQL = a.UnderlyingDB().Where(generateSQL.String()).Take(&result)
+	}
+	err = executeSQL.Error
+	return
+}
 
 func (a administratorDo) Debug() *administratorDo {
 	return a.withDO(a.DO.Debug())

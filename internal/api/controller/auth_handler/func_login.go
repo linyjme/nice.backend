@@ -16,7 +16,6 @@ import (
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
 	"niceBackend/config"
-	"niceBackend/internal/api/service/admin"
 	"niceBackend/internal/middleware"
 	"niceBackend/internal/pkg/code"
 	"niceBackend/internal/pkg/core"
@@ -74,6 +73,7 @@ func (h *handler) Login() core.HandlerFunc {
 		if account == "" {
 			account = pass
 		}
+
 		var shaKey string
 		if userLoginCache != nil {
 			h := sha256.New()
@@ -86,10 +86,9 @@ func (h *handler) Login() core.HandlerFunc {
 				return
 			}
 		}
-		searchOneData := new(admin.SearchOneData)
-		searchOneData.Account = account
-		searchOneData.Password = password.GeneratePassword(pass)
-		info, _ := h.adminService.Detail(c, searchOneData)
+
+		encryptionPassword := password.GeneratePassword(pass)
+		info, _ := h.adminService.FindByAccountAndPassword(c, account, encryptionPassword)
 		fmt.Println(info)
 		//h.userService
 		//u := &model.User{Account: account, Password: password}

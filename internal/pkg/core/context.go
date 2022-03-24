@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"strings"
 	"sync"
+	"time"
 
 	"niceBackend/internal/proposal"
 	"niceBackend/pkg/trace"
@@ -51,9 +52,31 @@ func releaseContext(ctx Context) {
 	contextPool.Put(c)
 }
 
+func (c *context) Deadline() (deadline time.Time, ok bool) {
+	return
+}
+
+func (c *context) Done() <-chan struct{} {
+	return nil
+}
+
+func (c *context) Err() error {
+	return nil
+}
+
+func (c *context) Value(key interface{}) interface{} {
+	return nil
+}
+
 var _ Context = (*context)(nil)
 
 type Context interface {
+	stdctx.Context
+	//Deadline() (deadline time.Time, ok bool)
+	//Done() <-chan struct{}
+	//Err() error
+	//Value(key interface{}) interface{}
+
 	init()
 
 	// ShouldBindQuery 反序列化 querystring
