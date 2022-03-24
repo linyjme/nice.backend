@@ -1,9 +1,17 @@
-package transform
+package async
 
 import (
 	"fmt"
 	"sync"
 )
+
+func Init() *AsyncChan {
+	return &AsyncChan{
+		Product:   make(chan map[string]interface{}, 1000),
+		CloseChan: make(chan bool),
+		IsClosed:  false,
+	}
+}
 
 type AsyncChan struct {
 	Mutex     sync.Mutex

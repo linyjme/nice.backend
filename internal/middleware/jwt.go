@@ -2,14 +2,14 @@ package middleware
 
 import (
 	"errors"
-	"strconv"
-	"time"
-
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
+	"niceBackend/config"
 	"niceBackend/internal/api/service"
 	"niceBackend/internal/api/service/admin"
+	"strconv"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -45,12 +45,12 @@ func JWTAuth() gin.HandlerFunc {
 			c.Abort()
 		}
 		if claims.ExpiresAt-time.Now().Unix() < claims.BufferTime {
-			claims.ExpiresAt = time.Now().Unix() + global.NiceConfig.JWT.ExpiresTime
+			claims.ExpiresAt = time.Now().Unix() + config.GetConf().JWT.ExpiresTime
 			newToken, _ := j.CreateTokenByOldToken(token, *claims)
 			newClaims, _ := j.ParseToken(newToken)
 			c.Header("new-token", newToken)
 			c.Header("new-expires-at", strconv.FormatInt(newClaims.ExpiresAt, 10))
-			if global.NiceConfig.System.UseMultipoint {
+			if config.GetConf().System.UseMultipoint {
 				err, RedisJwtToken := service.GetRedisJWT(newClaims.Account)
 				if err != nil {
 					global.NiceLog.Error("get redis jwt failed", zap.Any("err", err))
@@ -79,7 +79,7 @@ var (
 
 func NewJWT() *JWT {
 	return &JWT{
-		[]byte(global.NiceConfig.JWT.SigningKey),
+		[]byte(config.GetConf().JWT.SigningKey),
 	}
 }
 

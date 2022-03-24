@@ -1,6 +1,7 @@
 package router
 
 import (
+	"niceBackend/config"
 	"strconv"
 
 	"niceBackend/common/global"
@@ -21,7 +22,7 @@ type Server struct {
 
 func NewHTTPServer() (*Server, error) {
 	r := new(resource)
-	openBrowserUri := global.NiceConfig.System.Domain + ":" + strconv.Itoa(global.NiceConfig.System.Port)
+	openBrowserUri := config.GetConf().System.Domain + ":" + strconv.Itoa(config.GetConf().System.Port)
 
 	mux, err := core.New(global.NiceLog,
 		core.WithEnableOpenBrowser(openBrowserUri),

@@ -3,6 +3,7 @@ package errors
 import (
 	"fmt"
 	"io"
+	"log"
 	"runtime"
 
 	"github.com/pkg/errors"
@@ -97,4 +98,10 @@ func WithStack(err error) Error {
 	}
 
 	return &item{msg: err.Error(), stack: callers()}
+}
+
+func catchErr(logInfo string, err error) {
+	if err != nil {
+		log.Printf(logInfo+": %s\n", err)
+	}
 }

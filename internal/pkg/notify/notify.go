@@ -10,7 +10,7 @@ import (
 
 // OnPanicNotify 发生 panic 时进行通知
 func OnPanicNotify(ctx core.Context, err interface{}, stackInfo string) {
-	cfg := global.NiceConfig.Mail
+	cfg := config.GetConf().Mail
 	if cfg.Host == "" || cfg.Port == 0 || cfg.User == "" || cfg.Pass == "" || cfg.To == "" {
 		ctx.Logger().Error("Mail config error")
 		return

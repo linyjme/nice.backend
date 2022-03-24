@@ -1,11 +1,7 @@
-package pkg
+package util
 
 import (
 	"os"
-
-	"niceBackend/common/global"
-
-	"go.uber.org/zap"
 )
 
 //@author: yjLin
@@ -38,9 +34,7 @@ func CreateDir(dirs ...string) (err error) {
 			return err
 		}
 		if !exist {
-			global.NiceLog.Debug("create directory" + v)
 			if err := os.MkdirAll(v, os.ModePerm); err != nil {
-				global.NiceLog.Error("create directory"+v, zap.Any(" error:", err))
 				return err
 			}
 		}

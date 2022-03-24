@@ -1,4 +1,4 @@
-package pkg
+package util
 
 var (
 	LoginVerify        = Rules{"account": {Empty()}, "password": {NotEmpty()}}

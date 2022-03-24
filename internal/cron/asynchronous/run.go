@@ -1,7 +1,9 @@
 package asynchronous
 
-import "niceBackend/common/transform"
+import (
+	"niceBackend/internal/pkg/async"
+)
 
-func StopChan(p *transform.AsyncChan) {
+func StopChan(p *async.AsyncChan) {
 	p.Close()
 }

@@ -1,13 +1,9 @@
-package pkg
+package util
 
 import (
 	"os"
-	"path"
+	"path/filepath"
 	"unsafe"
-
-	"niceBackend/common/global"
-
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func GetProjectDirectory() string {
@@ -17,11 +13,7 @@ func GetProjectDirectory() string {
 
 func GetConfigIniPath() string {
 	projectDir := GetProjectDirectory()
-	return path.Join(projectDir, "config", "config.yaml")
-}
-
-func GetDatabase() *mongo.Database {
-	return global.NiceMongo.Database(global.NiceConfig.Mongo.DB)
+	return filepath.Join(projectDir, "config", "config.yaml")
 }
 
 // StringToBytes converts string to byte slice without a memory allocation.

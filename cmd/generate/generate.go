@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	// dal.init()
 
 	g := gen.NewGenerator(gen.Config{
 		OutPath: "./internal/repository/mysql/query",

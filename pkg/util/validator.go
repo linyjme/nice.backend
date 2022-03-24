@@ -1,4 +1,4 @@
-package pkg
+package util
 
 import (
 	"errors"
@@ -12,6 +12,25 @@ type Rules map[string][]string
 type RulesMap map[string]Rules
 
 var CustomizeMap = make(map[string]Rules)
+
+func init() {
+	_ = RegisterRule("PageVerify",
+		Rules{
+			"Page":     {NotEmpty()},
+			"PageSize": {NotEmpty()},
+		},
+	)
+	_ = RegisterRule("IdVerify",
+		Rules{
+			"Id": {NotEmpty()},
+		},
+	)
+	_ = RegisterRule("AuthorityIdVerify",
+		Rules{
+			"AuthorityId": {NotEmpty()},
+		},
+	)
+}
 
 //@author: yjLin
 //@function: RegisterRule

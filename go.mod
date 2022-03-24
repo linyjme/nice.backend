@@ -49,5 +49,6 @@ require (
 	gorm.io/driver/sqlite v1.3.1
 	gorm.io/gen v0.2.43 // indirect
 	gorm.io/gorm v1.23.1
+	github.com/gomodule/redigo v2.0.0+incompatible
 
 )

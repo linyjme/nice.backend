@@ -1,7 +1,6 @@
 package code
 
 import (
-	"niceBackend/common/global"
 	"niceBackend/config"
 )
 
@@ -74,7 +73,7 @@ const (
 )
 
 func Text(code int) string {
-	lang := global.NiceConfig.System.Language
+	lang := config.GetConf().System.Language
 	if lang == config.ZhCN {
 		return zhCNText[code]
 	}

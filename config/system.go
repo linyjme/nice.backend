@@ -1,9 +1,8 @@
-package initialize
+package config
 
 import (
 	"niceBackend/common/global"
-	nc "niceBackend/config"
-	"niceBackend/pkg"
+	"niceBackend/pkg/util"
 
 	"go.uber.org/zap"
 )
@@ -14,12 +13,12 @@ import (
 //@param: system model.System
 //@return: err error
 
-func SetSystemConfig(system nc.Server) {
-	cs := pkg.StructToMap(system)
+func SetSystemConfig(system System) {
+	cs := util.StructToMap(system)
 	for k, v := range cs {
-		global.NiceVp.Set(k, v)
+		GetVip().Set(k, v)
 	}
-	err := global.NiceVp.WriteConfig()
+	err := GetVip().WriteConfig()
 	if err != nil {
 		global.NiceLog.Error("set SystemConfig  failed", zap.Any("err", err))
 	}

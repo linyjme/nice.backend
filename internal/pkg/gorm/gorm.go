@@ -1,6 +1,8 @@
-package initialize
+package gorm
 
 import (
+	"niceBackend/config"
+	"niceBackend/pkg/util"
 	"os"
 	"path"
 
@@ -11,7 +13,6 @@ import (
 	"niceBackend/internal/repository/db_repo/categroy_repo"
 	"niceBackend/internal/repository/db_repo/comment_repo"
 	"niceBackend/internal/repository/db_repo/tag_repo"
-	"niceBackend/pkg"
 	"niceBackend/source"
 
 	"go.uber.org/zap"
@@ -27,7 +28,7 @@ import (
 //@return: *gorm.DB
 
 func Gorm() *gorm.DB {
-	switch global.NiceConfig.System.DbType {
+	switch config.GetConf().System.DbType {
 	case "mysql":
 		return GormMysql()
 	case "sqlite":
@@ -56,13 +57,13 @@ func SqlTables(db *gorm.DB) {
 		global.NiceLog.Error("register table failed", zap.Any("err", err))
 		os.Exit(0)
 	}
-	if global.NiceConfig.System.DbMigrate == true {
+	if config.GetConf().System.DbMigrate == true {
 		err = source.InitDB(source.Admin)
 		if err != nil {
 			global.NiceLog.Error("init table failed", zap.Any("err", err))
 		} else {
-			global.NiceConfig.System.DbMigrate = false
-			SetSystemConfig(global.NiceConfig)
+			config.GetConf().System.DbMigrate = false
+			config.SetSystemConfig(config.GetConf().System)
 		}
 	}
 
@@ -75,7 +76,7 @@ func SqlTables(db *gorm.DB) {
 //@return: *gorm.DB
 
 func GormMysql() *gorm.DB {
-	m := global.NiceConfig.Mysql.Write
+	m := config.GetConf().Mysql.Write
 	if m.Dbname == "" {
 		return nil
 	}
@@ -106,7 +107,7 @@ func GormMysql() *gorm.DB {
 //@return: *gorm.DB
 
 func GormSqlite() *gorm.DB {
-	projectDir := pkg.GetProjectDirectory()
+	projectDir := util.GetProjectDirectory()
 	sqlitePath := path.Join(projectDir, "config", "nice.db")
 	if db, err := gorm.Open(sqlite.Open(sqlitePath), gormConfig()); err != nil {
 		return nil

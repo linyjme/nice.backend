@@ -3,32 +3,23 @@ package internal
 import (
 	"context"
 	"fmt"
+	"go.uber.org/zap"
 	"net/http"
-	"time"
-
 	"niceBackend/common/global"
+	"niceBackend/config"
 	"niceBackend/internal/cron/asynchronous"
-	"niceBackend/internal/initialize"
 	"niceBackend/internal/router"
 	"niceBackend/pkg/shutdown"
-
-	"go.uber.org/zap"
+	"time"
 )
 
 func RunServer() {
-	//Router := initialize.Routers()
-
-	// 初始化redis服务
-	initialize.Redis()
-	// 初始化mongo服务
-	//initialize.ConnectMongo()
-
 	s, err := router.NewHTTPServer()
 	if err != nil {
 		panic(err)
 	}
 
-	address := fmt.Sprintf(":%d", global.NiceConfig.System.Port)
+	address := fmt.Sprintf(":%d", config.GetConf().System.Port)
 	global.NiceLog.Info("server run success on ", zap.String("address", address))
 	server := &http.Server{
 		Addr:           address,

@@ -4,9 +4,14 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"net/http"
+	"niceBackend/pkg/util"
 	"sync"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	"github.com/patrickmn/go-cache"
+	"go.uber.org/zap"
 	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
 	"niceBackend/common/transform/response"
@@ -17,12 +22,6 @@ import (
 	"niceBackend/internal/pkg/core"
 	"niceBackend/internal/pkg/password"
 	"niceBackend/internal/repository/db_repo/admin_repo"
-	"niceBackend/pkg"
-
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	"github.com/patrickmn/go-cache"
-	"go.uber.org/zap"
 )
 
 // Admin login structure
@@ -57,7 +56,7 @@ func (h *handler) Login() core.HandlerFunc {
 		var req loginRequest
 		res := new(loginResponse)
 		_ = c.ShouldBindJSON(&req)
-		if err := pkg.Verify(req, pkg.LoginVerify); err != nil {
+		if err := util.Verify(req, util.LoginVerify); err != nil {
 			c.AbortWithError(core.Error(
 				http.StatusBadRequest,
 				code.ParamBindError,
@@ -70,7 +69,7 @@ func (h *handler) Login() core.HandlerFunc {
 				userLoginCache = cache.New(time.Duration(config.LoginCacheTime)*time.Second, 2*time.Minute)
 			}
 		})
-		pass := pkg.DecodeBase64(req.Password)
+		pass := util.DecodeBase64(req.Password)
 		account := req.Account
 		if account == "" {
 			account = pass
@@ -78,7 +77,7 @@ func (h *handler) Login() core.HandlerFunc {
 		var shaKey string
 		if userLoginCache != nil {
 			h := sha256.New()
-			h.Write(pkg.StringToBytes(account + "|" + pass))
+			h.Write(util.StringToBytes(account + "|" + pass))
 			shaKey = string(h.Sum(nil))
 			u, ok := userLoginCache.Get(shaKey)
 			if ok {
@@ -118,15 +117,15 @@ func (h *handler) Login() core.HandlerFunc {
 
 // 登录以后签发jwt
 func tokenNext(c *gin.Context, user admin_repo.Admin) {
-	j := &middleware.JWT{SigningKey: []byte(global.NiceConfig.JWT.SigningKey)} // 唯一签名
+	j := &middleware.JWT{SigningKey: []byte(config.GetConf().JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
 		UUID:       user.UUID,
 		ID:         user.ID,
 		Account:    user.Account,
-		BufferTime: global.NiceConfig.JWT.BufferTime, // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
+		BufferTime: config.GetConf().JWT.BufferTime, // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                              // 签名生效时间
-			ExpiresAt: time.Now().Unix() + global.NiceConfig.JWT.ExpiresTime, // 过期时间 7天  配置文件
+			ExpiresAt: time.Now().Unix() + config.GetConf().JWT.ExpiresTime, // 过期时间 7天  配置文件
 			Issuer:    "qmPlus",                                              // 签名的发行者
 		},
 	}

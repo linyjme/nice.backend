@@ -1,218 +1,214 @@
 package cache
 
 import (
+	"bytes"
+	"encoding/gob"
+	"github.com/gomodule/redigo/redis"
+	"strconv"
 	"time"
-
-	"niceBackend/common/global"
-	"niceBackend/pkg/errors"
-	"niceBackend/pkg/time_parse"
-	"niceBackend/pkg/trace"
-
-	"github.com/go-redis/redis"
 )
 
-type Option func(*option)
-
-type Trace = trace.T
-
-type option struct {
-	Trace *trace.Trace
-	Redis *trace.Redis
+// RedisStore redis存储驱动
+type RedisStore struct {
+	pool *redis.Pool
 }
 
-func newOption() *option {
-	return &option{}
+type item struct {
+	Value interface{}
 }
 
-var _ Repo = (*cacheRepo)(nil)
-
-type Repo interface {
-	i()
-	Set(key, value string, ttl time.Duration, options ...Option) error
-	Get(key string, options ...Option) (string, error)
-	TTL(key string) (time.Duration, error)
-	Expire(key string, ttl time.Duration) bool
-	ExpireAt(key string, ttl time.Time) bool
-	Del(key string, options ...Option) bool
-	Exists(keys ...string) bool
-	Incr(key string, options ...Option) int64
-	Close() error
-}
-
-type cacheRepo struct {
-	client *redis.Client
-}
-
-func New() (Repo, error) {
-	client, err := redisConnect()
+func serializer(value interface{}) ([]byte, error) {
+	var buffer bytes.Buffer
+	enc := gob.NewEncoder(&buffer)
+	storeValue := item{
+		Value: value,
+	}
+	err := enc.Encode(storeValue)
 	if err != nil {
 		return nil, err
 	}
-
-	return &cacheRepo{
-		client: client,
-	}, nil
+	return buffer.Bytes(), nil
 }
 
-func (c *cacheRepo) i() {}
+func deserializer(value []byte) (interface{}, error) {
+	var res item
+	buffer := bytes.NewReader(value)
+	dec := gob.NewDecoder(buffer)
+	err := dec.Decode(&res)
+	if err != nil {
+		return nil, err
+	}
+	return res.Value, nil
+}
 
-func redisConnect() (*redis.Client, error) {
-	cfg := global.NiceConfig.Redis
-	client := redis.NewClient(&redis.Options{
-		Addr:         cfg.Addr,
-		Password:     cfg.Pass,
-		DB:           cfg.DB,
-		MaxRetries:   cfg.MaxRetries,
-		PoolSize:     cfg.PoolSize,
-		MinIdleConns: cfg.MinIdleConns,
-	})
+// NewRedisStore 创建新的redis存储
+func NewRedisStore(size int, network, address, password, database string) *RedisStore {
+	return &RedisStore{
+		pool: &redis.Pool{
+			MaxIdle:     size,
+			IdleTimeout: 240 * time.Second,
+			TestOnBorrow: func(c redis.Conn, t time.Time) error {
+				_, err := c.Do("PING")
+				return err
+			},
+			Dial: func() (redis.Conn, error) {
+				db, err := strconv.Atoi(database)
+				if err != nil {
+					return nil, err
+				}
 
-	if err := client.Ping().Err(); err != nil {
-		return nil, errors.Wrap(err, "ping redis err")
+				c, err := redis.Dial(
+					network,
+					address,
+					redis.DialDatabase(db),
+					redis.DialPassword(password),
+				)
+				if err != nil {
+					return nil, err
+				}
+				return c, nil
+			},
+		},
+	}
+}
+
+// Set 存储值
+func (store *RedisStore) Set(key string, value interface{}, ttl int) error {
+	rc := store.pool.Get()
+	defer rc.Close()
+
+	serialized, err := serializer(value)
+	if err != nil {
+		return err
 	}
 
-	return client, nil
+	if rc.Err() != nil {
+		return rc.Err()
+	}
+
+	if ttl > 0 {
+		_, err = rc.Do("SETEX", key, ttl, serialized)
+	} else {
+		_, err = rc.Do("SET", key, serialized)
+	}
+
+	if err != nil {
+		return err
+	}
+	return nil
+
 }
 
-// Set set some <key,value> into redis
-func (c *cacheRepo) Set(key, value string, ttl time.Duration, options ...Option) error {
-	ts := time.Now()
-	opt := newOption()
-	defer func() {
-		if opt.Trace != nil {
-			opt.Redis.Timestamp = time_parse.CSTLayoutString()
-			opt.Redis.Handle = "set"
-			opt.Redis.Key = key
-			opt.Redis.Value = value
-			opt.Redis.TTL = ttl.Minutes()
-			opt.Redis.CostSeconds = time.Since(ts).Seconds()
-			opt.Trace.AppendRedis(opt.Redis)
+// Get 取值
+func (store *RedisStore) Get(key string) (interface{}, bool) {
+	rc := store.pool.Get()
+	defer rc.Close()
+	if rc.Err() != nil {
+		return nil, false
+	}
+
+	v, err := redis.Bytes(rc.Do("GET", key))
+	if err != nil || v == nil {
+		return nil, false
+	}
+
+	finalValue, err := deserializer(v)
+	if err != nil {
+		return nil, false
+	}
+
+	return finalValue, true
+
+}
+
+// Gets 批量取值
+func (store *RedisStore) Gets(keys []string, prefix string) (map[string]interface{}, []string) {
+	rc := store.pool.Get()
+	defer rc.Close()
+	if rc.Err() != nil {
+		return nil, keys
+	}
+
+	var queryKeys = make([]string, len(keys))
+	for key, value := range keys {
+		queryKeys[key] = prefix + value
+	}
+
+	v, err := redis.ByteSlices(rc.Do("MGET", redis.Args{}.AddFlat(queryKeys)...))
+	if err != nil {
+		return nil, keys
+	}
+
+	var res = make(map[string]interface{})
+	var missed = make([]string, 0, len(keys))
+
+	for key, value := range v {
+		decoded, err := deserializer(value)
+		if err != nil || decoded == nil {
+			missed = append(missed, keys[key])
+		} else {
+			res[keys[key]] = decoded
 		}
-	}()
+	}
+	// 解码所得值
+	return res, missed
+}
 
-	for _, f := range options {
-		f(opt)
+// Sets 批量设置值
+func (store *RedisStore) Sets(values map[string]interface{}, prefix string) error {
+	rc := store.pool.Get()
+	defer rc.Close()
+	if rc.Err() != nil {
+		return rc.Err()
+	}
+	var setValues = make(map[string]interface{})
+
+	// 编码待设置值
+	for key, value := range values {
+		serialized, err := serializer(value)
+		if err != nil {
+			return err
+		}
+		setValues[prefix+key] = serialized
 	}
 
-	if err := c.client.Set(key, value, ttl).Err(); err != nil {
-		return errors.Wrapf(err, "redis set key: %s err", key)
+	_, err := rc.Do("MSET", redis.Args{}.AddFlat(setValues)...)
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
+
+// Delete 批量删除给定的键
+func (store *RedisStore) Delete(keys []string, prefix string) error {
+	rc := store.pool.Get()
+	defer rc.Close()
+	if rc.Err() != nil {
+		return rc.Err()
 	}
 
+	// 处理前缀
+	for i := 0; i < len(keys); i++ {
+		keys[i] = prefix + keys[i]
+	}
+
+	_, err := rc.Do("DEL", redis.Args{}.AddFlat(keys)...)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
-// Get get some key from redis
-func (c *cacheRepo) Get(key string, options ...Option) (string, error) {
-	ts := time.Now()
-	opt := newOption()
-	defer func() {
-		if opt.Trace != nil {
-			opt.Redis.Timestamp = time_parse.CSTLayoutString()
-			opt.Redis.Handle = "get"
-			opt.Redis.Key = key
-			opt.Redis.CostSeconds = time.Since(ts).Seconds()
-			opt.Trace.AppendRedis(opt.Redis)
-		}
-	}()
-
-	for _, f := range options {
-		f(opt)
+// DeleteAll 批量所有键
+func (store *RedisStore) DeleteAll() error {
+	rc := store.pool.Get()
+	defer rc.Close()
+	if rc.Err() != nil {
+		return rc.Err()
 	}
 
-	value, err := c.client.Get(key).Result()
-	if err != nil {
-		return "", errors.Wrapf(err, "redis get key: %s err", key)
-	}
+	_, err := rc.Do("FLUSHDB")
 
-	return value, nil
-}
-
-// TTL get some key from redis
-func (c *cacheRepo) TTL(key string) (time.Duration, error) {
-	ttl, err := c.client.TTL(key).Result()
-	if err != nil {
-		return -1, errors.Wrapf(err, "redis get key: %s err", key)
-	}
-
-	return ttl, nil
-}
-
-// Expire expire some key
-func (c *cacheRepo) Expire(key string, ttl time.Duration) bool {
-	ok, _ := c.client.Expire(key, ttl).Result()
-	return ok
-}
-
-// ExpireAt expire some key at some time
-func (c *cacheRepo) ExpireAt(key string, ttl time.Time) bool {
-	ok, _ := c.client.ExpireAt(key, ttl).Result()
-	return ok
-}
-
-func (c *cacheRepo) Exists(keys ...string) bool {
-	if len(keys) == 0 {
-		return true
-	}
-	value, _ := c.client.Exists(keys...).Result()
-	return value > 0
-}
-
-func (c *cacheRepo) Del(key string, options ...Option) bool {
-	ts := time.Now()
-	opt := newOption()
-	defer func() {
-		if opt.Trace != nil {
-			opt.Redis.Timestamp = time_parse.CSTLayoutString()
-			opt.Redis.Handle = "del"
-			opt.Redis.Key = key
-			opt.Redis.CostSeconds = time.Since(ts).Seconds()
-			opt.Trace.AppendRedis(opt.Redis)
-		}
-	}()
-
-	for _, f := range options {
-		f(opt)
-	}
-
-	if key == "" {
-		return true
-	}
-
-	value, _ := c.client.Del(key).Result()
-	return value > 0
-}
-
-func (c *cacheRepo) Incr(key string, options ...Option) int64 {
-	ts := time.Now()
-	opt := newOption()
-	defer func() {
-		if opt.Trace != nil {
-			opt.Redis.Timestamp = time_parse.CSTLayoutString()
-			opt.Redis.Handle = "incr"
-			opt.Redis.Key = key
-			opt.Redis.CostSeconds = time.Since(ts).Seconds()
-			opt.Trace.AppendRedis(opt.Redis)
-		}
-	}()
-
-	for _, f := range options {
-		f(opt)
-	}
-	value, _ := c.client.Incr(key).Result()
-	return value
-}
-
-// Close close redis client
-func (c *cacheRepo) Close() error {
-	return c.client.Close()
-}
-
-// WithTrace 设置trace信息
-func WithTrace(t Trace) Option {
-	return func(opt *option) {
-		if t != nil {
-			opt.Trace = t.(*trace.Trace)
-			opt.Redis = new(trace.Redis)
-		}
-	}
+	return err
 }

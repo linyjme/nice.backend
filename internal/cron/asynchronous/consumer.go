@@ -2,12 +2,12 @@ package asynchronous
 
 import (
 	"fmt"
+	"niceBackend/internal/pkg/async"
 
-	"niceBackend/common/transform"
 	"niceBackend/internal/cron/asynchronous/tasks"
 )
 
-func Consumer(p *transform.AsyncChan) {
+func Consumer(p *async.AsyncChan) {
 	var tMap map[string]interface{}
 	for true {
 		select {

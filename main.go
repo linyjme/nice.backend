@@ -2,10 +2,14 @@ package main
 
 import (
 	"flag"
+	"niceBackend/bootstrap"
 	"niceBackend/common/global"
+	"niceBackend/config"
 	"niceBackend/internal"
-	"niceBackend/internal/initialize"
-	"niceBackend/pkg"
+	"niceBackend/internal/pkg/async"
+	"niceBackend/internal/pkg/cache"
+	"niceBackend/internal/pkg/gorm"
+	"niceBackend/pkg/util"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -19,10 +23,10 @@ var (
 )
 
 func init() {
-	flag.StringVar(&confPath, "c", pkg.GetConfigIniPath(), "配置文件路径")
+	flag.StringVar(&confPath, "c", util.GetConfigIniPath(), "配置文件路径")
 	flag.StringVar(&scriptName, "s", "", "运行内置数据库助手脚本")
 	flag.Parse()
-	//bootstrap.Init(confPath)
+	bootstrap.Init(confPath)
 }
 
 // @title Swagger Example API
@@ -36,14 +40,14 @@ func init() {
 // @name x-token
 // @BasePath /
 func main() {
-	global.NiceVp = initialize.Viper() // 初始化Viper
-	global.NiceLog = initialize.Zap()  // 初始化zap日志库
-	global.NiceDb = initialize.Gorm()  // gorm连接数据库
-	global.AsyncChan = initialize.InitAsync()
+	global.NiceDb = gorm.Gorm() // g orm连接数据库
+	global.AsyncChan = async.Init()
 	if global.NiceDb != nil {
-		initialize.SqlTables(global.NiceDb) // 初始化表
+		gorm.SqlTables(global.NiceDb) // 初始化表
 	} else {
 		panic(global.NiceDb)
 	}
+	// 初始化缓存服务
+	cache.Init(config.GetConf().Redis)
 	internal.RunServer()
 }

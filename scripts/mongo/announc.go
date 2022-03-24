@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"niceBackend/pkg/util"
 	"time"
 
 	"niceBackend/common/global"
@@ -22,7 +23,7 @@ import (
 func PostAnnouncement(c *gin.Context) {
 	var r request.Announcements
 	_ = c.ShouldBindJSON(&r)
-	if err := pkg.Verify(r, pkg.AnnouncementVerify); err != nil {
+	if err := util.Verify(r, util.AnnouncementVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

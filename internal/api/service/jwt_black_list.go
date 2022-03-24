@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"niceBackend/config"
 	"time"
 
 	"niceBackend/common/global"
@@ -48,7 +49,7 @@ func GetRedisJWT(userName string) (err error, redisJWT string) {
 
 func SetRedisJWT(jwt string, userName string) (err error) {
 	// 此处过期时间等于jwt过期时间
-	timer := time.Duration(global.NiceConfig.JWT.ExpiresTime) * time.Second
+	timer := time.Duration(config.GetConf().JWT.ExpiresTime) * time.Second
 	err = global.NiceRedis.Set(userName, jwt, timer).Err()
 	return err
 }

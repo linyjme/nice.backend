@@ -1,24 +1,24 @@
 package cache
 
 import (
-	"github.com/cloudreve/Cloudreve/v3/pkg/conf"
 	"github.com/gin-gonic/gin"
+	"niceBackend/config"
 )
 
 // Store 缓存存储器
 var Store Driver = NewMemoStore()
 
 // Init 初始化缓存
-func Init() {
+func Init(conf config.Redis) {
 	//Store = NewRedisStore(10, "tcp", "127.0.0.1:6379", "", "0")
 	//return
-	if conf.RedisConfig.Server != "" && gin.Mode() != gin.TestMode {
+	if conf.Addr != "" && gin.Mode() != gin.TestMode {
 		Store = NewRedisStore(
 			10,
-			conf.RedisConfig.Network,
-			conf.RedisConfig.Server,
-			conf.RedisConfig.Password,
-			conf.RedisConfig.DB,
+			"tcp",
+			conf.Addr,
+			conf.Pass,
+			conf.DB,
 		)
 	}
 }

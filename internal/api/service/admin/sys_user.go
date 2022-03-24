@@ -2,12 +2,11 @@ package admin
 
 import (
 	"errors"
-
-	"niceBackend/common/global"
-	"niceBackend/internal/repository/db_repo/admin_repo"
-	"niceBackend/pkg"
+	"niceBackend/pkg/util"
 
 	"gorm.io/gorm"
+	"niceBackend/common/global"
+	"niceBackend/internal/repository/db_repo/admin_repo"
 )
 
 //@author: yjLin
@@ -28,7 +27,7 @@ func Register(u admin_repo.Admin) (err error, userInter admin_repo.Admin) {
 		return errors.New("用户名已注册"), userInter
 	}
 	// 否则 附加uuid 密码md5简单加密 注册
-	u.Password = pkg.MD5V([]byte(u.Password))
+	u.Password = util.MD5V([]byte(u.Password))
 	err = global.NiceDb.Create(&u).Error
 	return err, u
 }

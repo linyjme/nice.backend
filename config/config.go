@@ -1,8 +1,14 @@
 package config
 
-import "time"
+import (
+	"fmt"
+	"github.com/fsnotify/fsnotify"
+	"github.com/spf13/viper"
+	"sync"
+	"time"
+)
 
-type Server struct {
+type Config struct {
 	JWT    JWT     `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
 	Zap    Zap     `mapstructure:"zap" json:"zap" yaml:"zap"`
 	Timer  Timer   `mapstructure:"timer" json:"timer" yaml:"timer"`
@@ -48,7 +54,8 @@ type Mysql struct {
 //}
 
 type Redis struct {
-	DB           int    `mapstructure:"db" json:"db" yaml:"db"`                   // redis的哪个数据库
+	Network      string `mapstructure:"network" json:"network" yaml:"network"`    // redis的哪个数据库
+	DB           string `mapstructure:"db" json:"db" yaml:"db"`                   // redis的哪个数据库
 	Addr         string `mapstructure:"addr" json:"addr" yaml:"addr"`             // 服务器地址:端口
 	Pass         string `mapstructure:"password" json:"password" yaml:"password"` // 密码
 	MaxRetries   int    `toml:"maxRetries"`
@@ -104,4 +111,46 @@ type Mail struct {
 	User string `toml:"user"`
 	Pass string `toml:"pass"`
 	To   string `toml:"to"`
+}
+
+var onceConf sync.Once
+var conf *Config
+var vip *viper.Viper
+
+func Init(configPath string) error {
+	var err error
+	onceConf.Do(func() {
+		if conf == nil {
+			err = func() error {
+				v := viper.New()
+				v.SetConfigFile(configPath)
+				v.SetConfigType("yaml")
+				err := v.ReadInConfig()
+				if err != nil {
+					return err
+					//panic(fmt.Errorf("Fatal error config file: %s \n", err))
+				}
+				v.WatchConfig()
+				v.OnConfigChange(func(e fsnotify.Event) {
+					fmt.Println("config file changed:", e.Name)
+					if err := v.Unmarshal(&conf); err != nil {
+						fmt.Println(err)
+					}
+				})
+				if err := v.Unmarshal(&conf); err != nil {
+					return err
+				}
+				return nil
+			}()
+		}
+	})
+	return err
+}
+
+func GetVip() *viper.Viper {
+	return vip
+}
+
+func GetConf() *Config {
+	return conf
 }

@@ -1,7 +1,7 @@
 package alert
 
 import (
-	"niceBackend/common/global"
+	"niceBackend/config"
 	"niceBackend/internal/proposal"
 	"niceBackend/pkg/errors"
 	"niceBackend/pkg/mail"
@@ -16,7 +16,7 @@ func NotifyHandler(logger *zap.Logger) func(msg *proposal.AlertMessage) {
 	}
 
 	return func(msg *proposal.AlertMessage) {
-		cfg := global.NiceConfig.Mail
+		cfg := config.GetConf().Mail
 		if cfg.Host == "" || cfg.Port == 0 || cfg.User == "" || cfg.Pass == "" || cfg.To == "" {
 			logger.Error("Mail config error")
 			return
