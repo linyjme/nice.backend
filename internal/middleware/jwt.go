@@ -39,7 +39,7 @@ func JWTAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		if err, _ = admin.FindUserByUuid(claims.UUID.String()); err != nil {
+		if err, _ = admin.FindUserByUuid(claims.UUID); err != nil {
 			_ = service.JsonInBlacklist(response.JwtBlacklist{Jwt: token})
 			response.FailWithDetailed(gin.H{"reload": true}, err.Error(), c)
 			c.Abort()

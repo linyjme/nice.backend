@@ -4,23 +4,19 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"net/http"
+	"niceBackend/internal/repository/mysql/model"
 	"niceBackend/pkg/util"
 	"sync"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
 	"github.com/patrickmn/go-cache"
-	"go.uber.org/zap"
-	"niceBackend/common/global"
 	"niceBackend/common/transform/request"
-	"niceBackend/common/transform/response"
 	"niceBackend/config"
 	"niceBackend/internal/middleware"
 	"niceBackend/internal/pkg/code"
 	"niceBackend/internal/pkg/core"
 	"niceBackend/internal/pkg/password"
-	"niceBackend/internal/repository/db_repo/admin_repo"
 )
 
 // Admin login structure
@@ -88,7 +84,15 @@ func (h *handler) Login() core.HandlerFunc {
 		}
 
 		encryptionPassword := password.GeneratePassword(pass)
-		info, _ := h.adminService.FindByAccountAndPassword(c, account, encryptionPassword)
+		info, err := h.adminService.FindByAccountAndPassword(c, account, encryptionPassword)
+		if err != nil {
+			c.AbortWithError(core.Error(
+				http.StatusBadRequest,
+				code.AdminLoginError,
+				code.Text(code.AdminLoginError)).WithError(err),
+			)
+			return
+		}
 		fmt.Println(info)
 		//h.userService
 		//u := &model.User{Account: account, Password: password}
@@ -97,15 +101,17 @@ func (h *handler) Login() core.HandlerFunc {
 		//	response.FailWithCode(4002, c)
 		//} else {
 		//	// 颁发token
-		//	tokenNext(c, *user)
+		token := tokenNext(c, info)
+
+		// 将用户信息记录到 Redis 中
+
+		// 将可访问接口信息记录到 Redis 中
+
 		//}
-		res.Status = "success"
-		res.Message = "登陆成功"
-		token := Token{
-			AccessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJyb290In0sImlhdCI6MTY0NTY5NTkxMiwiZXhwIjoxNjQ1Njk5NTEyfQ.o4xs9FrYHDam5YhK2hmDsPO0qLhsajX3mCnhPwH0wyY",
+		res.Result = Token{
+			AccessToken: token,
 			ExpiresIn:   3600,
 		}
-		res.Result = token
 		c.Payload(res)
 		if userLoginCache != nil {
 			userLoginCache.SetDefault(shaKey, token)
@@ -115,29 +121,32 @@ func (h *handler) Login() core.HandlerFunc {
 }
 
 // 登录以后签发jwt
-func tokenNext(c *gin.Context, user admin_repo.Admin) {
+func tokenNext(c core.Context, user *model.Administrator) string {
 	j := &middleware.JWT{SigningKey: []byte(config.GetConf().JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
-		UUID:       user.UUID,
+		UUID:       user.UID,
 		ID:         user.ID,
 		Account:    user.Account,
 		BufferTime: config.GetConf().JWT.BufferTime, // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000,                              // 签名生效时间
+			NotBefore: time.Now().Unix() - 1000,                             // 签名生效时间
 			ExpiresAt: time.Now().Unix() + config.GetConf().JWT.ExpiresTime, // 过期时间 7天  配置文件
-			Issuer:    "qmPlus",                                              // 签名的发行者
+			Issuer:    "qmPlus",                                             // 签名的发行者
 		},
 	}
 	token, err := j.CreateToken(claims)
 	if err != nil {
-		global.NiceLog.Error("获取token失败!", zap.Any("err", err))
-		response.FailWithMessage("获取token失败", c)
-		return
+		c.AbortWithError(core.Error(
+			http.StatusBadRequest,
+			code.AdminLoginError,
+			code.Text(code.AdminLoginError)).WithError(err),
+		)
+		return token
 	}
-	response.OkWithDetailed(response.LoginResponse{
-		Admin:     user,
-		Token:     token,
-		ExpiresAt: claims.StandardClaims.ExpiresAt * 1000,
-	}, "登录成功", c)
-	return
+	//if err != nil {
+	//	global.NiceLog.Error("获取token失败!", zap.Any("err", err))
+	//	response.FailWithMessage("获取token失败", c)
+	//	return ""
+	//}
+	return token
 }
