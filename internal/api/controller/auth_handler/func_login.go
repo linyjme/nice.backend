@@ -2,7 +2,6 @@ package auth_handler
 
 import (
 	"crypto/sha256"
-	"fmt"
 	"net/http"
 	"niceBackend/internal/repository/mysql/model"
 	"niceBackend/pkg/util"
@@ -69,7 +68,6 @@ func (h *handler) Login() core.HandlerFunc {
 		if account == "" {
 			account = pass
 		}
-
 		var shaKey string
 		if userLoginCache != nil {
 			h := sha256.New()
@@ -93,20 +91,9 @@ func (h *handler) Login() core.HandlerFunc {
 			)
 			return
 		}
-		fmt.Println(info)
-		//h.userService
-		//u := &model.User{Account: account, Password: password}
-		//if err, user := service.Login(u); err != nil {
-		//	global.NiceLog.Error("登陆失败! 用户名不存在或者密码错误!", zap.Any("err", err))
-		//	response.FailWithCode(4002, c)
-		//} else {
-		//	// 颁发token
 		token := tokenNext(c, info)
-
 		// 将用户信息记录到 Redis 中
-
 		// 将可访问接口信息记录到 Redis 中
-
 		//}
 		res.Result = Token{
 			AccessToken: token,

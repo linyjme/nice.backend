@@ -23,16 +23,17 @@ func setApiRouter(r *resource) {
 	expansionHandler := expansion_handler.New()
 	optionHandler := option_handler.New()
 	{
-		BaseRouter.GET("/tag", tagHandler.List())                        // 创建Api
-		BaseRouter.GET("/category", categoryHandler.List())              // 创建Api
-		BaseRouter.GET("/announcement", announcementHandler.List())      // 创建Api
-		BaseRouter.GET("/comment", commentHandler.List())                // 创建Api
-		BaseRouter.GET("/option", optionHandler.List())                  // 创建Api
-		BaseRouter.GET("/article", articleHandler.List())                // 创建Api
-		BaseRouter.POST("/auth/login", authHandler.Login())              // 创建Api
-		BaseRouter.GET("/auth/admin", authHandler.List())                // 创建Api
-		BaseRouter.GET("/expansion/statistic", expansionHandler.List())  // 创建Api
-		BaseRouter.POST("/expansion/statistic", expansionHandler.List()) // 创建Api
+		BaseRouter.GET("/tag", tagHandler.List())                        //
+		BaseRouter.GET("/category", categoryHandler.List())              //
+		BaseRouter.GET("/announcement", announcementHandler.List())      //
+		BaseRouter.GET("/comment", commentHandler.List())                //
+		BaseRouter.GET("/option", optionHandler.List())                  //
+		BaseRouter.GET("/article", articleHandler.List())                //
+		BaseRouter.POST("/auth/login", authHandler.Login())              //
+		BaseRouter.POST("/auth/check", authHandler.TokenCheck())         //
+		BaseRouter.GET("/auth/admin", authHandler.List())                //
+		BaseRouter.GET("/expansion/statistic", expansionHandler.List())  //
+		BaseRouter.POST("/expansion/statistic", expansionHandler.List()) //
 	}
 
 }

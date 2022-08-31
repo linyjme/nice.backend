@@ -40,4 +40,4 @@ const (
 	LoginSessionTTL = time.Hour * 24
 )
 
-var LoginCacheTime = 0
+var LoginCacheTime = 1
